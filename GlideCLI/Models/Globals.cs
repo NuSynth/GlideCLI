@@ -6,8 +6,6 @@ namespace GlideCLI.Models
 {
     public class Globals
     {
-        // public string UserName { get; set; } // Proably don't need this
-
         /*TODO: Correct how I named osSwitch, to OsSwitch */
         public bool osSwitch { get; set; } // True if Linux, false if Windows. This is needed to store files correctly, so this app can be used in both operating systems.
         public string DirectoryPath { get; set; }
