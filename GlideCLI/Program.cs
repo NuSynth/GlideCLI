@@ -19,50 +19,9 @@ namespace GlideCLI
         public static void Main(string[] args)
         {
             GetPath();
-            // List<Person> people = new List<Person>(); // This is part of example content I'm referring to
-            // List<string> lines = File.ReadAllLines(filePath).ToList();
-
-            //globals.FilePath = filePath;
-
             StartUp();
 
-            /* Start of example processing */
-            // foreach ( string line in lines)
-            // {
-            //     string[] entries = line.Split(',');
-            //     Person newPerson = new Person();
-
-            //     newPerson.FirstName = entries[0];
-            //     newPerson.LastName = entries[1];
-            //     newPerson.Url = entries[2];
-
-            //     people.Add(newPerson);
-            // }
-
-            // Console.WriteLine("Read from text file");
-            // foreach (var person in people)
-            // {
-            //     Console.WriteLine($"{person.FirstName} {person.LastName}: {person.Url}");
-            // }
-
-            // // Something like this might work for adding a new course, inside a loop.
-            // people.Add(new Person { FirstName = "Greg", LastName = "Jones", Url = "www.test.com"});
-            // List<string> output = new List<string>();
-            // foreach ( var person in people)
-            // {
-            //     output.Add($"{person.FirstName},{person.LastName},{person.Url}");
-            // }            
-            // File.WriteAllLines(filePath, output);
-            // Console.WriteLine("Text File Updated.");
-
-            // Console.ReadLine();
-            /* End of example processing */
-
-
         }
-
-        /*Start up logic */
-        /* */
         private static void GetPath()
         {
             // TODO: Allow user to specify the file path, (or the directory path).
@@ -117,8 +76,7 @@ namespace GlideCLI
             string directory = (@"\GlideCLI");
             string pathString = Convert.ToString(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + directory);
             string usablePath = pathString.Replace(@"\", @"\\");
-
-
+            
             if (!Directory.Exists(usablePath))
             {
                 Directory.CreateDirectory(usablePath);
