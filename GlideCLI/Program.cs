@@ -23,7 +23,6 @@ namespace GlideCLI
         }
         private static void GetPath()
         {
-            // TODO: Allow user to specify the file path, (or the directory path).
             const int ZERO = 0;
             const int ONE = 1;
             bool ask = true;
@@ -70,8 +69,6 @@ namespace GlideCLI
         }
         private static void Windows()
         {
-            /*TODO: Change this to use the path in windows. */
-            // globals.UserName = Environment.UserName; // Probably do not need for Windows users.
             string directory = (@"\GlideCLI");
             string pathString = Convert.ToString(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + directory);
             string usablePath = pathString.Replace(@"\", @"\\");
@@ -86,12 +83,8 @@ namespace GlideCLI
         }
         private static void StartUp()
         {
-            //TODO: Set these methods up.
             CheckForCountFile(); // Check for file that holds number of courses
             MainMenu();
-
-            //TopicsList = TopicManager.GetTopics(); // Allows default values to be used, or replaced with saved values.
-            //LoadTopicIDs();
         }
         private static void CheckForCountFile()
         {
@@ -368,8 +361,6 @@ namespace GlideCLI
 
             File.WriteAllLines(filePath2, lines); // Just in case the computer loses power, or freezes up. CourseList.bak would have to be manually renamed.
             File.WriteAllLines(filePath, lines);
-
-            // courseCount = File.ReadAllText(path); I think I left this by accident
         }
         private static void SelectCourse()
         {
