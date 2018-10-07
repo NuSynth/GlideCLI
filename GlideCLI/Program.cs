@@ -20,7 +20,6 @@ namespace GlideCLI
         {
             GetPath();
             StartUp();
-
         }
         private static void GetPath()
         {
