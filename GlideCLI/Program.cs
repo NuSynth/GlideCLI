@@ -303,7 +303,7 @@ namespace GlideCLI
                     topics.Add(newTopic);
                     topicLoop = topicLoop + ONE;
                     check = topicLoop;
-                    if (check < topicCounter)
+                    if (check <= topicCounter)
                     {
                         // Top_ID must be incremented before next iteration of loop, if more topics exist.
                         topicID = topicID + ONE;
