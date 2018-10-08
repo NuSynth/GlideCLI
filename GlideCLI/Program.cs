@@ -459,6 +459,15 @@ namespace GlideCLI
                 {
                     globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
                     validInput = true;
+
+                    foreach (var course in completeList)
+                    {
+                        Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
+                        if (selectionInt == course.Course_ID)
+                        {
+                            globals.CourseName = course.Course_Name;
+                        }
+                    }
                 }
                 catch
                 {
