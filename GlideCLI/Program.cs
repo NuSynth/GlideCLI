@@ -174,7 +174,7 @@ namespace GlideCLI
                         break;
                 }
             }
-            Console.WriteLine("This message is displayed so the progra can exit, without \nlooking like it crashed. Press any key to close the program.");
+            Console.WriteLine("This message is displayed so the program can exit, without \nlooking like it crashed. Press any key to close the program.");
             Console.ReadLine();
             Environment.Exit(ZERO);
         }
@@ -455,17 +455,28 @@ namespace GlideCLI
                 selectionInt = Convert.ToInt32(selectionString);
                 selectionInt = selectionInt - ONE;
 
+                Console.WriteLine("Entering test 1");
+                Console.ReadLine();
+                var testVar = selectionInt + ONE;
                 try
                 {
                     globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
                     validInput = true;
 
+                    Console.WriteLine("Entering test 2");
+                    Console.ReadLine();
                     foreach (var course in completeList)
                     {
                         Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
-                        if (selectionInt == course.Course_ID)
+                        
+                        Console.WriteLine("Entering test 3");
+                        Console.ReadLine();
+                        //selectionInt + ONE;
+                        if (testVar == course.Course_ID)
                         {
                             globals.CourseName = course.Course_Name;
+                            Console.WriteLine($"globals.CourseName = {globals.CourseName}");
+                            Console.ReadLine();
                         }
                     }
                 }
@@ -755,6 +766,7 @@ namespace GlideCLI
         private static void SaveProgress()
         {
             string filePath;
+            string filePath2;
             List<string> output = new List<string>();
             foreach (var topic in TopicsList)
             {
@@ -764,15 +776,17 @@ namespace GlideCLI
             if (globals.osSwitch == true)
             {
                 // For Linux
-                filePath = $"{globals.DirectoryPath}//{globals.CourseName}.bak";
-                filePath = $"{globals.DirectoryPath}//{globals.CourseName}.txt";
+                filePath2 = $"{globals.DirectoryPath}//{globals.CourseName}.bak";
+                filePath = $"{globals.DirectoryPath}//{globals.CourseName}";
+                File.WriteAllLines(filePath2, output);
                 File.WriteAllLines(filePath, output);
             }
             else
             {
                 // For Windows
-                filePath = $"{globals.DirectoryPath}\\{globals.CourseName}.bak";
+                filePath2 = $"{globals.DirectoryPath}\\{globals.CourseName}.bak";
                 filePath = $"{globals.DirectoryPath}\\{globals.CourseName}.txt";
+                File.WriteAllLines(filePath2, output);
                 File.WriteAllLines(filePath, output);
             }
 
