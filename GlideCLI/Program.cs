@@ -1,4 +1,4 @@
-﻿using GlideCLI.Models;
+using GlideCLI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,12 +47,12 @@ namespace GlideCLI
             }
             if (choice == ONE)
             {
-                Console.WriteLine("\n\nOption 1 selected/");
+                Console.WriteLine("\n\nOption 1 selected.");
                 Linux();
             }
             else
             {
-                Console.WriteLine("\n\nOption 2 selected/");
+                Console.WriteLine("\n\nOption 2 selected.");
                 Windows();
             }
         }
@@ -66,6 +66,10 @@ namespace GlideCLI
             }
             globals.DirectoryPath = pathString;
             globals.osSwitch = true;
+
+            //Test
+            Console.WriteLine($"{globals.DirectoryPath}");
+            Console.ReadLine();
         }
         private static void Windows()
         {
@@ -79,6 +83,7 @@ namespace GlideCLI
             }
 
             globals.DirectoryPath = usablePath;
+
             globals.osSwitch = false;
         }
         private static void StartUp()
@@ -100,10 +105,10 @@ namespace GlideCLI
             {
                 filename = "\\CourseCount.txt";
             }
-            path = Path.Combine(globals.DirectoryPath, filename);            
+            path = $"{globals.DirectoryPath}{filename}";
             if (!Directory.Exists(path))
             {
-                File.WriteAllText(path, ZERO);
+                File.WriteAllText(path, ZERO);                
             }
             courseCount = File.ReadAllText(path);
             globals.CourseCount = Convert.ToInt32(courseCount);
