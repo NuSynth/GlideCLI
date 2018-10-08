@@ -102,12 +102,33 @@ namespace GlideCLI
                 filename = "\\CourseCount.txt";
             }
             path = $"{globals.DirectoryPath}{filename}";
-            if (!Directory.Exists(path))
+            //Test
+            // var test = Directory.Exists(path);
+            // string testString = Convert.ToString(test);
+            // Console.WriteLine($"This should be true, testString = {testString};");
+            // Console.ReadLine();
+            //EndTest
+            // if (!Directory.Exists(path))
+            // {
+            //     File.WriteAllText(path, ZERO);                
+            // }
+            try
             {
-                File.WriteAllText(path, ZERO);                
+                courseCount = File.ReadAllText(path);
+                globals.CourseCount = Convert.ToInt32(courseCount);
             }
-            courseCount = File.ReadAllText(path);
-            globals.CourseCount = Convert.ToInt32(courseCount);
+            catch
+            {
+                File.WriteAllText(path, ZERO);
+                courseCount = File.ReadAllText(path);
+                globals.CourseCount = Convert.ToInt32(courseCount);
+            }
+            
+
+            //Test
+            Console.WriteLine($"{globals.CourseCount}");
+            Console.ReadLine();
+            //EndTest
         }
         private static void MainMenu()
         {
@@ -164,9 +185,9 @@ namespace GlideCLI
             string selectionString;
             bool madeSelect = false;
             Console.WriteLine("\n\n1: Exit the program");
-            Console.WriteLine("2: Create a new course\n");
+            Console.WriteLine("2: Create a new course");
             Console.WriteLine("3: Study a course\n"); // Does not delete file, just removes it from the program
-            Console.WriteLine("4: Remove a Course\n");
+            // Console.WriteLine("4: Remove a Course\n");
             Console.WriteLine("\n\n\nSelect an option from the menu: ");
             selectionString = Console.ReadLine();
             selection = Convert.ToInt32(selectionString);
@@ -222,10 +243,11 @@ namespace GlideCLI
             //int courseID = ZERO; // Can probably get rid of this.
             string filePath;
             globals.TopicCount = ZERO;
-            TopicModel newTopic = new TopicModel
-            {
-                Top_ID = ZERO
-            };
+            int topicID = ZERO;
+            // TopicModel newTopic = new TopicModel
+            // {
+            //     Top_ID = ZERO
+            // };
 
             Console.WriteLine("\n\n\n\n\nWhat is the name of the course? ");
             globals.CourseName = Console.ReadLine();
@@ -244,10 +266,15 @@ namespace GlideCLI
                 while (topicLoop < topicCounter)
                 {
                     // This loop is where all of the essential data are set up
+                    TopicModel newTopic = new TopicModel();
+                    if (topicLoop == ZERO)
+                    {
+                        newTopic.Top_ID = ZERO;
+                    }
                     double problemCount = ZERO;
                     string pCountString;
                     int currentTopic = topicLoop + ONE;
-                    int check = ZERO; // will be used to see if Top_ID should increment.
+                    // int check = ZERO; // will be used to see if Top_ID should increment.
                     string topicString = Convert.ToString(currentTopic);
                     newTopic.Top_Name = ($"{currentChapter}.{topicString}");
                     const string NONE = "none";
@@ -274,7 +301,8 @@ namespace GlideCLI
                     newTopic.Engram_Retrievability = ZERO_DOUBLE;
 
                     topics.Add(newTopic);
-                    check = currentTopic + ONE;
+                    topicLoop = topicLoop + ONE;
+                    check = topicLoop;
                     if (check < topicCounter)
                     {
                         // Top_ID must be incremented before next iteration of loop, if more topics exist.
@@ -329,6 +357,26 @@ namespace GlideCLI
             }
 
             Console.WriteLine("\n\n\n\n\nFinished writing data to text file.");
+//*****************************************************************8888888888************************************* */
+            Console.WriteLine("Updating CourseCount.txt");
+            globals.CourseCount = globals.CourseCount + ONE;
+            string path;
+            string courseCount;
+            if (globals.osSwitch == true)
+            {
+                path = $"{globals.DirectoryPath}//CourseCount.txt";
+            }
+            else
+            {
+                path = $"{globals.DirectoryPath}\\CourseCount.txt";
+            }
+            courseCount = File.ReadAllText(path);
+            globals.CourseCount = Convert.ToInt32(courseCount);
+            globals.CourseCount = globals.CourseCount + ONE;
+            courseCount = Convert.ToString(globals.CourseCount);
+            File.WriteAllText(path, courseCount); 
+            Console.WriteLine("Finished updating CourseCount.txt");
+            Console.ReadLine();
         }
         private static void AddCourseToList()
         {
@@ -398,7 +446,7 @@ namespace GlideCLI
             }
             foreach (var course in completeList)
             {
-                Console.WriteLine($"Course ID:{course.Course_ID} Course Name:{course.Course_Name}");
+                Console.WriteLine($"Course ID: {course.Course_ID} Course Name: {course.Course_Name}");
             }
             while (validInput == false)
             {
