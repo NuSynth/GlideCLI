@@ -306,7 +306,8 @@ namespace GlideCLI
                     if (check < topicCounter)
                     {
                         // Top_ID must be incremented before next iteration of loop, if more topics exist.
-                        newTopic.Top_ID = newTopic.Top_ID + ONE;
+                        topicID = topicID + ONE;
+                        newTopic.Top_ID = topicID;
                     }
                 }
                 topicCounter = ZERO;
