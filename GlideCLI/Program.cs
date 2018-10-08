@@ -628,7 +628,7 @@ namespace GlideCLI
                         numCorrectString = Console.ReadLine();
 
                         TopicsList.ElementAt(globals.TopicID).Num_Correct = Convert.ToDouble(numCorrectString);
-                        TopicsList.ElementAt(globals.TopicID).First_Date = todayDateStrings;
+                        TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
                     }
                     else
                     {
