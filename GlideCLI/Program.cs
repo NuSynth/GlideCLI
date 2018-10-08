@@ -594,6 +594,8 @@ namespace GlideCLI
             int toStudyCount = ToStudy.Count;
             string numCorrectString;
             string topStudBool;
+            DateTime today = DateTime.Now;
+            string todayDateString = today.ToString("d");
             if (toStudyCount > ZERO)
             {
                 globals.ProblemsDone = false;
@@ -604,6 +606,7 @@ namespace GlideCLI
             }
             while (globals.ProblemsDone != true)
             {
+                
                 if (globals.TopicIndex < toStudyCount)
                 {
                     //Loop through this code, assigning values to it until the list of indexes runs out.
@@ -626,6 +629,7 @@ namespace GlideCLI
                         numCorrectString = Console.ReadLine();
 
                         TopicsList.ElementAt(globals.TopicID).Num_Correct = Convert.ToDouble(numCorrectString);
+                        TopicsList.ElementAt(globals.TopicID).First_Date = todayDateStrings;
                     }
                     else
                     {
@@ -785,7 +789,7 @@ namespace GlideCLI
             {
                 // For Windows
                 filePath2 = $"{globals.DirectoryPath}\\{globals.CourseName}.bak";
-                filePath = $"{globals.DirectoryPath}\\{globals.CourseName}.txt";
+                filePath = $"{globals.DirectoryPath}\\{globals.CourseName}";
                 File.WriteAllLines(filePath2, output);
                 File.WriteAllLines(filePath, output);
             }
