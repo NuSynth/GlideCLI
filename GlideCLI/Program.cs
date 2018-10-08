@@ -274,7 +274,7 @@ namespace GlideCLI
                     double problemCount = ZERO;
                     string pCountString;
                     int currentTopic = topicLoop + ONE;
-                    // int check = ZERO; // will be used to see if Top_ID should increment.
+                    int check = ZERO; // will be used to see if Top_ID should increment.
                     string topicString = Convert.ToString(currentTopic);
                     newTopic.Top_Name = ($"{currentChapter}.{topicString}");
                     const string NONE = "none";
