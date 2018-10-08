@@ -358,7 +358,6 @@ namespace GlideCLI
             }
 
             Console.WriteLine("\n\n\n\n\nFinished writing data to text file.");
-//*****************************************************************8888888888************************************* */
             Console.WriteLine("Updating CourseCount.txt");
             globals.CourseCount = globals.CourseCount + ONE;
             string path;
@@ -447,7 +446,7 @@ namespace GlideCLI
             }
             foreach (var course in completeList)
             {
-                Console.WriteLine($"Course ID: {course.Course_ID} Course Name: {course.Course_Name}");
+                Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
             }
             while (validInput == false)
             {
