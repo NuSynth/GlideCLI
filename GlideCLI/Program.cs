@@ -102,16 +102,6 @@ namespace GlideCLI
                 filename = "\\CourseCount.txt";
             }
             path = $"{globals.DirectoryPath}{filename}";
-            //Test
-            // var test = Directory.Exists(path);
-            // string testString = Convert.ToString(test);
-            // Console.WriteLine($"This should be true, testString = {testString};");
-            // Console.ReadLine();
-            //EndTest
-            // if (!Directory.Exists(path))
-            // {
-            //     File.WriteAllText(path, ZERO);                
-            // }
             try
             {
                 courseCount = File.ReadAllText(path);
@@ -123,12 +113,6 @@ namespace GlideCLI
                 courseCount = File.ReadAllText(path);
                 globals.CourseCount = Convert.ToInt32(courseCount);
             }
-            
-
-            //Test
-            Console.WriteLine($"{globals.CourseCount}");
-            Console.ReadLine();
-            //EndTest
         }
         private static void MainMenu()
         {
@@ -240,14 +224,9 @@ namespace GlideCLI
             int topicCounter = ZERO;
             string topicCountString = ZERO_STRING;
             int topicLoop = ZERO;
-            //int courseID = ZERO; // Can probably get rid of this.
             string filePath;
             globals.TopicCount = ZERO;
             int topicID = ZERO;
-            // TopicModel newTopic = new TopicModel
-            // {
-            //     Top_ID = ZERO
-            // };
 
             Console.WriteLine("\n\n\n\n\nWhat is the name of the course? ");
             globals.CourseName = Console.ReadLine();
@@ -454,29 +433,17 @@ namespace GlideCLI
                 selectionString = Console.ReadLine();
                 selectionInt = Convert.ToInt32(selectionString);
                 selectionInt = selectionInt - ONE;
-
-                Console.WriteLine("Entering test 1");
-                Console.ReadLine();
                 var testVar = selectionInt + ONE;
                 try
                 {
                     globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
                     validInput = true;
-
-                    Console.WriteLine("Entering test 2");
-                    Console.ReadLine();
                     foreach (var course in completeList)
                     {
                         Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
-                        
-                        Console.WriteLine("Entering test 3");
-                        Console.ReadLine();
-                        //selectionInt + ONE;
                         if (testVar == course.Course_ID)
                         {
                             globals.CourseName = course.Course_Name;
-                            Console.WriteLine($"globals.CourseName = {globals.CourseName}");
-                            Console.ReadLine();
                         }
                     }
                 }
