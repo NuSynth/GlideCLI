@@ -594,7 +594,6 @@ namespace GlideCLI
             int toStudyCount = ToStudy.Count;
             string numCorrectString;
             string topStudBool;
-            DateTime today = DateTime.Now;
             string todayDateString = today.ToString("d");
             if (toStudyCount > ZERO)
             {
