@@ -66,10 +66,6 @@ namespace GlideCLI
             }
             globals.DirectoryPath = pathString;
             globals.osSwitch = true;
-
-            //Test
-            Console.WriteLine($"{globals.DirectoryPath}");
-            Console.ReadLine();
         }
         private static void Windows()
         {
