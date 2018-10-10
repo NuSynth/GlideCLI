@@ -224,6 +224,9 @@ namespace GlideCLI
             int topicCounter = ZERO;
             string topicCountString = ZERO_STRING;
             int topicLoop = ZERO;
+            int subSectionCounter = ZERO;
+            string subSectionString = ZERO_STRING;
+            int subLoop = ZERO;
             string filePath;
             globals.TopicCount = ZERO;
             int topicID = ZERO;
@@ -238,59 +241,71 @@ namespace GlideCLI
             {
                 int currentChapter = chapterLoop + ONE;
                 Console.WriteLine($"\n\n\n\n\nHow many sub-sections are in chapter {currentChapter}: "); // Chapters are used here to make it easier to set the course up.
-                topicCountString = Console.ReadLine();
-                topicCounter = Convert.ToInt32(topicCountString);
-                globals.TopicCount = globals.TopicCount + topicCounter;
+                subSectionString = Console.ReadLine();
+                subSectionCounter = Convert.ToInt32(subSectionString);
+                
 
-                while (topicLoop < topicCounter)
+                while (subLoop < subSectionCounter)
                 {
-                    // This loop is where all of the essential data are set up
-                    TopicModel newTopic = new TopicModel();
-                    if (topicLoop == ZERO)
+                    int currentSubSection = subLoop + ONE;
+                    Console.WriteLine($"\n\n\n\n\nHow many topics are in section {currentChapter}.{currentSubSection}: "); // Chapters are used here to make it easier to set the course up.
+                    topicCountString = Console.ReadLine();
+                    topicCounter = Convert.ToInt32(topicCountString);
+                    globals.TopicCount = globals.TopicCount + topicCounter;
+
+                    while (topicLoop < topicCounter)
                     {
-                        newTopic.Top_ID = ZERO;
+                        // This loop is where all of the essential data are set up
+                        TopicModel newTopic = new TopicModel();
+                        if (topicLoop == ZERO)
+                        {
+                            newTopic.Top_ID = ZERO;
+                        }
+                        double problemCount = ZERO;
+                        string pCountString;
+                        int currentTopic = topicLoop + ONE;
+                        int check = ZERO; // will be used to see if Top_ID should increment.
+                        string topicString = Convert.ToString(currentTopic);
+                        newTopic.Top_Name = ($"{currentChapter}.{currentSubSection}.{topicString}");
+                        const string NONE = "none";
+
+                        Console.WriteLine($"\n\n\n\n\nEnter the quantity of questions for section {newTopic.Top_Name}: ");
+                        pCountString = Console.ReadLine();
+                        problemCount = Convert.ToDouble(pCountString);
+
+                        // Top_ID is initialized to zero at start of method, and incremented later in this loop. // int
+                        newTopic.Course_ID = globals.CourseCount + ONE; // int
+                        // Top_Name was set already // string
+                        newTopic.Top_Studied = false; // bool
+
+                        newTopic.Next_Date = NONE; // string
+                        newTopic.First_Date = NONE; // string
+
+                        newTopic.Num_Problems = problemCount; // the rest are type double
+                        newTopic.Num_Correct = ZERO_DOUBLE;
+                        newTopic.Top_Difficulty = ZERO_DOUBLE;
+                        newTopic.Top_Repetition = ZERO_DOUBLE;
+                        newTopic.Interval_Remaining = ZERO_DOUBLE;
+                        newTopic.Interval_Length = ZERO_DOUBLE;
+                        newTopic.Engram_Stability = ZERO_DOUBLE;
+                        newTopic.Engram_Retrievability = ZERO_DOUBLE;
+
+                        topics.Add(newTopic);
+                        topicLoop = topicLoop + ONE;
+                        check = topicLoop;
+                        if (check <= topicCounter)
+                        {
+                            // Top_ID must be incremented before next iteration of loop, if more topics exist.
+                            topicID = topicID + ONE;
+                            newTopic.Top_ID = topicID;
+                        }
                     }
-                    double problemCount = ZERO;
-                    string pCountString;
-                    int currentTopic = topicLoop + ONE;
-                    int check = ZERO; // will be used to see if Top_ID should increment.
-                    string topicString = Convert.ToString(currentTopic);
-                    newTopic.Top_Name = ($"{currentChapter}.{topicString}");
-                    const string NONE = "none";
-
-                    Console.WriteLine($"\n\n\n\n\nEnter the quantity of questions for section {newTopic.Top_Name}: ");
-                    pCountString = Console.ReadLine();
-                    problemCount = Convert.ToDouble(pCountString);
-
-                    // Top_ID is initialized to zero at start of method, and incremented later in this loop. // int
-                    newTopic.Course_ID = globals.CourseCount + ONE; // int
-                    // Top_Name was set already // string
-                    newTopic.Top_Studied = false; // bool
-
-                    newTopic.Next_Date = NONE; // string
-                    newTopic.First_Date = NONE; // string
-
-                    newTopic.Num_Problems = problemCount; // the rest are type double
-                    newTopic.Num_Correct = ZERO_DOUBLE;
-                    newTopic.Top_Difficulty = ZERO_DOUBLE;
-                    newTopic.Top_Repetition = ZERO_DOUBLE;
-                    newTopic.Interval_Remaining = ZERO_DOUBLE;
-                    newTopic.Interval_Length = ZERO_DOUBLE;
-                    newTopic.Engram_Stability = ZERO_DOUBLE;
-                    newTopic.Engram_Retrievability = ZERO_DOUBLE;
-
-                    topics.Add(newTopic);
-                    topicLoop = topicLoop + ONE;
-                    check = topicLoop;
-                    if (check <= topicCounter)
-                    {
-                        // Top_ID must be incremented before next iteration of loop, if more topics exist.
-                        topicID = topicID + ONE;
-                        newTopic.Top_ID = topicID;
-                    }
+                    topicCounter = ZERO;
+                    topicLoop = ZERO;
+                    subLoop = subLoop + ONE;
                 }
-                topicCounter = ZERO;
-                topicLoop = ZERO;
+                subSectionCounter = ZERO;
+                subLoop = ZERO;                
                 chapterLoop = chapterLoop + ONE;
             }
             List<string> output = new List<string>();
