@@ -12,11 +12,9 @@ This version of Glide does not do what B.F. Skinner's "GLIDER" machine did. That
 
 GlideCLI implements calculations from research on the forgetting curve, to schedule the spacing of repetitions for the user. GlideCLI also allows the user to add courses into the program very easily. Just prepare your flash cards if you need them, for every section of every chapter, make sure you know which section of which chapter they belong, then start GlideCLI. This program is a lot better than the machine called "GLIDER", as long as you check your answer after every problem, or question.
 
-Research that all calculations are based on, except for two, can be found at https://github.com/Dartomic/GlideCLI/blob/master/5535.pdf
+Research that all calculations are based on, except for one, can be found at https://github.com/Dartomic/GlideCLI/blob/master/5535.pdf and https://github.com/Dartomic/GlideCLI/blob/master/easinessFactor.pdf
 
-The first calculation that is not based on that paper, are the values and process used to determine "Difficulty." I designed the program to use a Point-Slope formula, and had to find the maximum and minimum output values by comparing the spacing schedules produced, to those used in several experiments.
-
-The other calculation that is not available in that paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software.
+The calculation that is not available either paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software.
 
 
 This works on Windows, and Linux. It may also work for macOS if you select Linux as your operating system, but I don't have macOS, so I don't know. 
