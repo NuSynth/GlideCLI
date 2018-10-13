@@ -12,9 +12,12 @@ This version of Glide does not do what B.F. Skinner's "GLIDER" machine did. That
 
 GlideCLI implements calculations from research on the forgetting curve, to schedule the spacing of repetitions for the user. GlideCLI also allows the user to add courses into the program very easily. Just prepare your flash cards if you need them, for every section of every chapter, make sure you know which section of which chapter they belong, then start GlideCLI. This program is a lot better than the machine called "GLIDER", as long as you check your answer after every problem, or question.
 
-Research that all calculations are based on, except for one, can be found at https://github.com/Dartomic/GlideCLI/blob/master/5535.pdf and https://github.com/Dartomic/GlideCLI/blob/master/easinessFactor.pdf
+Research that all calculations are based on, except for one, can be found at https://github.com/Dartomic/GlideCLI/blob/master/5535.pdf
 
-The calculation that is not available either paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software.
+I was unaware of the existence of this paper, for the algorithm that calculates difficulty, until someone helped me find it: https://github.com/Dartomic/GlideCLI/blob/master/easinessFactor.pdf I was going to implement it too, if it produced more accuracy than the algorithm that I implement in this software, but it does not. Before I did a single calculation, I was unable to think of how my program could produce any more accuracy in this calculation than it currently does, because it is not possible. To my surprise, the formula that calculates difficulty, in the peer-reviewed research article titled "Optimization of repetition spacing in the practice of learning," is less accurate. Here is how: https://github.com/Dartomic/GlideCLI/blob/master/Differences.md
+
+
+The calculation that is not available in either paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software.
 
 
 This works on Windows, and Linux. It may also work for macOS if you select Linux as your operating system, but I don't have macOS, so I don't know. 
