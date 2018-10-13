@@ -19,7 +19,7 @@ I was unaware of the existence of this paper, for the formula that calculates di
 Here is how GlideCLI is more accurate than similar software applications: https://github.com/Dartomic/GlideCLI/blob/master/Differences.md
 
 
-The calculation that is not available in either paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software.
+The calculation that is not available in either paper, is the amount of time that should exist between the first and second repetitions. Most studies use 24 hours, so that's the amount of time that is used in this software. I also use the more accurate Slope-Intercept formula to measure difficulty.
 
 
 This works on Windows, and Linux. It may also work for macOS if you select Linux as your operating system, but I don't have macOS, so I don't know. 
