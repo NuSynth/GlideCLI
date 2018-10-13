@@ -14,7 +14,7 @@ GlideCLI implements calculations from research on the forgetting curve, to sched
 
 Research that all calculations are based on, except for two, can be found at https://github.com/Dartomic/GlideCLI/blob/master/5535.pdf
 
-I was unaware of the existence of this paper, for the formula that calculates difficulty, until someone helped me find it: https://github.com/Dartomic/GlideCLI/blob/master/easinessFactor.pdf I was going to implement it too, if it produced more accuracy than the algorithm that I implement in this software, but it does not. Before I did a single calculation, I was unable to think of how my program could produce any more accuracy in this calculation than it currently does, because it is not possible. To my surprise, the formula that calculates difficulty, in the peer-reviewed research article titled "Optimization of repetition spacing in the practice of learning," is less accurate. 
+I was unaware of the existence of this paper, for the formula that calculates difficulty, until someone helped me find it: https://github.com/Dartomic/GlideCLI/blob/master/easinessFactor.pdf I was going to implement it too, if it produced more accuracy than the formula that I implement in this software, but it does not. Before I did a single calculation, I was unable to think of how my program could produce any more accuracy in this calculation than it currently does, because it is not possible. To my surprise, the formula that calculates difficulty, in the peer-reviewed research article titled "Optimization of repetition spacing in the practice of learning," is less accurate. 
 
 Here is how GlideCLI is more accurate than similar software applications: https://github.com/Dartomic/GlideCLI/blob/master/Differences.md
 
