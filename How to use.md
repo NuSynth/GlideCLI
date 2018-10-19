@@ -36,6 +36,6 @@ If it is a new topic for you, and if your answer is incorrect, write an 'X' by t
 
 If it is not a new topic for you, then study the topic the same way. But you do not need to mark an 'X' by the incorrectly answered problems/questions, because GlideCLI only needs that information the first time that topic is studied.
 
-#That's it!
+# That's it!
 
 I may make a video tutorial later, on how to set GlideCLI up, in case these instructions confuse anyone. It's a lot easier to set up than the other programs I looked at. It only took me a day to set up my first course. Plus, GlideCLI is more precise, which is something I guess I need to demonstrate in a video as well.
