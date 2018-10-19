@@ -1,4 +1,4 @@
-#Preparing a course
+# Preparing a course
 
 The table of contents in text books, normally have chapters, and sections that the chapters are divided into. These sections are the "Sub-Sections" that GlideCLI asks for the number of, for every chapter. When you look through the sub-sections of every chapter, most of these are normally also further divided into smaller segments. These segments will often have a title in bold print. I call these sections of the Sub-Sections "Topics." These topics are the units that contain the information that you need to learn.
 
@@ -24,7 +24,7 @@ Once I have all the numbering of topics, and have the questions and/or problems 
 Here is how it should look before you create the course in GlideCLI: (This will be a link to a document, but I have to get it from a different computer.)
 
 
-#Studying
+# Studying
 
 Just study the topics that GlideCLI prompts you to study, one at a time. 
 
