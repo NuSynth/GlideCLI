@@ -474,7 +474,7 @@ namespace GlideCLI
             /*Start of section from LoadTopicIDs*/
             const int ZERO = 0;
             const int ONE = 1;
-            const string TRUE = "true";
+            const string TRUE = "True";
             int index;
             DateTime today = DateTime.Now;
             DateTime topicDate;
