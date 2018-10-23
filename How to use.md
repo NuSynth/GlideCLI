@@ -21,7 +21,7 @@ Sometimes an entire chapter is stuff that is not needed to be learned. So, when 
 
 Once I have all the numbering of topics, and have the questions and/or problems numbered, I organize that information in a word processor, so that I have that information ready to enter into GlideCLI while it asks me for that information.
 
-Here is how it should look before you create the course in GlideCLI: (This will be a link to a document, but I have to get it from a different computer.)
+Here is how it should look before you create the course in GlideCLI: https://github.com/Dartomic/GlideCLI/blob/master/course%20set%20up.odt
 
 
 # Studying
