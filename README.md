@@ -10,7 +10,7 @@ You can probably also compile the program from monodevelop, but I haven't tried.
 # For Windows: 
 You need to have .Net core. You can use Visual Studio. I compiled GlideCLI from Visual Studio in Windows, but I have only tested that everything works on Linux. (I like Visual Studio, but I don't like using Windows LOL). If there is an issue with it saving and loading work on Windows, just open an issue here, and I'll fix it.
 
-
+# About
 Glide implements calculations from scientific research on the forgetting curve, to present study material at the right time.
 
 
