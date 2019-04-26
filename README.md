@@ -1,7 +1,3 @@
-# GlideCLI
-
-Instructions on how to use GlideCLI are here: https://github.com/Dartomic/GlideCLI/blob/master/How%20to%20use.md
-
 # For Linux: 
 You need to install .Net core, and go into the GlideCLI directory within the project folder, open a terminal from there, and type: dotnet run
 
