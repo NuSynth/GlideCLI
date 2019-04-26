@@ -1,11 +1,3 @@
-# For Linux: 
-You need to install .Net core, and go into the GlideCLI directory within the project folder, open a terminal from there, and type: dotnet run
-
-You can probably also compile the program from monodevelop, but I haven't tried.
-
-# For Windows: 
-You need to have .Net core. You can use Visual Studio. I compiled GlideCLI from Visual Studio in Windows, but I have only tested that everything works on Linux. (I like Visual Studio, but I don't like using Windows LOL). If there is an issue with it saving and loading work on Windows, just open an issue here, and I'll fix it.
-
 # About
 Glide allows people who use it to study more efficiently, and learn at a very fast rate. 
 
