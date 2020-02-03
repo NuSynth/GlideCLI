@@ -1,9 +1,18 @@
 # About
 Glide allows people who use it to study more efficiently, and learn at a very fast rate. 
 
-To run the software, install .Net Core, made by Microsoft. Navigate to the directory that has the file labeled as 'Program.cs", open a command prompt, or a terminal there, then enter: dotnet run
+To run the software:
+1) Install .Net Core, made by Microsoft. 
+2) If you just want to use the program, you can download the zip file of the program, and unzip it. 
 
-For instructions on how to use the software, and to read about this software, look at this power point: https://github.com/Dartomic/GlideCLI/blob/master/Manual.pptx
+On Windos, double click the file "GlideCLI", or drag and drop that file into a command prompt, then press the Enter key. 
+
+On Linux, and hopefully on macOS, you can drag and drop the file into your terminal, and press the Enter key.
+
+3) If you want to compile it from source code: 
+Navigate to the directory that has the file labeled as 'Program.cs", open a command prompt, or a terminal there, then enter: dotnet run. You can run the program that way every time, or run it from the directory labeled bin.
+
+For instructions on how to use the software, and to read about this software, read this pdf: https://github.com/Dartomic/GlideCLI/blob/master/Manual.pdf
 
 
 # Difference between this software, and the research
