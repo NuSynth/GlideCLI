@@ -5,7 +5,7 @@ To run the software:
 1) Install .Net Core, made by Microsoft. 
 2) If you just want to use the program, you can download the zip file of the program, and unzip it. 
 
-On Windos, double click the file "GlideCLI", or drag and drop that file into a command prompt, then press the Enter key. 
+On Windows, double click the file "GlideCLI", or drag and drop that file into a command prompt, then press the Enter key. 
 
 On Linux, and hopefully on macOS, you can drag and drop the file into your terminal, and press the Enter key.
 
