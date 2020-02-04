@@ -28,7 +28,8 @@ namespace GlideCLI
             bool ask = true;
             string operatingSystem;
             int choice = ZERO;
-
+            
+            Console.Clear();
             while (ask == true)
             {
                 Console.WriteLine("\n\n1. Linux\n2. Microsoft");
@@ -47,11 +48,13 @@ namespace GlideCLI
             }
             if (choice == ONE)
             {
+                Console.Clear();
                 Console.WriteLine("\n\nOption 1 selected.");
                 Linux();
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("\n\nOption 2 selected.");
                 Windows();
             }
@@ -143,11 +146,13 @@ namespace GlideCLI
                 switch (selectionInt)
                 {
                     case 1:
+                        Console.Clear();
                         Console.WriteLine("Good Bye");
                         madeSelect = true;
                         Environment.Exit(ZERO);
                         break;
                     case 2:
+                        Console.Clear();
                         Console.WriteLine("Create new course selected.\n");
                         CreateCourse();
                         madeSelect = true;
@@ -170,8 +175,8 @@ namespace GlideCLI
             bool madeSelect = false;
             Console.WriteLine("\n\n1: Exit the program");
             Console.WriteLine("2: Create a new course");
-            Console.WriteLine("3: Study a course\n"); // Does not delete file, just removes it from the program
-            // Console.WriteLine("4: Remove a Course\n");
+            Console.WriteLine("3: Study a course\n"); 
+            // Console.WriteLine("4: Remove a Course\n"); // Does not delete file, just removes it from the program
             Console.WriteLine("\n\n\nSelect an option from the menu: ");
             selectionString = Console.ReadLine();
             selection = Convert.ToInt32(selectionString);
@@ -181,17 +186,20 @@ namespace GlideCLI
                 switch (selection)
                 {
                     case 1:
+                        Console.Clear();
                         Console.WriteLine("Good Bye");
                         madeSelect = true;
                         Environment.Exit(ZERO);
                         break;
                     case 2:
+                        Console.Clear();
                         Console.WriteLine("Create new course selected.\n");
                         CreateCourse();
                         madeSelect = true;
                         break;
                     case 3:
-                        Console.WriteLine("Remove a course selected.\n");
+                        Console.Clear();
+                        Console.WriteLine("Study a course selected.\n");
                         SelectCourse();
                         StudyCourse();
                         madeSelect = true;
@@ -453,6 +461,7 @@ namespace GlideCLI
                 {
                     globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
                     validInput = true;
+                    Console.Clear();
                     foreach (var course in completeList)
                     {
                         Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
@@ -611,11 +620,13 @@ namespace GlideCLI
 
                         TopicsList.ElementAt(globals.TopicID).Num_Correct = Convert.ToDouble(numCorrectString);
                         TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
+                        Console.Clear();
                     }
                     else
                     {
                         Console.WriteLine("\n\n\nPress any key to study next section.");
                         Console.ReadLine();
+                        Console.Clear();
                     }
 
                     // Call funtion to calculate topics from here.
