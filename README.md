@@ -3,7 +3,7 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 
 To run the software:
 1) Install .Net Core, made by Microsoft. 
-2) If you just want to use the program, you can download the zip file of the program, and unzip it. 
+2) If you just want to use the program, you can download the zip file of the program, and unzip it. https://github.com/Dartomic/GlideCLI/raw/master/glideCLI.zip
 
 On Windows, double click the file "GlideCLI", or drag and drop that file into a command prompt, then press the Enter key. 
 
