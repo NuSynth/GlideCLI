@@ -408,7 +408,7 @@ namespace GlideCLI
             {
                 lines = File.ReadAllLines(filePath).ToList();
             }            
-            lines.Add($"{courseID},{globals.CourseName},{courseFilePath}");
+            lines.Add($"{courseID},{globals.CourseName}.txt,{courseFilePath}");
 
             File.WriteAllLines(filePath2, lines); // Just in case the computer loses power, or freezes up. CourseList.bak would have to be manually renamed.
             File.WriteAllLines(filePath, lines);
