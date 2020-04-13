@@ -1,5 +1,5 @@
 # Update 04-2020
-I'm re-writing this program again. I have lost interest in high level languages like Java, and C#. So this time I am writing it in the C language. It will eventually have a much better graphical user interface than the first version of this program did as a UWP app on Windows, after I do a straight port of the current program. I am doing this in my spare time, as I am mostly using the current version of the program to learn more mathematics. So this will take a few months.
+I'm re-writing this program again. I have lost interest in high level languages like Java, and C#. So this time I am writing it in the C language. It will eventually have a much better graphical user interface than the first version of this program did as a UWP app on Windows, after I do a straight port of the current program. I am doing this in my spare time, as I am mostly using the current version of the program to learn more mathematics. So this will take months.
 
 The new version will be made for Unix-like systems, and the GUI version that will follow will be for the Gnome desktop environment.The GUI version will eventually be able to display the forgetting curves of each item studied, as well as a flash card building system using images and mathematical/scientific symbols.
 
