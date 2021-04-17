@@ -18,8 +18,20 @@ namespace GlideCLI
 
         public static void Main(string[] args)
         {
+            GetTheDate();
             GetPath();
             StartUp();
+        }
+        // Get the date of the start of the study session
+        private static void GetTheDate()
+        {
+            // Get the current date
+            DateTime today = DateTime.Now;
+
+            /* Store the current date in the global variable 
+               to be used for the rest of the program
+            */
+            globals.TheDate = today.ToString("d");
         }
         private static void GetPath()
         {
@@ -485,8 +497,14 @@ namespace GlideCLI
             const int ONE = 1;
             const string TRUE = "True";
             int index;
-            DateTime today = DateTime.Now;
+            
+            /*
+              Take the date stored from program iniitialization.
+            */
+            DateTime today = DateTime.Parse(globals.TheDate);
             DateTime topicDate;
+            
+            
             int dateCompare;
             string dateAsString;
             string filePath = globals.FilePath;
@@ -748,7 +766,7 @@ namespace GlideCLI
             const double SINGLE_DAY = 1440;
             double intervalLength = TopicsList.ElementAt(globals.TopicID).Interval_Length;
             double days = Convert.ToInt32(intervalLength / SINGLE_DAY);
-            DateTime today = DateTime.Now;
+            DateTime today = DateTime.Parse(globals.TheDate);
             DateTime nextDate = today.AddDays(days);
             string nextDateString = nextDate.ToString("d");
             
