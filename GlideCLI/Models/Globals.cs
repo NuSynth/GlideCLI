@@ -24,5 +24,8 @@ namespace GlideCLI.Models
         public int TopicIndex { get; set; } // Needed for course study session
         public int TopicID { get; set; }
         public bool ProblemsDone { get; set; }
+        
+        // Use this date, its from the start of the study session
+        public string TheDate { get; set; }
     }
 }
