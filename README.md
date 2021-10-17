@@ -277,8 +277,8 @@ fall to pieces, I want to see all of these people involved in one of the most ma
 man, lose their jobs, and I mean every single one of them. I want to see the people who run these institutions go 
 into debt, and fall into that same pit they have been keeping people from finding their way out of, due to their
 incredible amount of greed. The satisfaction of knowing this scam of a system is finally going to fall to pieces, 
-because people are going to be able to finally learn that which the system has been keeping them from learning is 
-much more satisfying than having than any amount of money could ever purchase. If the system were interested in people 
+because people are going to be able to finally learn that which the system has been keeping them from learning, is 
+much more satisfying than any quantity of money that could ever be gained. If the system were interested in people 
 learning, then it would not charge more than the people who need education the most more than they could ever afford, 
 it would not be using half of a method used to educate people in a time before paper existed, and it would absolutely 
 be on top of using the best, most accurate methods known to science that our highly advanced technology is fully able
