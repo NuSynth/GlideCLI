@@ -225,36 +225,36 @@ interests such as:
 # Why this new program will always be free
 
     We live in a world that has had very in depth scientific research available on the cognitive science 
-    on learning and behavior since before the invention of the electronic computer, and that body of 
-    knowledge has only grown. Before electronic computers became a feasible option to implement this 
-    research to easily give mass numbers of people a very high level of education, primitive tools were 
-    invented to implement some of this research, mostly by a scientist named Burrhus Frederic Skinner, 
-    and the results were excellent. Yet, here we are today. We have extremely powerful computers that 
-    fit in our pockets, and a mountain of research that could be implemented in the education of people. 
-    Almost none of that research is being implemented in the education of people. Instead; we have been 
-    stuck with a society that values subjecting children to attending a part time prison for at least 13 
-    years of their lives, to learn material that could be obtained in less than 2 years. The societies of 
-    the world look at these extraordinarily expensive institutions, like Harvard, or Yale, as the Penacle 
-    of education, when all of the information that the students in these institution obtain could be gained 
-    for very little money, and often times no money at all. Our society's least desirable "educational" 
-    institutes, community colleges, are able to reject perfectly capable people, who score very highly on 
-    their entrance exam, from gaining admittance due to a lack of a piece of paper issued in the form of a
-    G.E.D.. I have been rejected for this very reason myself. All publically available institutes in the 
-    U.S.A. charge an insanely high amount of money, at a ratio that is ever increasing, to that of minimum 
-    wage. 
+on learning and behavior since before the invention of the electronic computer, and that body of 
+knowledge has only grown. Before electronic computers became a feasible option to implement this 
+research to easily give mass numbers of people a very high level of education, primitive tools were 
+invented to implement some of this research, mostly by a scientist named Burrhus Frederic Skinner, 
+and the results were excellent. Yet, here we are today. We have extremely powerful computers that 
+fit in our pockets, and a mountain of research that could be implemented in the education of people. 
+Almost none of that research is being implemented in the education of people. Instead; we have been 
+stuck with a society that values subjecting children to attending a part time prison for at least 13 
+years of their lives, to learn material that could be obtained in less than 2 years. The societies of 
+the world look at these extraordinarily expensive institutions, like Harvard, or Yale, as the Penacle 
+of education, when all of the information that the students in these institution obtain could be gained 
+for very little money, and often times no money at all. Our society's least desirable "educational" 
+institutes, community colleges, are able to reject perfectly capable people, who score very highly on 
+their entrance exam, from gaining admittance due to a lack of a piece of paper issued in the form of a
+G.E.D.. I have been rejected for this very reason myself. All publically available institutes in the 
+U.S.A. charge an insanely high amount of money, at a ratio that is ever increasing, to that of minimum 
+wage. 
 
 
     The methods used to "teach" people are incredibly out dated. Part of the current method can trace its roots 
-    to a time when information was passed in verbal form, due to the invention of paper not having occurred yet.
-    Now that we have had the technology of a writing utencil and ample supply of paper, along with the printing 
-    press that allow people to have zero reason to pay attention to a lecturer once they know how to read, as 
-    well as a massive body of research on the science of learning, along with extremely powerful computer systems 
-    that have been available to households since the late 1970's, which were perfectly powerful enough to, and 
-    those same ones still are, capable of being programmed to deliver an education better than that at our 
-    society's most valued educational institutes on the planet. Most people are still having to pay a high 
-    financial cost to sit in a room, watch a person say words that they could have just read in the first place, 
-    and often times forced to wait until the very last week of a class, or later, to recieve feedback to learn 
-    how well they are doing so that they can adjust to perform better--- well it's too late at that point.
+to a time when information was passed in verbal form, due to the invention of paper not having occurred yet.
+Now that we have had the technology of a writing utencil and ample supply of paper, along with the printing 
+press that allow people to have zero reason to pay attention to a lecturer once they know how to read, as 
+well as a massive body of research on the science of learning, along with extremely powerful computer systems 
+that have been available to households since the late 1970's, which were perfectly powerful enough to, and 
+those same ones still are, capable of being programmed to deliver an education better than that at our 
+society's most valued educational institutes on the planet. Most people are still having to pay a high 
+financial cost to sit in a room, watch a person say words that they could have just read in the first place, 
+and often times forced to wait until the very last week of a class, or later, to recieve feedback to learn 
+how well they are doing so that they can adjust to perform better--- well it's too late at that point.
 
 
 Even the countries that charge the students nothing to gain an education in their nation have a lot of these same 
