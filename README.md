@@ -228,7 +228,7 @@ people, and businesses, but not from anyone involved with public or private educ
 eventually be corrupted by the very organizations that need to only exist as a historical topic. This would provide a certificate,
 and the test takers scores, and personal information would be stored in a data base, just like an educational institution
 would use, so that employers can access the test takers percentage of knowledge that was able to be retrieved, for every curriculum
-that the test taker was tested on. In person tests would need to be performed to ensure there is zero cheating to the best of anyones
+that the test taker was tested on. In-person tests would need to be performed to ensure there is zero cheating to the best of anyones
 ability to ensure that. The entire test session would be video recorded and stored for an employer to review as well, until the 
 certification provided to the test taker expires. They will have to expire due to the forgetting curves, as the certificates would
 not mean much if they did not ensure profficiency in the subjects tested. This whole process would be the replacement
