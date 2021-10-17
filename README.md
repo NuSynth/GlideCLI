@@ -291,10 +291,10 @@ users of this software's educational resources. When everyone sees that the free
 "educational institutions" will eventually have no customers, and all of these con artists will finally be out of the job.
 
 
-Enjoy the upcoming software!
-Enjoy the upcoming knowledge!
-Enjoy the freedom!
-And enjoy the collapse of a system held up by the pillars of poverty and ignorance!
+    Enjoy the upcoming software!
+    Enjoy the upcoming knowledge!
+    Enjoy the freedom!
+    And enjoy the collapse of a system held up by the pillars of poverty and ignorance!
  
 
 
