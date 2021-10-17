@@ -270,7 +270,7 @@ more than everything they have ever made, and sometimes ever will make, in hope 
 
 
 
-No more. We are dealing with a system of stupid, oppression, and it needs to be crushed. This is the start of that 
+No more. We are dealing with a system of stupid, and oppression. It needs to be crushed. This is the start of that 
 effort. In order for this to be successful, this software must grow to offer the HIGHEST POSSIBLE QUALITY of education 
 that will be known to have ever existed, and it can not cost a single penny! I want to watch the "education system" 
 fall to pieces, I want to see all of these people involved in one of the most massive scale scam operations known to 
