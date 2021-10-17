@@ -193,7 +193,7 @@ blocks that I plan to be involved with. I imagine others will find other ways of
 software long after I have worked on it.
 
 
-The program will offer offer "memory-trials". These are a series of experiments that users will 
+The program will offer "memory-trials". These are a series of experiments that users will 
 be able to volunteer to participate in. Initially; these trials will address the information that 
 was absent from the research documents. After those initial variables have been more precisely 
 determined, then several other series of trials will take place. These later trials will explore 
