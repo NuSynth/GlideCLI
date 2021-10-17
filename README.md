@@ -287,14 +287,14 @@ to implement.
 Companies will eventually see the difference in the quality of knowledge, and mathematical skills, from people who use 
 this coming software, compared those who go to the "best" educational institutions. The public is going to take notice
 when people come from these institutions more often than not, have a much harder time gaining employment compared to 
-users of this software's educational resources. When everyone sees that the free option is the better option, these places
-will have no customers, and all of these con artists will finally be out of the job.
+users of this software's educational resources. When everyone sees that the free option is the better option, these
+"educational institutions" will eventually have no customers, and all of these con artists will finally be out of the job.
 
 
 Enjoy the upcoming software!
 Enjoy the upcoming knowledge!
 Enjoy the freedom!
-And enjoy the collapse of a system held up by the pillars of poverty and stupid!
+And enjoy the collapse of a system held up by the pillars of poverty and ignorance!
  
 
 
