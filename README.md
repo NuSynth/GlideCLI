@@ -165,8 +165,8 @@ increasingly become easier to create a new course in the program.
             2. Electronic source of information, such as a section of a web-site:
 
                 i) This is mostly the same as the last section in everyway, except that there 
-                is usually text that does not require a system to be capable of interpretting 
-                visual information. This will still probably come later than the previous 
+                   is usually text that does not require a system to be capable of interpretting 
+                   visual information. This will still probably come later than the previous 
                    section, due to the last section being a more much more valuable priority 
                    to have available to users. The section of the web site will need to be 
                    scraped and processed mostly the same as the last section.
