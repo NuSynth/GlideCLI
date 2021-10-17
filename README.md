@@ -68,7 +68,7 @@ increasingly become easier to create a new course in the program.
         There are several parts that the end goal consist of, as well as the necessary tasks 
         that the automated system must be proficient at performing:
 
-            1. Automated construction of course construction from physical copy of a printed 
+            1. Automated construction of a course from physical a copy of a printed 
                book, or in an ebook built from images:
 
                 i) The process of the automated system here is the same. The only thing different 
