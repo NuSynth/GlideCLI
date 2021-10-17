@@ -188,8 +188,8 @@ increasingly become easier to create a new course in the program.
 
 # The Last Building Blocks
 
-This section may not be the last building blocks of this program, but it will be the last building
-blocks that I plan to be involved with. I imagine others will find other ways of improving this 
+This section may not be the last building blocks of the upcoming program, but it will be the last building
+blocks that I plan to be involved with. I imagine others will find other ways of improving the 
 software long after I have worked on it.
 
 
