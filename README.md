@@ -301,7 +301,7 @@ would use, so that employers can access the test takers percentage of knowledge 
 that the test taker was tested on. In person tests would need to be performed to ensure there is zero cheating to the best of anyones
 ability to ensure that. The entire test session would be video recorded and stored for an employer to review as well, until the 
 certification provided to the test taker expires. They will have to expire due to the forgetting curves, as the certificates would
-not mean much if they did not ensure profficiency in the topics tested that were tested. This whole process would be the replacement
+not mean much if they did not ensure profficiency in the subjects tested. This whole process would be the replacement
 piece that a degree serves.
 
 
