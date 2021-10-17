@@ -291,18 +291,23 @@ users of this software's educational resources. When everyone sees that the free
 "educational institutions" will eventually have no customers, and all of these con artists will finally be out of the job.
 
 
-    Enjoy the upcoming software!
-    Enjoy the upcoming knowledge!
-    Enjoy the freedom!
-    And enjoy the collapse of a system held up by the pillars of poverty and ignorance!
+One thing that may need to be done later, is to offer comprehensive tests to people at designated testing sites. It may
+be a travelling testing site, to save costs on rent, and the number of people that obviously need to be able to eat. The only
+way that I would have anything to do with this effort, is if it is funded only through donations. The donations could be from
+people, and businesses, but not from anyone involved with public or private educational institutes, as I do not want this to
+eventually be corrupted by the very organizations that need to only exist as a historical topic.
+
+
+    Enjoy the upcoming software, an welcome to the future.
  
 
 
 
 # This current program:
-This is now considered a prototype to part of a program designed obliterate the current education system. It is sort 
-of the guts of the system. It is a tedious process for people to learn to use, so I don't blame the lack of current 
-interest. But the upcoming program that uses a lot of this, is going to change the world. So stay tuned!
+This is now considered a prototype to part of a program designed both help people become educated, and to obliterate 
+the current education system. It is sort of the guts of the system. It is a tedious process for people to learn to use, 
+so I don't blame the lack of current interest. But the upcoming program that uses a lot of this, is going to change the 
+world. So stay tuned!
 
 # About
 Glide allows people who use it to study more efficiently, and learn at a very fast rate.
