@@ -17,15 +17,15 @@ The first version of this other program will be ready fairly soon. From a user s
 # Features of new program:
 
 # 1) Pre-loaded Courses:
-    Once the first graphical user interface version is complete, it will come loaded with some 
-    courses that I have already designed. The courses will all be designed in accordance to 
-    behaviorism research, to ensure a high yield of successful completion from the user base.
+Once the first graphical user interface version is complete, it will come loaded with some 
+courses that I have already designed. The courses will all be designed in accordance to 
+behaviorism research, to ensure a high yield of successful completion from the user base.
 
-    Not long after, it will come with some complete curriculums, all of which will ensure that 
-    the users will be able to pass with very high marks. I currently only have plans for U.S. 
-    curriculums. But I will later look into other nations educational systems, and create 
-    curriculums for the ones that I speak the languages of as well. This will include German 
-    speaking nations fairly soon. So far this is the planned rollout of courses for the new program:
+Not long after, it will come with some complete curriculums, all of which will ensure that 
+the users will be able to pass with very high marks. I currently only have plans for U.S. 
+curriculums. But I will later look into other nations educational systems, and create 
+curriculums for the ones that I speak the languages of as well. This will include German 
+speaking nations fairly soon. So far this is the planned rollout of courses for the new program:
 
     1. Complete GED curriculum
 
@@ -50,11 +50,11 @@ The first version of this other program will be ready fairly soon. From a user s
 
 
 # 2) User-Made Courses:
-    There will be a way for users to construct new courses within the graphical 
-    user interface, as well as organizing these into a complete curriculum. This 
-    feature will be immediately available with the graphical user interface, but constructing 
-    a course in the program is a tedious process. But the methods available to the user will 
-    increasingly become easier to create a new course in the program.
+There will be a way for users to construct new courses within the graphical 
+user interface, as well as organizing these into a complete curriculum. This 
+feature will be immediately available with the graphical user interface, but constructing 
+a course in the program is a tedious process. But the methods available to the user will 
+increasingly become easier to create a new course in the program.
     
     # Easy User-Made Courses:
         I will eventually know enough from the fields of artificial intelligence and/or machine 
@@ -224,7 +224,7 @@ interests such as:
 
 # Why this new program will always be free
 
-    We live in a world that has had very in depth scientific research available on the cognitive science 
+We live in a world that has had very in depth scientific research available on the cognitive science 
 on learning and behavior since before the invention of the electronic computer, and that body of 
 knowledge has only grown. Before electronic computers became a feasible option to implement this 
 research to easily give mass numbers of people a very high level of education, primitive tools were 
@@ -244,7 +244,7 @@ U.S.A. charge an insanely high amount of money, at a ratio that is ever increasi
 wage. 
 
 
-    The methods used to "teach" people are incredibly out dated. Part of the current method can trace its roots 
+The methods used to "teach" people are incredibly out dated. Part of the current method can trace its roots 
 to a time when information was passed in verbal form, due to the invention of paper not having occurred yet.
 Now that we have had the technology of a writing utencil and ample supply of paper, along with the printing 
 press that allow people to have zero reason to pay attention to a lecturer once they know how to read, as 
