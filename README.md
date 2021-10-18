@@ -1,7 +1,10 @@
-# Updates 10-16-2021
+# Updates 10-17-2021
 
 
 # New Program:
+
+Not ready yet - FreeClear: https://github.com/Dartomic/FreeClear
+
 While this current program has been a great tool for me, it has become a prototype for what I consider "the real deal". I am writing a new program in C that is based on this program's design. Last year I announced that I was doing this in my free time, but I put the project on pause, while I investigated further into some graphical user interface design plans I was questioning, and also while I was designing some math courses for it, as well as actually using this version of the program to study subjects as well, along with unrelated things I was looking into for fun. 
 
 
