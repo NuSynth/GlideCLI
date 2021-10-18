@@ -297,7 +297,7 @@ users of this software's educational resources. When everyone sees that the free
 
 
 
-    Enjoy the upcoming software, an welcome to the future.
+    Welcome to the future.
  
 
 
