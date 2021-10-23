@@ -1,17 +1,11 @@
 # Updates 10-17-2021
-I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language.
+I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to both help people become educated, and to end the current education system that sucks. 
 
-# New Program:
-GlideCLI is now just a prototype to part of a program designed to both help people become educated, and to end 
-the current education system that sucks. 
-
-FreeClear:
+# FreeClear:
  https://github.com/Dartomic/FreeClear - It is a replacement for this program - Not ready, but coming soon!
 
 
-I took instructions down for how to compile or run this app, because .Net updates cause me to have to update the project's dependencies that .Net produces in the project. Just wait for FreeClear if you want to try it out. FreeClear v1.0 will be just like this one, except without the initial hassle of getting it to run.
 
-GlideCLI will recieve no further updates, except to this readme to just point you towards FreeClear once v1.0 is finished.
 
 
 
@@ -19,7 +13,11 @@ GlideCLI will recieve no further updates, except to this readme to just point yo
 # About
 Glide allows people who use it to study more efficiently, and learn at a very fast rate. 
 
-For instructions on how to use the software, and to read about this software, read this pdf: https://github.com/Dartomic/GlideCLI/blob/master/Manual.pdf
+I took instructions down for how to compile or run this app, because .Net updates cause me to have to update the project's dependencies that .Net produces in the project. Just wait for FreeClear if you want to try it out. FreeClear v1.0 will be just like this one, except without the initial hassle of getting it to run.
+
+GlideCLI will recieve no further updates, except to this readme to just point you towards FreeClear once v1.0 is finished.
+
+
 
 
 
