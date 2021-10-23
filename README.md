@@ -40,8 +40,11 @@ If you just want to run the binary, then you can download the zip file of the pr
 
 For Linux Users:
 You can drag and drop the file into your open terminal, and press the Enter key.
+If it does not work, then that means you are using a newer verson of .Net than this was built with. Don't even bother with the instructions below. It's not worth explaining how to make it work if it fails for you, because Microsoft might change .Net in a way that the instructions would be a complete waste of time to read or follow by the time you read them.
 
-3) To compile it from source code: 
+3) To compile it from source code:
+(You should try step 2 first. If you only use software you compile though, then be warned, .Net updates change certain things that will probably cause the program not to be able to compile unless you know what you are doing.)
+
    1. Download the source code.
 
    2. If you are on Windows, then I think you can use Visual Studio. You can also build by 
