@@ -1,5 +1,5 @@
 # Updates 10-17-2021
-I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to both help people become educated, and to end the current education system that sucks. 
+I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to help people learn.
 
 # FreeClear:
  https://github.com/Dartomic/FreeClear - It is a replacement for this program - Not ready, but coming soon!
