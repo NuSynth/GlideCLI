@@ -6,6 +6,9 @@ namespace GlideCLI.Models
 {
     public class Globals
     {
+        public int studyTracker {get; set;} //used to check if list needs to be cleared
+
+
         /*TODO: Correct how I named osSwitch, to OsSwitch */
         public bool osSwitch { get; set; } // True if Linux, false if Windows. This is needed to store files correctly, so this app can be used in both operating systems.
         public string DirectoryPath { get; set; }
@@ -30,5 +33,12 @@ namespace GlideCLI.Models
         
         //This is for Ready menu
         public bool madeSelect {get; set;}
+
+        // These three are just used to display
+        // topics left to study for the user
+        // to see.
+        public int newLeft {get; set;}
+        public int currentLeft {get; set;}
+        public int lateLeft {get; set;}
     }
 }

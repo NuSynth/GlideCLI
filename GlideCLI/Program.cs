@@ -214,9 +214,12 @@ namespace GlideCLI
                     case 3:
                         globals.madeSelect = true;
                         Console.Clear();
-                        Console.WriteLine("Study a course selected.\n");
+                        Console.WriteLine("Study a course selected.\n");                        
+                        StudyIncrementer();
+                        ClearLists();
                         SelectCourse();
                         StudyCourse();
+                        
                         break;
                     //case 4:
                     //    Console.WriteLine("Study a course selected.\n");
@@ -429,7 +432,9 @@ namespace GlideCLI
         }
         private static void SelectCourse()
         {
+            const int ZERO = 0;
             const int ONE = 1;
+            const int TWO = 2;
             string filePath;
             string selectionString;
             int selectionInt;
@@ -454,9 +459,9 @@ namespace GlideCLI
                 string[] entries = line.Split(',');
                 CourseListModel newList = new CourseListModel();
 
-                newList.Course_ID = Convert.ToInt32(entries[0]);
-                newList.Course_Name = entries[1];
-                newList.File_Path = entries[2];
+                newList.Course_ID = Convert.ToInt32(entries[ZERO]);
+                newList.Course_Name = entries[ONE];
+                newList.File_Path = entries[TWO];
 
                 completeList.Add(newList);
             }
@@ -552,6 +557,8 @@ namespace GlideCLI
             }
             // Retry Studied TopicID's section (these are study sessions that were missed)
             index = ZERO;
+            globals.lateLeft = ZERO;
+            Console.WriteLine($"globals.currentLeft = {globals.lateLeft}");
             while (index < TopicsList.Count)
             {
                 if (TopicsList.ElementAt(index).Top_Studied == true)
@@ -563,13 +570,18 @@ namespace GlideCLI
                     if (dateCompare < ZERO)
                     {                        
                         ToStudy.Add(index);
+                        // to display number of late topics left to study
+                        ++globals.lateLeft;
                     }
                 }
 
                 index = index + ONE;
             }
+            
+
             // Studied TopicID's scheduled for today section
             index = ZERO;
+            globals.currentLeft = ZERO;
             while (index < TopicsList.Count)
             {
                 if (TopicsList.ElementAt(index).Top_Studied == true)
@@ -581,22 +593,31 @@ namespace GlideCLI
                     if (dateCompare == ZERO)
                     {
                         ToStudy.Add(index);
+                        
+                        // to display number of on-time review topics left to study
+                        globals.currentLeft += ONE;
                     }
                 }
-
                 index = index + ONE;
             }
+            
+
             // New Topic ID's section
             index = ZERO;
+            globals.newLeft = ZERO;
             while (index < TopicsList.Count)
             {
                 if (TopicsList.ElementAt(index).Top_Studied == false)
                 {
                     ToStudy.Add(index);
+
+                    // to display number of topics left to study for the first time
+                    globals.newLeft += ONE;
                 }
 
                 index = index + ONE;
             }
+            
 
             globals.TopicID = ToStudy.ElementAt(ZERO);
             globals.TopicIndex = ZERO;       
@@ -614,7 +635,12 @@ namespace GlideCLI
             {
                 globals.ProblemsDone = true;
             }
-            string exitOrStay = "0"; //Just added this to give option to go back to Ready Menu
+
+            string response = "0"; //Just added this to give option to go back to Ready Menu
+            double numCorrectDouble = ZERO;
+
+
+
             while (globals.ProblemsDone != true)
             {
                 
@@ -622,7 +648,11 @@ namespace GlideCLI
                 {
                     //Loop through this code, assigning values to it until the list of indexes runs out.
                     //TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
-
+                    Console.Clear();
+                    Console.WriteLine($"Course Name: {globals.CourseName}");
+                    Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
+                    Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
+                    Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
                     Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
                     Console.WriteLine($"Number of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");                  
                     if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
@@ -633,26 +663,62 @@ namespace GlideCLI
                     {
                         topStudBool = "false";
                     }
+
+
                     Console.WriteLine($"Previously Studied: {topStudBool}");
                     if (TopicsList.ElementAt(globals.TopicID).Top_Studied == false)
                     {
-                        Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
-                        Console.WriteLine("Type q to go back to menu");
-                        exitOrStay = Console.ReadLine();
-                        if (exitOrStay == "q")
+                        Console.WriteLine("\n\n\nEnter the quantity you answered correctly ");
+                        Console.WriteLine("\n*OR*\n");
+                        //The following option is added because I have found 
+                        //that sometimes it is easier to set the questions up right before I
+                        //study them, instead of setting them all up at once. And also incase
+                        //I need to correct the number of questions that there are.
+                        Console.WriteLine("\nEnter q to go back to menu or enter\"change\"(without quotes)to change number of TOTAL problems or questions, if you need to:");
+                        response = Console.ReadLine();
+                        if (response == "q" || response == "change")
                         {
-                            Console.Clear();
-                            globals.madeSelect = false;
-                            return;
+                            if (response == "change")
+                            {                            
+                                ChangeTopicQuestions();
+                                Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
+                                response = Console.ReadLine();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                globals.madeSelect = false;
+                                globals.newLeft = ZERO;
+                                globals.currentLeft = ZERO;
+                                globals.lateLeft = ZERO;
+                                return;
+                            }
                         }
-                        else
+                        
+                        //Not an else since response expected to change if != "q"
+                        if (response != "q" && response != "change")
                         {
-                        numCorrectString = Console.ReadLine();
-
-                        TopicsList.ElementAt(globals.TopicID).Num_Correct = Convert.ToDouble(numCorrectString);
-                        TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
-                        Console.Clear();
-
+                            numCorrectString = response;
+                            numCorrectDouble = Convert.ToDouble(numCorrectString);
+                            while (numCorrectDouble > TopicsList.ElementAt(globals.TopicID).Num_Problems)
+                            {
+                                Console.WriteLine("value exceeds number of problems or questions.");
+                                Console.WriteLine("Input a value less than or equal to number or problems or questions.");
+                                Console.WriteLine("\nOR you can enter the word \"change\" without the quotes to change the number of total problems or questions:");
+                                response = Console.ReadLine();
+                                if (response == "change")
+                                {
+                                    ChangeTopicQuestions();
+                                    Console.Clear();
+                                    Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
+                                }                                
+                                numCorrectString = Console.ReadLine();
+                                numCorrectDouble = Convert.ToDouble(numCorrectString);
+                            }
+                            TopicsList.ElementAt(globals.TopicID).Num_Correct = numCorrectDouble;
+                            TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
+                            globals.newLeft -= ONE;
+                            Console.Clear();
                         }
 
                     }
@@ -660,16 +726,30 @@ namespace GlideCLI
                     {
                         Console.WriteLine("\n\n\nPress any key to study next section.");
                         Console.WriteLine("Type q to go back to menu");
-                        exitOrStay = Console.ReadLine();
-                        if (exitOrStay == "q")
+                        response = Console.ReadLine();
+                        if (response == "q")
                         {
                             globals.madeSelect = false;
                             Console.Clear();
+                            globals.newLeft = ZERO;
+                            globals.currentLeft = ZERO;
+                            globals.lateLeft = ZERO;
                             return;
                         }
-                        Console.ReadLine();
+                        
+
+                        dateAsString = TopicsList.ElementAt(globals.TopicID).Next_Date;
+                        topicDate = DateTime.Parse(dateAsString);
+                        dateCompare = DateTime.Compare(topicDate, today);
+                        if (dateCompare < ZERO)
+                            --globals.lateLeft;
+                        else if (dateCompare == ZERO)
+                            --globals.currentLeft;
+
+
                         Console.Clear();
                     }
+                    numCorrectDouble = ZERO;
 
                     // Call funtion to calculate topics from here.
                     CalculateLearning();
@@ -689,11 +769,14 @@ namespace GlideCLI
             Console.WriteLine("\n\n\nNothing left to study for today.");
             Console.WriteLine("Press Ctrl + C to exit");
             Console.WriteLine("Or enter q to go back to menu");
-            exitOrStay = Console.ReadLine();
-            if (exitOrStay == "q")
+            response = Console.ReadLine();
+            if (response == "q")
             {
                 Console.Clear();
                 globals.madeSelect = false;
+                globals.newLeft = ZERO;
+                globals.currentLeft = ZERO;
+                globals.lateLeft = ZERO;
                 return;
             }
             else
@@ -842,5 +925,31 @@ namespace GlideCLI
             Console.WriteLine("Work Saved.");
             Console.ReadLine();
         }
+        private static void ChangeTopicQuestions()
+        {
+            string numTotalString;
+            double numTotalDouble;
+            Console.Clear();
+            Console.WriteLine("Enter new number of TOTAL questions:");
+            numTotalString = Console.ReadLine();
+            numTotalDouble = Convert.ToDouble(numTotalString);
+            TopicsList.ElementAt(globals.TopicID).Num_Problems = numTotalDouble;
+        }
+        private static void StudyIncrementer()
+        {
+            ++globals.studyTracker;
+        }
+        private static void ClearLists()
+        {
+            const int ONE = 1;
+            if ( globals.studyTracker > ONE)
+            {
+
+                TopicsList.Clear();
+                topics.Clear();
+                ToStudy.Clear();
+            }
+        }
+    
     }
 }
