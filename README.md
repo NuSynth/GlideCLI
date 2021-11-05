@@ -1,7 +1,8 @@
 # Update
-I got tired of closing and re-opening the program every time I wanted to check to see what courses I have to study. So I did a couple of updates:
-Added option to go back to the main menu.
-Replaced some files so GlideCLI will compile in .Net 5.0.
+I didn't plan to update this, but this morning I thought some specific features would be nice to have now before they are implemented in FreeClear.
+
+You can now see how many topics are left for a subject during a study session.
+You can also change which subject you study, and quit from the menu at almost any time, instead of using Ctrl+C.
 
 # Updates 10-17-2021
 I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to help people learn.
