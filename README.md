@@ -1,3 +1,8 @@
+# Update
+I got tired of closing and re-opening the program every time I wanted to check to see what courses I have to study. So I did a couple of updates:
+Added option to go back to the main menu.
+Replaced some files so GlideCLI will compile in .Net 5.0.
+
 # Updates 10-17-2021
 I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to help people learn.
 
