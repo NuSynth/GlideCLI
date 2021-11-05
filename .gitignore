@@ -1,0 +1,7 @@
+/.vscode*
+
+/GlideCLI*
+*~
+/bin*
+/obj*
+GlideCLI.csproj
