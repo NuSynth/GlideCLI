@@ -1,8 +1,17 @@
 # Update
 I didn't plan to update this, but this morning I thought some specific features would be nice to have now before they are implemented in FreeClear.
 
-You can now see how many topics are left for a subject during a study session.
-You can also change which subject you study, and quit from the menu at almost any time, instead of using Ctrl+C.
+Updated to:
+display number of topics left
+allows user to switch topics
+exit from menu
+Change number of total questions on first study of a topic
+
+There may be about 2 more major updates to GlideCLI before FreeClear is finished:
+1) I'm probably going to port this code over to Vala. This will make the program more accessible to Linux users. Right now people have to install .Net, and then if I don't update the csproject file when microsoft updates .Net, then it won't compile on machines only running the newest .Net version. So, at least it will be accessible for some people. Plus, it doesn't look like I would have to change much to the actual source code to port it over to Vala.
+
+2) If I port it to Vala, then I'm going to give it a GUI. The GUI for this Vala version will give me a good idea of how I want the FreeClear GUI to be organized at first. FreeClear is going to use a different widget kit though. So this will still be a prototype for FreeClear.
+
 
 # Updates 10-17-2021
 I was going to re-write GlideCLI in the C language. I still am, but it is getting a different name, and is going to be much more than just a port of GlideCLI from C# to the C language. GlideCLI is now just a prototype to part of a new software application coming soon, which is designed to help people learn.
