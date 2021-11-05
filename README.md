@@ -2,10 +2,13 @@
 I didn't plan to update this, but this morning I thought some specific features would be nice to have now before they are implemented in FreeClear.
 
 Updated to:
- display number of topics left
- allows user to switch topics
- exit from menu
- Change number of total questions on first study of a topic
+   display number of topics left
+
+   allows user to switch topics
+
+   exit from menu
+
+   Change number of total questions on first study of a topic
 
 There may be about 2 more major updates to GlideCLI before FreeClear is finished:
 1) I'm probably going to port this code over to Vala. This will make the program more accessible to Linux users. Right now people have to install .Net, and then if I don't update the csproject file when microsoft updates .Net, then it won't compile on machines only running the newest .Net version. So, at least it will be accessible for some people. Plus, it doesn't look like I would have to change much to the actual source code to port it over to Vala.
