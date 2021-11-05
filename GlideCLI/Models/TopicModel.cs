@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GlideCLI.Models
+﻿namespace GlideCLI.Models
 {
     public class TopicModel
     {
