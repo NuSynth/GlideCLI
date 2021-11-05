@@ -27,5 +27,8 @@ namespace GlideCLI.Models
         
         // Use this date, its from the start of the study session
         public string TheDate { get; set; }
+        
+        //This is for Ready menu
+        public bool madeSelect {get; set;}
     }
 }
