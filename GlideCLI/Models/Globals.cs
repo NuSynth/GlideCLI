@@ -2,7 +2,8 @@
 {
     public class Globals
     {
-        public int studyTracker {get; set;} //used to check if list needs to be cleared
+        //used to check if list needs to be cleared
+        public int studyTracker {get; set;}
 
 
         /*TODO: Correct how I named osSwitch, to OsSwitch */
@@ -18,16 +19,14 @@
         public string CourseChapters { get; set; }
         public int CourseCount { get; set; }
         public int TopicCount { get; set; }
-
-
         public int TopicIndex { get; set; } // Needed for course study session
         public int TopicID { get; set; }
         public bool ProblemsDone { get; set; }
         
-        // Use this date, its from the start of the study session
+        // Date from time program initializes
         public string TheDate { get; set; }
         
-        //This is for Ready menu
+        //This is for AvailableOptions() and MainOptions()
         public bool madeSelect {get; set;}
 
         // These three are just used to display
