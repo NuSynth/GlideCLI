@@ -12,6 +12,7 @@ namespace GlideCLI
         static List<TopicModel> TopicsList = new List<TopicModel>();
         static List<TopicModel> topics = new List<TopicModel>();
         static Globals globals = new Globals();
+        static CreationModel creationVars = new CreationModel();
 
         
 
@@ -88,13 +89,18 @@ namespace GlideCLI
             }
 
             globals.DirectoryPath = usablePath;
-
             globals.osSwitch = false;
         }
         private static void StartUp()
         {
-            CheckForCountFile(); // Check for file that holds number of courses
-            MainMenu();
+            while (true)
+            {
+                //Remove stuff @332
+                CheckForCountFile(); // Check for file that holds number of courses
+                MainMenu();
+                StudyIncrementer();
+                ClearLists();
+            }            
         }
         private static void CheckForCountFile()
         {
@@ -121,10 +127,8 @@ namespace GlideCLI
         }
         private static void MainMenu()
         {
-            Console.WriteLine($"courseCount = {globals.CourseCount}");
-            Console.WriteLine($"globals.ZERO_INT = {Constants.ZERO_INT}");
-            Console.WriteLine($"globals.ONE_INT = {Constants.ONE_INT}");
-
+            // Go to option set set one if there are courses
+            // Go to option set zero if there are no courses
             if (globals.CourseCount > Constants.ZERO_INT)
                 AvailableOptions(Constants.ONE_INT);
             else
@@ -140,6 +144,7 @@ namespace GlideCLI
             {
                 if (options == Constants.ZERO_INT)
                 {
+                    // Option set for no available courses
                     SelectionDialogs(Constants.ONE_INT);
                     selectionString = Console.ReadLine();
                     selectionInt = Convert.ToInt32(selectionString);
@@ -148,6 +153,7 @@ namespace GlideCLI
                 }
                 if (options == Constants.ONE_INT)
                 {
+                    //Option set if courses are available
                     SelectionDialogs(Constants.TWO_INT);
                     selectionString = Console.ReadLine();
                     selectionInt = Convert.ToInt32(selectionString);
@@ -155,7 +161,7 @@ namespace GlideCLI
                         MainOptions(selectionInt);
                 }                
             }
-            SelectionDialogs(Constants.THREE_INT);
+            //SelectionDialogs(Constants.THREE_INT);
         }
         private static void MainOptions(int selectionInt)
         {
@@ -191,24 +197,72 @@ namespace GlideCLI
         }
         private static void SelectionDialogs(int dialog)
         {
-            const int ZERO = 0;
             switch (dialog)
             {
                 case 1:
+                    //For AvailableOptions()
+                    // Option 1 if no courses available
                     Console.WriteLine("\n\n1: Exit the program");
                     Console.WriteLine("2: Create a new course\n");
                     Console.WriteLine("\n\n\nEnter an option from the menu: ");
                     break;
                 case 2:
+                    //For AvailableOptions()
+                    // Option 2 if courses are available
                     Console.WriteLine("\n\n1: Exit the program");
                     Console.WriteLine("2: Create a new course");
                     Console.WriteLine("3: Study a course\n"); 
                     Console.WriteLine("\n\n\nSelect an option from the menu: ");
                     break;
                 case 3:
-                    Console.WriteLine("This message is displayed so the progra can exit, without \nlooking like it crashed. Press any key to close the program.");
+                    //For StudyCourse()
+                    Console.WriteLine("\n\n\nNothing left to study for current topic today.");
+                    Console.WriteLine("Enter q to quit back to menu, or any other key to exit.");
+                    globals.response = Console.ReadLine();                
+                    if (globals.response == "q")
+                    {
+                        Console.Clear();
+                        globals.madeSelect = false;
+                        globals.newLeft = Constants.ZERO_INT;
+                        globals.currentLeft = Constants.ZERO_INT;
+                        globals.lateLeft = Constants.ZERO_INT;
+                        return;
+                    }
+                    else
+                    {
+                        Console.ReadLine();
+                        Environment.Exit(Constants.ZERO_INT);
+                    }
+                    break;
+                case 4:
+                    //For CreateCourse()
+                    Console.WriteLine("\n\n\n\n\nWhat is the name of the course? ");
+                    globals.CourseName = Console.ReadLine();
+                    Console.WriteLine("\n\n\n\n\nHow many chapters are in the text book? ");
+                    globals.CourseChapters = Console.ReadLine();
+                    creationVars.chaptersInt = Convert.ToInt32(globals.CourseChapters);
+                    break;
+                case 5:
+                    //For SetupData()
+                    Console.WriteLine($"\n\n\n\n\nHow many sub-sections are in chapter {creationVars.currentChapter}: "); // Chapters are used here to make it easier to set the course up.
+                    creationVars.subSectionString = Console.ReadLine();
+                    creationVars.subSectionCounter = Convert.ToInt32(creationVars.subSectionString);
+                    break;
+                case 6:
+                    //For SetupData()
+                    Console.WriteLine($"\n\n\n\n\nHow many topics are in section {creationVars.currentChapter}.{creationVars.currentSubSection}: "); // Chapters are used here to make it easier to set the course up.
+                    creationVars.topicCountString = Console.ReadLine();
+                    break;
+                case 7:
+                    //For SetupData()
+                    Console.WriteLine($"\n\n\n\n\nEnter the quantity of questions for section {creationVars.newTopName}: ");
+                    creationVars.pCountString = Console.ReadLine();
+                    break;
+                case 8:
+                    //For UpdateCounts()
+                    Console.WriteLine("Finished updating CourseCount.txt");
                     Console.ReadLine();
-                    Environment.Exit(ZERO);
+                    Console.Clear();
                     break;
             }
         }
@@ -216,65 +270,59 @@ namespace GlideCLI
         {
             // increment the course count after the course file containing the topic names
             // is created AND/OR updated.
-            int chapterLoop = Constants.ZERO_INT;
-            int currentChapter = Constants.ZERO_INT;
-            int chaptersInt = Constants.ZERO_INT;
-            int topicCounter = Constants.ZERO_INT;
-            string topicCountString = Constants.ZERO_STRING;
-            int topicLoop = Constants.ZERO_INT;
-            int subSectionCounter = Constants.ZERO_INT;
-            string subSectionString = Constants.ZERO_STRING;
-            int subLoop = Constants.ZERO_INT;
-            string filePath;
+            creationVars.chapterLoop = Constants.ZERO_INT;
+            creationVars.currentChapter = Constants.ZERO_INT;
+            creationVars.chaptersInt = Constants.ZERO_INT;
+            creationVars.topicCounter = Constants.ZERO_INT;
+            creationVars.topicCountString = Constants.ZERO_STRING;
+            creationVars.topicLoop = Constants.ZERO_INT;
+            creationVars.subSectionCounter = Constants.ZERO_INT;
+            creationVars.subSectionString = Constants.ZERO_STRING;
+            creationVars.subLoop = Constants.ZERO_INT;
+            creationVars.topicID = Constants.ZERO_INT;
             globals.TopicCount = Constants.ZERO_INT;
-            int topicID = Constants.ZERO_INT;
-
-            Console.WriteLine("\n\n\n\n\nWhat is the name of the course? ");
-            globals.CourseName = Console.ReadLine();
-            Console.WriteLine("\n\n\n\n\nHow many chapters are in the text book? ");
-            globals.CourseChapters = Console.ReadLine();
-            chaptersInt = Convert.ToInt32(globals.CourseChapters);
-
-            while (chapterLoop < chaptersInt)
+            creationVars.currentSubSection = Constants.ZERO_INT;
+            SelectionDialogs(Constants.FOUR_INT);
+            SetupData();
+            ProduceCourse();
+            UpdateCounts();
+        }
+        private static void SetupData()
+        {
+            //For CreateCourse()
+            while (creationVars.chapterLoop < creationVars.chaptersInt)
             {
-                currentChapter = chapterLoop + Constants.ONE_INT;
-                Console.WriteLine($"\n\n\n\n\nHow many sub-sections are in chapter {currentChapter}: "); // Chapters are used here to make it easier to set the course up.
-                subSectionString = Console.ReadLine();
-                subSectionCounter = Convert.ToInt32(subSectionString);
+                creationVars.currentChapter = creationVars.chapterLoop + Constants.ONE_INT;
+                SelectionDialogs(Constants.FIVE_INT);
                 
-                while (subLoop < subSectionCounter)
+                while (creationVars.subLoop < creationVars.subSectionCounter)
                 {
-                    int currentSubSection = subLoop + Constants.ONE_INT;
-                    Console.WriteLine($"\n\n\n\n\nHow many topics are in section {currentChapter}.{currentSubSection}: "); // Chapters are used here to make it easier to set the course up.
-                    topicCountString = Console.ReadLine();
-                    topicCounter = Convert.ToInt32(topicCountString);
-                    globals.TopicCount = globals.TopicCount + topicCounter;
+                    creationVars.currentSubSection = creationVars.subLoop + Constants.ONE_INT;
+                    SelectionDialogs(Constants.SIX_INT);
+                    creationVars.topicCounter = Convert.ToInt32(creationVars.topicCountString);
+                    globals.TopicCount = globals.TopicCount + creationVars.topicCounter;
                     
                     // This loop is where all of the essential data are set up
-                    while (topicLoop < topicCounter)
+                    while (creationVars.topicLoop < creationVars.topicCounter)
                     {
                         TopicModel newTopic = new TopicModel();
-                        if (topicLoop == Constants.ZERO_INT)
+                        if (creationVars.topicLoop == Constants.ZERO_INT)
                         {
                             newTopic.Top_ID = Constants.ZERO_INT;
                         }
-                        double problemCount = Constants.ZERO_INT;
-                        string pCountString;
-                        int currentTopic = topicLoop + Constants.ONE_INT;
-                        int check = Constants.ZERO_INT; // will be used to see if Top_ID should increment.
-                        string topicString = Convert.ToString(currentTopic);
-                        newTopic.Top_Name = ($"{currentChapter}.{currentSubSection}.{topicString}");
-                        const string NONE = "none";
-
-                        Console.WriteLine($"\n\n\n\n\nEnter the quantity of questions for section {newTopic.Top_Name}: ");
-                        pCountString = Console.ReadLine();
-                        problemCount = Convert.ToDouble(pCountString);
-
+                        creationVars.problemCount = Constants.ZERO_INT;
+                        creationVars.currentTopic = creationVars.topicLoop + Constants.ONE_INT;
+                        creationVars.check = Constants.ZERO_INT; // will be used to see if Top_ID should increment.
+                        creationVars.topicString = Convert.ToString(creationVars.currentTopic);
+                        newTopic.Top_Name = ($"{creationVars.currentChapter}.{creationVars.currentSubSection}.{creationVars.topicString}");
+                        creationVars.newTopName = newTopic.Top_Name;
+                        SelectionDialogs(Constants.SEVEN_INT);
+                        creationVars.problemCount = Convert.ToDouble(creationVars.pCountString);
                         newTopic.Course_ID = globals.CourseCount + Constants.ONE_INT; // int
                         newTopic.Top_Studied = false; // bool
-                        newTopic.Next_Date = NONE; // string
-                        newTopic.First_Date = NONE; // string
-                        newTopic.Num_Problems = problemCount; // the rest are type double
+                        newTopic.Next_Date = Constants.NONE; // string
+                        newTopic.First_Date = Constants.NONE; // string
+                        newTopic.Num_Problems = creationVars.problemCount; // the rest are type double
                         newTopic.Num_Correct = Constants.ZERO_DOUBLE;
                         newTopic.Top_Difficulty = Constants.ZERO_DOUBLE;
                         newTopic.Top_Repetition = Constants.ZERO_DOUBLE;
@@ -283,80 +331,77 @@ namespace GlideCLI
                         newTopic.Engram_Stability = Constants.ZERO_DOUBLE;
                         newTopic.Engram_Retrievability = Constants.ZERO_DOUBLE;
                         topics.Add(newTopic);
-                        topicLoop = topicLoop + Constants.ONE_INT;
-                        check = topicLoop;
-                        if (check <= topicCounter)
+                        ++creationVars.topicLoop;
+                        creationVars.check = creationVars.topicLoop;
+                        if (creationVars.check <= creationVars.topicCounter)
                         {
                             // Top_ID must be incremented before next iteration of loop, if more topics exist.
-                            topicID = topicID + Constants.ONE_INT;
-                            newTopic.Top_ID = topicID;
+                            ++creationVars.topicID;
+                            newTopic.Top_ID = creationVars.topicID;
                         }
                     }
-                    topicCounter = Constants.ZERO_INT;
-                    topicLoop = Constants.ZERO_INT;
-                    subLoop = subLoop + Constants.ONE_INT;
+                    creationVars.topicCounter = Constants.ZERO_INT;
+                    creationVars.topicLoop = Constants.ZERO_INT;
+                    ++creationVars.subLoop;
                 }
-                subSectionCounter = Constants.ZERO_INT;
-                subLoop = Constants.ZERO_INT;                
-                chapterLoop = chapterLoop + Constants.ONE_INT;
-            }
+                creationVars.subSectionCounter = Constants.ZERO_INT;
+                creationVars.subLoop = Constants.ZERO_INT;                
+                ++creationVars.chapterLoop;
+            }            
+        }
+        private static void ProduceCourse()
+        {
             List<string> output = new List<string>();
             foreach (var topic in topics)
             {
                 output.Add($"{topic.Top_ID},{topic.Course_ID},{topic.Top_Name},{topic.Top_Studied},{topic.Next_Date},{topic.First_Date},{topic.Num_Problems},{topic.Num_Correct},{topic.Top_Difficulty},{topic.Top_Repetition},{topic.Interval_Remaining},{topic.Interval_Length},{topic.Engram_Stability},{topic.Engram_Retrievability}");
             }
-            string listFile;
             if (globals.osSwitch == true)
             {
                 // For Linux
-                filePath = $"{globals.DirectoryPath}//{globals.CourseName}.txt";
-                File.WriteAllLines(filePath, output);
-                listFile = $"{globals.DirectoryPath}//CourseList.txt";
+                creationVars.filePath = $"{globals.DirectoryPath}//{globals.CourseName}.txt";
+                File.WriteAllLines(creationVars.filePath, output);
+                creationVars.listFile = $"{globals.DirectoryPath}//CourseList.txt";
             }
             else
             {
                 // For Windows
-                filePath = $"{globals.DirectoryPath}\\{globals.CourseName}.txt";
-                File.WriteAllLines(filePath, output);
-                listFile = $"{globals.DirectoryPath}\\CourseList.txt";
+                creationVars.filePath = $"{globals.DirectoryPath}\\{globals.CourseName}.txt";
+                File.WriteAllLines(creationVars.filePath, output);
+                creationVars.listFile = $"{globals.DirectoryPath}\\CourseList.txt";
             }
-            int newID = globals.CourseCount + Constants.ONE_INT;
-            List<string> contentList = new List<string>();
-            string listContents = $"{newID},{globals.CourseName}.txt,{filePath}";
-            contentList.Add(listContents);
-            if (File.Exists(listFile))
-            {
-                OperatingSysChoice();
-            }
-            else
-            {
-                File.WriteAllLines(listFile, contentList);
-            }
-            globals.CourseCount = globals.CourseCount + Constants.ONE_INT;
+        }
+        private static void UpdateCounts()
+        {
+            int newID = globals.CourseCount;
             string path;
             string courseCount;
-            if (globals.osSwitch == true)
-            {
-                path = $"{globals.DirectoryPath}//CourseCount.txt";
-            }
+            string listContents;
+            List<string> contentList = new List<string>();            
+            ++newID;
+            listContents = $"{newID},{globals.CourseName}.txt,{creationVars.filePath}";
+            contentList.Add(listContents);            
+            if (File.Exists(creationVars.listFile))
+                CourseListPath();            
             else
-            {
-                path = $"{globals.DirectoryPath}\\CourseCount.txt";
-            }
+                File.WriteAllLines(creationVars.listFile, contentList);                   
+            
+            if (globals.osSwitch == true)
+                path = $"{globals.DirectoryPath}//CourseCount.txt";            
+            else
+                path = $"{globals.DirectoryPath}\\CourseCount.txt";            
             courseCount = File.ReadAllText(path);
             globals.CourseCount = Convert.ToInt32(courseCount);
-            globals.CourseCount = globals.CourseCount + Constants.ONE_INT;
+            ++globals.CourseCount;
             courseCount = Convert.ToString(globals.CourseCount);
             File.WriteAllText(path, courseCount); 
-            Console.WriteLine("Finished updating CourseCount.txt");
-            Console.ReadLine();
+            SelectionDialogs(Constants.EIGHT_INT);
         }
-        private static void OperatingSysChoice()
+        private static void CourseListPath()
         {
             string filePath;
             string filePath2;
             string courseFilePath;
-
             if (globals.osSwitch == true)
             {
                 // Linux
@@ -375,14 +420,12 @@ namespace GlideCLI
         }
         private static void AddCourseToList(string filePath, string filePath2, string courseFilePath)
         {
-            int courseID = globals.CourseCount + Constants.ONE_INT;
+            int courseID = globals.CourseCount;
+            ++courseID;
             List<string> lines = new List<string>();
             if (File.Exists(filePath))
-            {
-                lines = File.ReadAllLines(filePath).ToList();
-            }            
+                lines = File.ReadAllLines(filePath).ToList();          
             lines.Add($"{courseID},{globals.CourseName}.txt,{courseFilePath}");
-
             File.WriteAllLines(filePath2, lines); // Just in case the computer loses power, or freezes up. CourseList.bak would have to be manually renamed.
             File.WriteAllLines(filePath, lines);
         }
@@ -393,7 +436,7 @@ namespace GlideCLI
             const int TWO = 2;
             string filePath;
             string selectionString;
-            int selectionInt;
+            int selectionInt = Constants.ZERO_INT;
             bool validInput = false;
             if (globals.osSwitch == true)
             {
@@ -408,17 +451,14 @@ namespace GlideCLI
             List<CourseListModel> completeList = new List<CourseListModel>();
             List<string> lines = new List<string>();
             lines = File.ReadAllLines(filePath).ToList();
-
             Console.WriteLine("\n\n\n\n\nReading data.");
             foreach (string line in lines)
             {
                 string[] entries = line.Split(',');
                 CourseListModel newList = new CourseListModel();
-
                 newList.Course_ID = Convert.ToInt32(entries[ZERO]);
                 newList.Course_Name = entries[ONE];
                 newList.File_Path = entries[TWO];
-
                 completeList.Add(newList);
             }
             foreach (var course in completeList)
@@ -427,47 +467,50 @@ namespace GlideCLI
             }
             while (validInput == false)
             {
-                Console.WriteLine("\n\nEnter the Course's ID number that you wish to study: ");
-                selectionString = Console.ReadLine();
-                selectionInt = Convert.ToInt32(selectionString);
-                selectionInt = selectionInt - ONE;
-                var testVar = selectionInt + ONE;
                 try
                 {
-                    globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
+                    Console.WriteLine("\n\nEnter the Course's ID number that you wish to study: ");
+                    selectionString = Console.ReadLine();
+                    selectionInt = Convert.ToInt32(selectionString);
                     validInput = true;
-                    Console.Clear();
-                    foreach (var course in completeList)
-                    {
-                        Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
-                        if (testVar == course.Course_ID)
-                        {
-                            globals.CourseName = course.Course_Name;
-                        }
-                    }
                 }
                 catch
                 {
-                    Console.WriteLine("Invalid selection. Press any key to continue.");
-                    validInput = false;
+                    Console.WriteLine("Invalid selection.");
+                    validInput = false;                    
+                }
+                
+                if (validInput == true)
+                {
+                    selectionInt = selectionInt - ONE;
+                    var testVar = selectionInt + ONE;
+                    try
+                    {
+                        globals.FilePath = completeList.ElementAt(selectionInt).File_Path;
+                        validInput = true;
+                        Console.Clear();
+                        foreach (var course in completeList)
+                        {
+                            Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
+                            if (testVar == course.Course_ID)
+                                globals.CourseName = course.Course_Name;                            
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid selection.");
+                        validInput = false;
+                    }
                 }
             }            
         }
         private static void StudyCourse()
         {
             /*Start of section from LoadTopicIDs*/
-            const int ZERO = 0;
-            const int ONE = 1;
             const string TRUE = "True";
             int index;
-            
-            /*
-              Take the date stored from program iniitialization.
-            */
             DateTime today = DateTime.Parse(globals.TheDate);
-            DateTime topicDate;
-            
-            
+            DateTime topicDate;            
             int dateCompare;
             string dateAsString;
             string filePath = globals.FilePath;
@@ -476,270 +519,258 @@ namespace GlideCLI
 
             lines = File.ReadAllLines(filePath).ToList();
             Console.WriteLine("\n\n\n\n\nReading data.");
-            foreach (string line in lines)
+            Console.ReadLine();
+            if (lines.Count > 0)
             {
-                string[] entries = line.Split(',');
-                TopicModel newList = new TopicModel();
-
-                newList.Top_ID = Convert.ToInt32(entries[0]);
-                newList.Course_ID = Convert.ToInt32(entries[1]);
-                newList.Top_Name = entries[2];
-                topStudString = entries[3];
-                if (topStudString == TRUE)
+                foreach (string line in lines)
                 {
-                    newList.Top_Studied = true;
-                }
-                else
-                {
-                    newList.Top_Studied = false;
-                }
-                
+                    string[] entries = line.Split(',');
+                    TopicModel newList = new TopicModel();
 
-                newList.Next_Date = entries[4];
-                newList.First_Date = entries[5];
-
-                newList.Num_Problems = Convert.ToDouble(entries[6]);
-                newList.Num_Correct = Convert.ToDouble(entries[7]);
-
-                newList.Top_Difficulty = Convert.ToDouble(entries[8]);
-                newList.Top_Repetition = Convert.ToDouble(entries[9]);
-                newList.Interval_Remaining = Convert.ToDouble(entries[10]);
-
-                newList.Interval_Length = Convert.ToDouble(entries[11]);
-                newList.Engram_Stability = Convert.ToDouble(entries[12]);
-                newList.Engram_Retrievability = Convert.ToDouble(entries[13]);
-
-                TopicsList.Add(newList);
-            }
-            // Retry Studied TopicID's section (these are study sessions that were missed)
-            index = ZERO;
-            globals.lateLeft = ZERO;
-            Console.WriteLine($"globals.currentLeft = {globals.lateLeft}");
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == true)
-                {
-                    dateAsString = TopicsList.ElementAt(index).Next_Date;
-                    topicDate = DateTime.Parse(dateAsString);
-                    dateCompare = DateTime.Compare(topicDate, today);
-
-                    if (dateCompare < ZERO)
-                    {                        
-                        ToStudy.Add(index);
-                        // to display number of late topics left to study
-                        ++globals.lateLeft;
-                    }
-                }
-
-                index = index + ONE;
-            }
-            
-
-            // Studied TopicID's scheduled for today section
-            index = ZERO;
-            globals.currentLeft = ZERO;
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == true)
-                {
-                    dateAsString = TopicsList.ElementAt(index).Next_Date;
-                    topicDate = DateTime.Parse(dateAsString);
-                    dateCompare = DateTime.Compare(topicDate, today);
-
-                    if (dateCompare == ZERO)
+                    newList.Top_ID = Convert.ToInt32(entries[0]);
+                    newList.Course_ID = Convert.ToInt32(entries[1]);
+                    newList.Top_Name = entries[2];
+                    topStudString = entries[3];
+                    if (topStudString == TRUE)
                     {
-                        ToStudy.Add(index);
-                        
-                        // to display number of on-time review topics left to study
-                        globals.currentLeft += ONE;
-                    }
-                }
-                index = index + ONE;
-            }
-            
-
-            // New Topic ID's section
-            index = ZERO;
-            globals.newLeft = ZERO;
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == false)
-                {
-                    ToStudy.Add(index);
-
-                    // to display number of topics left to study for the first time
-                    globals.newLeft += ONE;
-                }
-
-                index = index + ONE;
-            }
-            
-
-            globals.TopicID = ToStudy.ElementAt(ZERO);
-            globals.TopicIndex = ZERO;       
-            /*End of secton from LoadTopicIDs*/
-
-            int toStudyCount = ToStudy.Count;
-            string numCorrectString;
-            string topStudBool;
-            string todayDateString = today.ToString("d");
-            if (toStudyCount > ZERO)
-            {
-                globals.ProblemsDone = false;
-            }
-            else
-            {
-                globals.ProblemsDone = true;
-            }
-
-            string response = "0"; //Just added this to give option to go back to Ready Menu
-            double numCorrectDouble = ZERO;
-
-
-
-            while (globals.ProblemsDone != true)
-            {
-                
-                if (globals.TopicIndex < toStudyCount)
-                {
-                    //Loop through this code, assigning values to it until the list of indexes runs out.
-                    //TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
-                    Console.Clear();
-                    Console.WriteLine($"Course Name: {globals.CourseName}");
-                    Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
-                    Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
-                    Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
-                    Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
-                    Console.WriteLine($"Number of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");                  
-                    if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
-                    {
-                        topStudBool = "true";
+                        newList.Top_Studied = true;
                     }
                     else
                     {
-                        topStudBool = "false";
+                        newList.Top_Studied = false;
                     }
+                    
 
+                    newList.Next_Date = entries[4];
+                    newList.First_Date = entries[5];
 
-                    Console.WriteLine($"Previously Studied: {topStudBool}");
-                    if (TopicsList.ElementAt(globals.TopicID).Top_Studied == false)
+                    newList.Num_Problems = Convert.ToDouble(entries[6]);
+                    newList.Num_Correct = Convert.ToDouble(entries[7]);
+
+                    newList.Top_Difficulty = Convert.ToDouble(entries[8]);
+                    newList.Top_Repetition = Convert.ToDouble(entries[9]);
+                    newList.Interval_Remaining = Convert.ToDouble(entries[10]);
+
+                    newList.Interval_Length = Convert.ToDouble(entries[11]);
+                    newList.Engram_Stability = Convert.ToDouble(entries[12]);
+                    newList.Engram_Retrievability = Convert.ToDouble(entries[13]);
+
+                    TopicsList.Add(newList);
+                }
+                // Retry Studied TopicID's section (these are study sessions that were missed)
+                index = Constants.ZERO_INT;
+                globals.lateLeft = Constants.ZERO_INT;
+                Console.WriteLine($"globals.currentLeft = {globals.lateLeft}");
+                while (index < TopicsList.Count)
+                {
+                    if (TopicsList.ElementAt(index).Top_Studied == true)
                     {
-                        Console.WriteLine("\n\n\nEnter the quantity you answered correctly ");
-                        Console.WriteLine("\n*OR*\n");
-                        //The following option is added because I have found 
-                        //that sometimes it is easier to set the questions up right before I
-                        //study them, instead of setting them all up at once. And also incase
-                        //I need to correct the number of questions that there are.
-                        Console.WriteLine("\nEnter q to go back to menu or enter\"change\"(without quotes)to change number of TOTAL problems or questions, if you need to:");
-                        response = Console.ReadLine();
-                        if (response == "q" || response == "change")
-                        {
-                            if (response == "change")
-                            {                            
-                                ChangeTopicQuestions();
-                                Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
-                                response = Console.ReadLine();
-                            }
-                            else
-                            {
-                                Console.Clear();
-                                globals.madeSelect = false;
-                                globals.newLeft = ZERO;
-                                globals.currentLeft = ZERO;
-                                globals.lateLeft = ZERO;
-                                return;
-                            }
-                        }
-                        
-                        //Not an else since response expected to change if != "q"
-                        if (response != "q" && response != "change")
-                        {
-                            numCorrectString = response;
-                            numCorrectDouble = Convert.ToDouble(numCorrectString);
-                            while (numCorrectDouble > TopicsList.ElementAt(globals.TopicID).Num_Problems)
-                            {
-                                Console.WriteLine("value exceeds number of problems or questions.");
-                                Console.WriteLine("Input a value less than or equal to number or problems or questions.");
-                                Console.WriteLine("\nOR you can enter the word \"change\" without the quotes to change the number of total problems or questions:");
-                                response = Console.ReadLine();
-                                if (response == "change")
-                                {
-                                    ChangeTopicQuestions();
-                                    Console.Clear();
-                                    Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
-                                }                                
-                                numCorrectString = Console.ReadLine();
-                                numCorrectDouble = Convert.ToDouble(numCorrectString);
-                            }
-                            TopicsList.ElementAt(globals.TopicID).Num_Correct = numCorrectDouble;
-                            TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
-                            globals.newLeft -= ONE;
-                            Console.Clear();
-                        }
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("\n\n\nPress any key to study next section.");
-                        Console.WriteLine("Type q to go back to menu");
-                        response = Console.ReadLine();
-                        if (response == "q")
-                        {
-                            globals.madeSelect = false;
-                            Console.Clear();
-                            globals.newLeft = ZERO;
-                            globals.currentLeft = ZERO;
-                            globals.lateLeft = ZERO;
-                            return;
-                        }
-                        
-
-                        dateAsString = TopicsList.ElementAt(globals.TopicID).Next_Date;
+                        dateAsString = TopicsList.ElementAt(index).Next_Date;
                         topicDate = DateTime.Parse(dateAsString);
                         dateCompare = DateTime.Compare(topicDate, today);
-                        if (dateCompare < ZERO)
-                            --globals.lateLeft;
-                        else if (dateCompare == ZERO)
-                            --globals.currentLeft;
 
-
-                        Console.Clear();
+                        if (dateCompare < Constants.ZERO_INT)
+                        {                        
+                            ToStudy.Add(index);
+                            // to display number of late topics left to study
+                            ++globals.lateLeft;
+                        }
                     }
-                    numCorrectDouble = ZERO;
+                    ++index;
+                }
+                
 
-                    // Call funtion to calculate topics from here.
-                    CalculateLearning();
-                    SaveProgress();
-
-                    globals.TopicIndex = globals.TopicIndex + ONE;
-                    if (globals.TopicIndex < toStudyCount)
+                // Studied TopicID's scheduled for today section
+                index = Constants.ZERO_INT;
+                globals.currentLeft = Constants.ZERO_INT;
+                while (index < TopicsList.Count)
+                {
+                    if (TopicsList.ElementAt(index).Top_Studied == true)
                     {
-                        globals.TopicID = ToStudy.ElementAt(globals.TopicIndex);
-                    }                    
+                        dateAsString = TopicsList.ElementAt(index).Next_Date;
+                        topicDate = DateTime.Parse(dateAsString);
+                        dateCompare = DateTime.Compare(topicDate, today);
+
+                        if (dateCompare == Constants.ZERO_INT)
+                        {
+                            ToStudy.Add(index);
+                            
+                            // to display number of on-time review topics left to study
+                            ++globals.currentLeft;
+                        }
+                    }
+                    ++index;
+                }
+                
+
+                // New Topic ID's section
+                index = Constants.ZERO_INT;
+                globals.newLeft = Constants.ZERO_INT;
+                while (index < TopicsList.Count)
+                {
+                    if (TopicsList.ElementAt(index).Top_Studied == false)
+                    {
+                        ToStudy.Add(index);
+
+                        // to display number of topics left to study for the first time
+                        ++globals.newLeft;
+                    }
+
+                    ++index;
+                }
+                
+
+                globals.TopicID = ToStudy.ElementAt(Constants.ZERO_INT);
+                globals.TopicIndex = Constants.ZERO_INT;       
+                /*End of secton from LoadTopicIDs*/
+
+                int toStudyCount = ToStudy.Count;
+                string numCorrectString;
+                string topStudBool;
+                string todayDateString = today.ToString("d");
+                if (toStudyCount > Constants.ZERO_INT)
+                {
+                    globals.ProblemsDone = false;
                 }
                 else
                 {
                     globals.ProblemsDone = true;
                 }
-            }
-            Console.WriteLine("\n\n\nNothing left to study for today.");
-            Console.WriteLine("Press Ctrl + C to exit");
-            Console.WriteLine("Or enter q to go back to menu");
-            response = Console.ReadLine();
-            if (response == "q")
-            {
-                Console.Clear();
-                globals.madeSelect = false;
-                globals.newLeft = ZERO;
-                globals.currentLeft = ZERO;
-                globals.lateLeft = ZERO;
-                return;
+
+                string response = "0"; //Just added this to give option to go back to Ready Menu
+                double numCorrectDouble = Constants.ZERO_DOUBLE;
+
+
+
+                while (globals.ProblemsDone != true)
+                {
+                    
+                    if (globals.TopicIndex < toStudyCount)
+                    {
+                        //Loop through this code, assigning values to it until the list of indexes runs out.
+                        //TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
+                        Console.Clear();
+                        Console.WriteLine($"Course Name: {globals.CourseName}");
+                        Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
+                        Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
+                        Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
+                        Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
+                        Console.WriteLine($"Number of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");                  
+                        if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
+                        {
+                            topStudBool = "true";
+                        }
+                        else
+                        {
+                            topStudBool = "false";
+                        }
+
+
+                        Console.WriteLine($"Previously Studied: {topStudBool}");
+                        if (TopicsList.ElementAt(globals.TopicID).Top_Studied == false)
+                        {
+                            Console.WriteLine("\n\n\nEnter the quantity you answered correctly ");
+                            Console.WriteLine("\n*OR*\n");
+                            //The following option is added because I have found 
+                            //that sometimes it is easier to set the questions up right before I
+                            //study them, instead of setting them all up at once. And also incase
+                            //I need to correct the number of questions that there are.
+                            Console.WriteLine("\nEnter q to go back to menu or enter\"change\"(without quotes)to change number of TOTAL problems or questions, if you need to:");
+                            response = Console.ReadLine();
+                            if (response == "q" || response == "change")
+                            {
+                                if (response == "change")
+                                {                            
+                                    ChangeTopicQuestions();
+                                    Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
+                                    response = Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    globals.madeSelect = false;
+                                    globals.newLeft = Constants.ZERO_INT;
+                                    globals.currentLeft = Constants.ZERO_INT;
+                                    globals.lateLeft = Constants.ZERO_INT;
+                                    return;
+                                }
+                            }
+                            
+                            //Not an else since response expected to change if != "q"
+                            if (response != "q" && response != "change")
+                            {
+                                numCorrectString = response;
+                                numCorrectDouble = Convert.ToDouble(numCorrectString);
+                                while (numCorrectDouble > TopicsList.ElementAt(globals.TopicID).Num_Problems)
+                                {
+                                    Console.WriteLine("value exceeds number of problems or questions.");
+                                    Console.WriteLine("Input a value less than or equal to number or problems or questions.");
+                                    Console.WriteLine("\nOR you can enter the word \"change\" without the quotes to change the number of total problems or questions:");
+                                    response = Console.ReadLine();
+                                    if (response == "change")
+                                    {
+                                        ChangeTopicQuestions();
+                                        Console.Clear();
+                                        Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
+                                    }                                
+                                    numCorrectString = Console.ReadLine();
+                                    numCorrectDouble = Convert.ToDouble(numCorrectString);
+                                }
+                                TopicsList.ElementAt(globals.TopicID).Num_Correct = numCorrectDouble;
+                                TopicsList.ElementAt(globals.TopicID).First_Date = todayDateString;
+                                --globals.newLeft;
+                                Console.Clear();
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("\n\n\nPress any key to study next section.");
+                            Console.WriteLine("Type q to go back to menu");
+                            response = Console.ReadLine();
+                            if (response == "q")
+                            {
+                                globals.madeSelect = false;
+                                Console.Clear();
+                                globals.newLeft = Constants.ZERO_INT;
+                                globals.currentLeft = Constants.ZERO_INT;
+                                globals.lateLeft = Constants.ZERO_INT;
+                                return;
+                            }
+                            
+
+                            dateAsString = TopicsList.ElementAt(globals.TopicID).Next_Date;
+                            topicDate = DateTime.Parse(dateAsString);
+                            dateCompare = DateTime.Compare(topicDate, today);
+                            if (dateCompare < Constants.ZERO_INT)
+                                --globals.lateLeft;
+                            else if (dateCompare == Constants.ZERO_INT)
+                                --globals.currentLeft;
+
+
+                            Console.Clear();
+                        }
+                        numCorrectDouble = Constants.ZERO_DOUBLE;
+
+                        // Call funtion to calculate topics from here.
+                        CalculateLearning();
+                        SaveProgress();
+
+                        ++globals.TopicIndex;
+                        if (globals.TopicIndex < toStudyCount)
+                        {
+                            globals.TopicID = ToStudy.ElementAt(globals.TopicIndex);
+                        }                    
+                    }
+                    else
+                    {
+                        globals.ProblemsDone = true;
+                    }
+                }
+                SelectionDialogs(Constants.THREE_INT);
             }
             else
-            {
-                Console.ReadLine();
-                Environment.Exit(ZERO);
-            }
+                SelectionDialogs(Constants.THREE_INT);
         }
         private static void CalculateLearning()
         {
@@ -897,10 +928,8 @@ namespace GlideCLI
         }
         private static void ClearLists()
         {
-            const int ONE = 1;
-            if ( globals.studyTracker > ONE)
+            if ( globals.studyTracker > Constants.ONE_INT)
             {
-
                 TopicsList.Clear();
                 topics.Clear();
                 ToStudy.Clear();

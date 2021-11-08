@@ -35,5 +35,8 @@
         public int newLeft {get; set;}
         public int currentLeft {get; set;}
         public int lateLeft {get; set;}
+
+        //For SelectionDialogs(option three)
+        public string response {get; set;}
     }
 }
