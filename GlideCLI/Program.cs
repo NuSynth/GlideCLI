@@ -765,6 +765,7 @@ namespace GlideCLI
         {
             //From StudyNotDone()
             bool test = false;
+            studyVars.whichStudy = false;
             studyVars.studied = true;
             while (test == false)
             {
@@ -861,9 +862,9 @@ namespace GlideCLI
         }
         private static void StudyTrue()
         {
-            Console.WriteLine("\n\n\nPress any key to study next section.");
-            Console.WriteLine("Type m to go back to menu");
+            Console.WriteLine("\n\n\nOption: ");
             studyVars.studied = true;
+            studyVars.whichStudy = true;
             studyVars.response = Console.ReadLine();
             if (studyVars.response == "m")
             {
@@ -942,7 +943,11 @@ namespace GlideCLI
             Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
             Console.WriteLine($"\n\nNumber of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");
             Console.WriteLine("\nOPTIONS:");
-            Console.WriteLine("(m) = Main Menu. \n(u) = Update number of questions.");
+            Console.WriteLine("(m) = Main Menu.");
+            if (studyVars.whichStudy == true)
+                Console.WriteLine("(u) = Update number of questions.");
+            else
+                Console.WriteLine("(enter key) = Process topic, and go to next");
         }
     }
 }
