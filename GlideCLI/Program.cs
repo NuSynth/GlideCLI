@@ -862,7 +862,6 @@ namespace GlideCLI
         private static void StudyTrue()
         {
             Console.WriteLine("\n\n\nPress any key to study next section.");
-            Console.WriteLine("Type m to go back to menu");
             studyVars.studied = true;
             studyVars.response = Console.ReadLine();
             if (studyVars.response == "m")
