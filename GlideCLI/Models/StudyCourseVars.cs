@@ -25,6 +25,9 @@ namespace GlideCLI.Models
         public string numCorrectString {get; set;}
         public string todayDateString {get; set;}
         public string response {get; set;}
+
+        //Bools
+        public bool studied {get; set;}
     }
 }
 

@@ -61,6 +61,7 @@ namespace GlideCLI
         {
             while (true)
             {
+                StudyDecrementer();
                 CheckForCountFile();
                 MainMenu();
                 StudyIncrementer();
@@ -161,7 +162,7 @@ namespace GlideCLI
                     case 3:
                         globals.madeSelect = true;
                         Console.Clear();
-                        Console.WriteLine("Study a course selected.\n");                        
+                        Console.WriteLine("COURSES:\n");                        
                         StudyIncrementer();
                         ClearLists();
                         SelectCourse();
@@ -198,9 +199,9 @@ namespace GlideCLI
                     //For StudyCourse()
                     Console.Clear();
                     Console.WriteLine("\n\n\nNothing left to study for current topic today.");
-                    Console.WriteLine("Enter q to quit back to menu, or any other key to exit.");
+                    Console.WriteLine("Enter m to quit back to menu, or any other key to exit.");
                     globals.response = Console.ReadLine();                
-                    if (globals.response == "q")
+                    if (globals.response == "m")
                     {
                         Console.Clear();
                         globals.madeSelect = false;
@@ -249,29 +250,22 @@ namespace GlideCLI
                     break;
                 case 9:
                     //For SelectCourse()
-                    Console.WriteLine("\n\nEnter the Course's ID number that you wish to study: ");
+                    Console.Write("\n\nEnter a Course ID: ");
                     break;
                 case 10:
                     //For StudyCourse()
-                    Console.Clear();
-                    Console.WriteLine($"Course Name: {globals.CourseName}");
-                    Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
-                    Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
-                    Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
-                    Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
-                    Console.WriteLine($"Number of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");  
+                    StudyHUD();
                     break;
                 case 11:
                     //For StudyCourse()
-                    Console.WriteLine("\n\n\nEnter the quantity you answered correctly ");
-                    Console.WriteLine("\n*OR*\n");
-                    Console.WriteLine("\nEnter q to go back to menu or enter\"change\"(without quotes)to change number of TOTAL problems or questions, if you need to:");
+                    Console.Write("\n\n\nQuantity answered correctly, or option choice: ");
                     break;
                 case 12:
                     //For StudyCourse()
-                    Console.WriteLine("value exceeds number of problems or questions.");
-                    Console.WriteLine("Input a value less than or equal to number or problems or questions.");
-                    Console.WriteLine("\nOR you can enter the word \"change\" without the quotes to change the number of total problems or questions:");
+                    StudyHUD();
+                    Console.WriteLine("Invalid Input:");
+                    Console.WriteLine("\n\nvalue exceeds number of problems or questions, \nor it is less than zero.");
+                    Console.Write("\n\n\nQuantity answered correctly, or option choice: ");
                     break;
             }
         }
@@ -510,7 +504,11 @@ namespace GlideCLI
                     {
                         StudyNotZero();
                         while (globals.ProblemsDone != true)
+                        {
                             StudyNotDone();
+                            if (studyVars.response == "m")
+                                return;
+                        }
                     }
                 }
                 SelectionDialogs(Constants.THREE_INT);
@@ -639,16 +637,36 @@ namespace GlideCLI
         private static void ChangeTopicQuestions()
         {
             string numTotalString;
-            double numTotalDouble;
-            Console.Clear();
-            Console.WriteLine("Enter new number of TOTAL questions:");
-            numTotalString = Console.ReadLine();
-            numTotalDouble = Convert.ToDouble(numTotalString);
+            double numTotalDouble = Constants.ZERO_DOUBLE;
+            bool test = false;
+            while (test == false)
+            {
+                Console.Clear();
+                Console.WriteLine("Enter new number of TOTAL questions:");
+                try
+                {
+                    numTotalString = Console.ReadLine();
+                    numTotalDouble = Convert.ToDouble(numTotalString);
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n\nInvalid Input\n\nPress Enter to Continue");
+                    Console.ReadLine();
+                    SelectionDialogs(Constants.TEN_INT);                
+                }
+            }
+            
             TopicsList.ElementAt(globals.TopicID).Num_Problems = numTotalDouble;
         }
         private static void StudyIncrementer()
         {
             ++globals.studyTracker;
+        }
+        private static void StudyDecrementer()
+        {
+            if (globals.studyTracker > Constants.ZERO_INT)
+                --globals.studyTracker;
         }
         private static void ClearLists()
         {
@@ -745,63 +763,116 @@ namespace GlideCLI
         }
         private static void StudyFalse()
         {
-            //For StudyCourse()
-            SelectionDialogs(Constants.ELLEVEN_INT);
-            studyVars.response = Console.ReadLine();
-            if (studyVars.response == "q" || studyVars.response == "change")
+            //From StudyNotDone()
+            bool test = false;
+            studyVars.studied = true;
+            while (test == false)
             {
-                if (studyVars.response == "change")
-                {                            
-                    ChangeTopicQuestions();
-                    Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
-                    studyVars.response = Console.ReadLine();
+                SelectionDialogs(Constants.ELLEVEN_INT);
+                studyVars.response = Console.ReadLine();
+                if (studyVars.response == "m" || studyVars.response == "u")
+                {
+                    while (studyVars.response == "u")
+                    {                            
+                        ChangeTopicQuestions();
+                        Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
+                        try
+                        {
+                            studyVars.response = Console.ReadLine();
+                            studyVars.numCorrectDouble = Convert.ToDouble(studyVars.response);
+                        }
+                        catch
+                        {
+                            Console.Clear();
+                            Console.WriteLine("\n\nInvalid Input\n\nPress Enter to Continue");
+                            studyVars.response = "u";
+                            Console.ReadLine();
+                            SelectionDialogs(Constants.TEN_INT);
+                        }
+                    }
+                    if (studyVars.response == "m")
+                    {
+                        Console.Clear();
+                        globals.madeSelect = false;
+                        globals.newLeft = Constants.ZERO_INT;
+                        globals.currentLeft = Constants.ZERO_INT;
+                        globals.lateLeft = Constants.ZERO_INT;
+                        studyVars.studied = false;
+                        return;
+                    }
                 }
-                else
+                try
+                {
+                    studyVars.numCorrectString = studyVars.response;
+                    studyVars.numCorrectDouble = Convert.ToDouble(studyVars.numCorrectString);
+                    test = true;                        
+                }
+                catch
                 {
                     Console.Clear();
-                    globals.madeSelect = false;
-                    globals.newLeft = Constants.ZERO_INT;
-                    globals.currentLeft = Constants.ZERO_INT;
-                    globals.lateLeft = Constants.ZERO_INT;
-                    return;
-                }
-            }
-            //Not an else since response expected to change if != "q"
-            if (studyVars.response != "q" && studyVars.response != "change")
-            {
-                studyVars.numCorrectString = studyVars.response;
-                studyVars.numCorrectDouble = Convert.ToDouble(studyVars.numCorrectString);
-                while (studyVars.numCorrectDouble > TopicsList.ElementAt(globals.TopicID).Num_Problems)
+                    Console.WriteLine("\n\nInvalid Input\n\nPress Enter to try again");
+                    Console.ReadLine();
+                    SelectionDialogs(Constants.TEN_INT);
+                    test = false;
+                }            
+                //Not an else since response expected to change if response == "u"
+                if (test == true)
                 {
-                    SelectionDialogs(Constants.TWELVE_INT);
-                    studyVars.response = Console.ReadLine();
-                    if (studyVars.response == "change")
-                    {
-                        ChangeTopicQuestions();
-                        Console.Clear();
-                        Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
-                    }                                
-                    studyVars.numCorrectString = Console.ReadLine();
+                    studyVars.numCorrectString = studyVars.response;
                     studyVars.numCorrectDouble = Convert.ToDouble(studyVars.numCorrectString);
+                    while (studyVars.numCorrectDouble > TopicsList.ElementAt(globals.TopicID).Num_Problems || studyVars.numCorrectDouble < Constants.ZERO_DOUBLE)
+                    {
+                        SelectionDialogs(Constants.TWELVE_INT);
+                        studyVars.response = Console.ReadLine();
+                        if (studyVars.response == "u")
+                        {
+                            ChangeTopicQuestions();
+                            Console.Clear();
+                            Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
+                        }          
+                        if (studyVars.response == "m")
+                        {
+                            Console.Clear();
+                            globals.madeSelect = false;
+                            globals.newLeft = Constants.ZERO_INT;
+                            globals.currentLeft = Constants.ZERO_INT;
+                            globals.lateLeft = Constants.ZERO_INT;
+                            studyVars.studied = false;
+                            return;
+                        }                      
+                        try
+                        {
+                            studyVars.numCorrectString = studyVars.response;
+                            studyVars.numCorrectDouble = Convert.ToDouble(studyVars.numCorrectString);
+                        }
+                        catch
+                        {
+                            Console.Clear();
+                            Console.WriteLine("\n\nInvalid Input\n\nPress Enter to try again");
+                            Console.ReadLine();
+                        }
+                    }
+                    TopicsList.ElementAt(globals.TopicID).Num_Correct = studyVars.numCorrectDouble;
+                    TopicsList.ElementAt(globals.TopicID).First_Date = studyVars.todayDateString;
+                    --globals.newLeft;
+                    Console.Clear();
                 }
-                TopicsList.ElementAt(globals.TopicID).Num_Correct = studyVars.numCorrectDouble;
-                TopicsList.ElementAt(globals.TopicID).First_Date = studyVars.todayDateString;
-                --globals.newLeft;
-                Console.Clear();
             }
         }
         private static void StudyTrue()
         {
             Console.WriteLine("\n\n\nPress any key to study next section.");
-            Console.WriteLine("Type q to go back to menu");
+            Console.WriteLine("Type m to go back to menu");
+            studyVars.studied = true;
             studyVars.response = Console.ReadLine();
-            if (studyVars.response == "q")
+            if (studyVars.response == "m")
             {
                 globals.madeSelect = false;
                 Console.Clear();
                 globals.newLeft = Constants.ZERO_INT;
                 globals.currentLeft = Constants.ZERO_INT;
                 globals.lateLeft = Constants.ZERO_INT;
+                studyVars.studied = false;
                 return;
             }
             studyVars.dateAsString = TopicsList.ElementAt(globals.TopicID).Next_Date;
@@ -816,24 +887,28 @@ namespace GlideCLI
         private static void StudyNotDone()
         {
             //From StudyCourse()
+            studyVars.studied = false;
             if (globals.TopicIndex < studyVars.toStudyCount)
             {
                 SelectionDialogs(Constants.TEN_INT);
-                if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
-                    studyVars.topStudBool = "true";
-                else
-                    studyVars.topStudBool = "false";
-                Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
                 if (TopicsList.ElementAt(globals.TopicID).Top_Studied == false)
+                {
                     StudyFalse();
+                    if (studyVars.response == "m")
+                        return;
+                }
                 else
                     StudyTrue();
-                studyVars.numCorrectDouble = Constants.ZERO_DOUBLE;
-                CalculateLearning();
-                SaveProgress();
-                ++globals.TopicIndex;
-                if (globals.TopicIndex < studyVars.toStudyCount)
-                    globals.TopicID = ToStudy.ElementAt(globals.TopicIndex);  
+                if (studyVars.studied == true)
+                {
+                    studyVars.numCorrectDouble = Constants.ZERO_DOUBLE;
+                    CalculateLearning();
+                    SaveProgress();
+                    ++globals.TopicIndex;
+                    if (globals.TopicIndex < studyVars.toStudyCount)
+                        globals.TopicID = ToStudy.ElementAt(globals.TopicIndex); 
+                }
+ 
             }
             else
                 globals.ProblemsDone = true;
@@ -851,6 +926,23 @@ namespace GlideCLI
                 globals.ProblemsDone = true;
             studyVars.response = Constants.ZERO_STRING; //Just added this to give option to go back to Ready Menu
             studyVars.numCorrectDouble = Constants.ZERO_DOUBLE;
+        }
+        private static void StudyHUD()
+        {
+            Console.Clear();
+            if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
+                studyVars.topStudBool = "true";
+            else
+                studyVars.topStudBool = "false";
+            Console.WriteLine($"Course Name: {globals.CourseName}");
+            Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
+            Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
+            Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
+            Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
+            Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
+            Console.WriteLine($"\n\nNumber of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");
+            Console.WriteLine("\nOPTIONS:");
+            Console.WriteLine("(m) = Main Menu. \n(u) = Update number of questions.");
         }
     }
 }
