@@ -28,7 +28,6 @@ namespace GlideCLI.Models
 
         //Bools
         public bool studied {get; set;}
-        public bool whichStudy {get; set;}
     }
 }
 
