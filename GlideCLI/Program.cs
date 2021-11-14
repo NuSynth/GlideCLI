@@ -14,6 +14,11 @@ namespace GlideCLI
         static Globals globals = new Globals();
         static CreationModel creationVars = new CreationModel();
         static StudyModel studyVars = new StudyModel();
+        static List<SimModel> simVars = new List<SimModel>();
+        static List<SimModel> genSimsStudied = new List<SimModel>();
+        static List<SimModel> genSimsProjected = new List<SimModel>();     
+        static List<SimModel> genSimsAll = new List<SimModel>();
+        static PredictModel predictVars = new PredictModel();
 
         public static void Main(string[] args)
         {
@@ -325,7 +330,7 @@ namespace GlideCLI
                         newTopic.Num_Problems = creationVars.problemCount; // the rest are type double
                         newTopic.Num_Correct = Constants.ZERO_DOUBLE;
                         newTopic.Top_Difficulty = Constants.ZERO_DOUBLE;
-                        newTopic.Top_Repetition = Constants.ZERO_DOUBLE;
+                        newTopic.Top_Repetition = Constants.ZERO_INT;
                         newTopic.Interval_Remaining = Constants.ZERO_DOUBLE;
                         newTopic.Interval_Length = Constants.ZERO_DOUBLE;
                         newTopic.Engram_Stability = Constants.ZERO_DOUBLE;
@@ -519,8 +524,8 @@ namespace GlideCLI
         private static void CalculateLearning()
         {
             AddRepetition();
-            double ithRepetition = TopicsList.ElementAt(globals.TopicID).Top_Repetition;
-            if (ithRepetition == Constants.ONE_DOUBLE)
+            int ithRepetition = TopicsList.ElementAt(globals.TopicID).Top_Repetition;
+            if (ithRepetition == Constants.ONE_INT)
                 TopicDifficulty();
             IntervalTime();
             EngramStability();
@@ -529,9 +534,7 @@ namespace GlideCLI
         }
         private static void AddRepetition()
         {
-            double ithRepetition = TopicsList.ElementAt(globals.TopicID).Top_Repetition;
-            ++ithRepetition;
-            TopicsList.ElementAt(globals.TopicID).Top_Repetition = ithRepetition;
+            ++TopicsList.ElementAt(globals.TopicID).Top_Repetition;
         }
         private static void TopicDifficulty()
         {
@@ -552,7 +555,7 @@ namespace GlideCLI
         {
             const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. I'm using minutes, instead of whole days, to be more precise.
             double difficulty = TopicsList.ElementAt(globals.TopicID).Top_Difficulty;
-            double ithRepetition = TopicsList.ElementAt(globals.TopicID).Top_Repetition;
+            int ithRepetition = TopicsList.ElementAt(globals.TopicID).Top_Repetition;
             double intervalRemaining = TopicsList.ElementAt(globals.TopicID).Interval_Remaining;
             double intervalLength = TopicsList.ElementAt(globals.TopicID).Interval_Length;
 
@@ -561,7 +564,7 @@ namespace GlideCLI
             //	   state a time frame until the second repetition. The 
             //	   values of the two variables may need to be changed, 
             //	   if the spacing is too far apart.
-            if (ithRepetition == Constants.ONE_DOUBLE)
+            if (ithRepetition == Constants.ONE_INT)
             {
                 // The researech document says that s == r @ 1st repetition
                 intervalRemaining = SINGLE_DAY;
@@ -699,7 +702,7 @@ namespace GlideCLI
                 newList.Num_Problems = Convert.ToDouble(entries[Constants.SIX_INT]);
                 newList.Num_Correct = Convert.ToDouble(entries[Constants.SEVEN_INT]);
                 newList.Top_Difficulty = Convert.ToDouble(entries[Constants.EIGHT_INT]);
-                newList.Top_Repetition = Convert.ToDouble(entries[Constants.NINE_INT]);
+                newList.Top_Repetition = Convert.ToInt32(entries[Constants.NINE_INT]);
                 newList.Interval_Remaining = Convert.ToDouble(entries[Constants.TEN_INT]);
                 newList.Interval_Length = Convert.ToDouble(entries[Constants.ELLEVEN_INT]);
                 newList.Engram_Stability = Convert.ToDouble(entries[Constants.TWELVE_INT]);
@@ -947,5 +950,10 @@ namespace GlideCLI
             else
                 Console.WriteLine("(u) = Update number of questions.");
         }
+        
+        /*Start: Create expected date of completing last topic*/
+
+        /*End: Create expected date of completing last topic*/
+
     }
 }

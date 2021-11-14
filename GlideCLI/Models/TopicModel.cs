@@ -14,8 +14,8 @@
         public double Num_Correct { get; set; }
 
         public double Top_Difficulty { get; set; }
-        public double Top_Repetition { get; set; }
-        public double Interval_Remaining { get; set; }
+        public int Top_Repetition { get; set; }
+        public double Interval_Remaining { get; set; } // This variable will be used later in the GUI
 
         public double Interval_Length { get; set; }
         public double Engram_Stability { get; set; }
