@@ -1,4 +1,8 @@
-
+/****************************************************************
+                        scratchPaper.cs
+This file is normally used to design components before
+putting them into the program.
+****************************************************************/
 private static void PredictLast()
 {
     predictVars.Process_Prediction = true;
