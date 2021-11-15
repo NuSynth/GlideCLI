@@ -21,6 +21,9 @@ namespace GlideCLI
         static List<SimModel> genSimsStudied = new List<SimModel>();
         static List<SimModel> genSimsProjected = new List<SimModel>();     
         static List<SimModel> genSimsAll = new List<SimModel>();
+        static List<PointLimits> yMaxList = new List<PointLimits>();
+        static List<PointLimits> xMaxList = new List<PointLimits>();
+
         static PredictModel predictVars = new PredictModel();
         // End of parts to predict date of last topic being studied
         /***********************************************/
