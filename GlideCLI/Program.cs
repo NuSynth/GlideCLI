@@ -14,11 +14,16 @@ namespace GlideCLI
         static Globals globals = new Globals();
         static CreationModel creationVars = new CreationModel();
         static StudyModel studyVars = new StudyModel();
+        
+        /***********************************************/
+        // Start of parts to predict date of last topic being studied
         static List<SimModel> simVars = new List<SimModel>();
         static List<SimModel> genSimsStudied = new List<SimModel>();
         static List<SimModel> genSimsProjected = new List<SimModel>();     
         static List<SimModel> genSimsAll = new List<SimModel>();
         static PredictModel predictVars = new PredictModel();
+        // End of parts to predict date of last topic being studied
+        /***********************************************/
 
         public static void Main(string[] args)
         {

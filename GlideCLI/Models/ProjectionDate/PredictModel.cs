@@ -20,6 +20,8 @@ namespace GlideCLI.Models
         public string Sim_Nxt_Date {get; set;}
 
 
+
+        //These need to be a list in the event of multiple same dates, so the correct x value can be determined.
         // Points for line to be plotted
         
         //Max Y-Values: first studied
@@ -28,9 +30,10 @@ namespace GlideCLI.Models
         x-point values correspond to number of repeats
         performed where y-value exists
         */
-        public string Y_High_Date {get; set;}
+        
+        //public string Y_High_Date {get; set;} 
         public double Y_High_Ycount {get; set;}
-        public double Y_High_Xcount {get; set;}
+        public double Y_High_Xcount {get; set;} // Need the average of x if multiple equal first studies at Ymax
 
 
         //Max X-Values: repeats studied
@@ -39,8 +42,10 @@ namespace GlideCLI.Models
         y-point values correspond to number of new-studies
         performed where x-value exists
         */
-        public string X_High_Date {get; set;}
-        public double X_High_Ycount {get; set;}
+
+        //These to be a list in the event of multiple same dates, so the correct y value can be determined.
+        //public string X_High_Date {get; set;} 
+        public double X_High_Ycount {get; set;} // Need the average of y if multiple equal first studies at Xmax
         public double X_High_Xcount {get; set;}
     }
 }

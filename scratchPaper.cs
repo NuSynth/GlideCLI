@@ -3,6 +3,11 @@
 This file is normally used to design components before
 putting them into the program.
 ****************************************************************/
+
+
+// I was pretty tired when I wrote a lot of this.
+// Go through and correct some of the bad logic.
+
 private static void PredictLast()
 {
     predictVars.Process_Prediction = true;
@@ -72,7 +77,7 @@ private static void CollectFirstStudies()
         if (topic.Top_Studied == true)
         {
             newSims.First_Date = topic.First_Date;
-            newSims.Real_Repetition = topic.Top_Repetition; // Stop simulating studied at current repetition
+            newSims.Real_Repetition = topic.Top_Repetition;
             newSims.Sim_Repetition = Constants.ZERO_INT;
             newSims.Top_Difficulty = topic.Top_Difficulty;
             newSims.Interval_Length = topic.Interval_Length;
@@ -92,6 +97,7 @@ private static void YmaxFirsts()
     DateTime tempDateTwo;    
     List<string> fStudyDates = new List<string>();
     List<int> fStudyCounts = new List<int>();
+
     foreach (var topic in simVars)
     {
         if (firstCheck == true)
@@ -100,9 +106,9 @@ private static void YmaxFirsts()
             fStudyCounts.Add(count);
             firstCheck = false;
         }
-        else if(firstCheck == false)
+        else
         {
-            tempDateOne = DateTime.Parse(fStudyDates.ElementAt(index - Constants.ONE_INT));
+            tempDateOne = DateTime.Parse(fStudyDates.ElementAt(index));
             tempDateTwo = DateTime.Parse(topic.First_Date);
             dateCompare = DateTime.Compare(tempDateOne, tempDateTwo);
 
@@ -130,14 +136,14 @@ private static void YmaxFirsts()
     while (count < Constants.TWO_INT)
     {  
         
-        for (j = 2; j < fStudyCounts.Count; ++j)
+        for (j = Constants.TWO_INT; j < fStudyCounts.Count; ++j)
         {
             keyOne = fStudyCounts.ElementAt(j);
             keyTwo = fStudyDates.ElementAt(j);
 
             // Insert fStudyCounts[j] into sorted sequence fStudyCounts[1...j-1]
             // Insert fStudyDates[j] into sorted sequence fStudyDates[1...j-1]
-            i = j-Constants.ONE_INT;
+            i = j - Constants.ONE_INT;
             while (i > Constants.ONE_INT && fStudyCounts.ElementAt(i) > keyOne)
             {
                 fStudyCounts.ElementAt(i + Constants.ONE_INT) = fStudyCounts.ElementAt(i);
@@ -169,21 +175,29 @@ private static void YmaxFirsts()
     /******************
     Sorting Section End
     ******************/
-    Convert.ToDouble(fStudyCounts.ElementAt(index));
-    index = fStudyCounts.Count - Constants.ONE_INT;
-    predictVars.Y_High_Date = fStudyDates.ElementAt(index);
-    predictVars.Y_High_Ycount = Convert.ToDouble(fStudyCounts.ElementAt(index));
+    // I forgot that there may be multiple dates with the same
+    // number of topics studied for the first time.
+    // This means that each of the dates with the equally highest number of 
+    // first topics studied needs to be used, so that the one with the highest
+    // number of repetitions also performed can be used for Y_High_Xcount
+    // Since this method does not count previously studied repetitions,
+    // then the dates just need to be passed to a list instead of the first
+    // single date with the highest count being passed to a variable.
+    
+    //index = fStudyCounts.Count - Constants.ONE_INT;
+    // predictVars.Y_High_Date = fStudyDates.ElementAt(index);
+    // predictVars.Y_High_Ycount = Convert.ToDouble(fStudyCounts.ElementAt(index));
 
-    //Test that it is higher
-    if (predictVars.Y_High_Ycount > fStudyCounts.ElementAt(ZERO)){
-        Console.WriteLine("Y_High_Ycount is higher. Test Passed");
-        Console.ReadLine();
-    }
-    else
-    {
-        Console.WriteLine("Y_High_Ycount is higher. Test Failed");
-        Console.ReadLine();
-    }
+    // //Test that it is higher
+    // if (predictVars.Y_High_Ycount > fStudyCounts.ElementAt(ZERO)){
+    //     Console.WriteLine("Y_High_Ycount is higher. Test Passed");
+    //     Console.ReadLine();
+    // }
+    // else
+    // {
+    //     Console.WriteLine("Y_High_Ycount is higher. Test Failed");
+    //     Console.ReadLine();
+    // }
 }
 private static void SimulatePastStudies()
 {
@@ -235,7 +249,6 @@ private static void YmaxRepeats()
     DateTime yMaxDate =  DateTime.Parse(predictVars.Y_High_Date);
     DateTime dateCompare;
     predictVars.Y_High_Xcount = Constants.ZERO_INT;
-    if (studyVars.dateCompare == Constants.ZERO_INT)
 
     foreach (var topic in genSimsStudied)
     {
@@ -247,13 +260,23 @@ private static void YmaxRepeats()
 }
 private static void XmaxRepeats()
 {
-    foreach (var topic in genSimsStudied)
+    int index = Constants.ZERO_INT;
+    // int topicIndex = Constants.ZERO_INT;
+    int maxReps = Constants.ZERO_INT;
+    int maxMultiply = Constants.ZERO_INT;
+    foreach (var topic in simVars)
     {
-        topicDate =  DateTime.Parse(topic.Repetition_Date);
-        dateCompare =  = DateTime.Compare(topicDate, yMaxDate);
-        if (topic.Sim_Repetition > Constants.ONE_INT && dateCompare == Constants.ZERO_INT)
-            ++predictVars.Y_High_Xcount;
+        if (index == Constants.ZERO_INT)
+            maxReps = topic.Real_Repetition;
+        
+        if (maxReps < topic.Real_Repetition)
+            maxReps = topic.Real_Repetition;
     }
+    foreach (var topic in simVars)
+        if (maxReps == topic.Real_Repetition)
+            ++maxMultiply;
+    predictVars.
+    
 }
 private static void XmaxFirsts()
 {
