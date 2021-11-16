@@ -39,7 +39,7 @@ private static void PredictLast()
     XmaxRepeats();
     XmaxFirsts();
 
-    GenerateProjectedS);
+    GenerateProjectedStudies();
     /*****************/
 
     // Make function to clear lists that need to be cleared.
@@ -89,14 +89,15 @@ private static void CollectFirstStudies()
 }
 private static void YmaxFirsts()
 {
+    List<string> fStudyDates = new List<string>();
+    List<int> fStudyCounts = new List<int>();
     bool firstCheck = true;
     int index = Constants.ZERO_INT;
     int count = Constants.ONE_INT;
     int dateCompare;
     DateTime tempDateOne;
     DateTime tempDateTwo;    
-    List<string> fStudyDates = new List<string>();
-    List<int> fStudyCounts = new List<int>();
+
 
     foreach (var topic in simVars)
     {
@@ -268,31 +269,27 @@ private static void YmaxRepeats()
     DateTime dateCompare;
     int index = Constants.ZERO_INT;
 
+/*Maybe use modification of this to get xMaxList values*/
     while (index < yMaxList.Count)
     {
         yMaxDate = yMaxList.ElementAt(index).High_Date;
         foreach (var topic in genSimsStudied)
         {
             topicDate =  DateTime.Parse(topic.Repetition_Date);
-            dateCompare =  = DateTime.Compare(topicDate, yMaxDate);
+            dateCompare = DateTime.Compare(topicDate, yMaxDate);
             if (topic.Sim_Repetition > Constants.ONE_INT && dateCompare == Constants.ZERO_INT)
                 ++yMaxList.ElementAt(index).X_Count;
         }
         ++index;
     }
 
-    bool firstCheck = true;
     double check = Constants.ZERO_INT;
     int useable = Canstants.ZERO_INT;
     index = Constants.ZERO_INT;
+    check = yMaxList.ElementAt(index).X_Count;
     while (index < yMaxList.Count)
     {
-        if (firstCheck == true)
-        {
-            firstCheck = false;
-            check = yMaxList.ElementAt(index).X_Count;
-        }
-        else if ((index + Constants.ONE_INT) <= yMaxList.Count)
+        if ((index + Constants.ONE_INT) < yMaxList.Count)
             if (check < yMaxList.ElementAt(index + Constants.ONE_INT).X_Count)
             {
                 check = yMaxList.ElementAt(index + Constants.ONE_INT).X_Count;
@@ -305,29 +302,97 @@ private static void YmaxRepeats()
 }
 private static void XmaxRepeats()
 {
-
-    
-
-    // This stuff was not going to work.
-    // I was really tired when I wrote it.
-    
     // I have to make a copy of genSimsStudied
-    SimModel studiedSims = new SimModel();
+    List<SimModel> studiedSims = new List<SimModel>();
 
-    // I have to use insertion sort to order the 
-    // dates to allow me easily count x-values,
-    // and y-values
+    studiedSims.Add(genSimsStudied);
+    xMaxSortList.Add(studiedSims);
+    XmaxRepeatSort();
+    studiedSims.Clear();
+    studiedSims.Add(xMaxSortList);
+    xMaxSortList.Clear();
+
+    //Get X
+    List<string> tempDates = new List<string>();
+    List<int> dateCounts = new List<int>();
+    int index = Constants.ZERO_INT;
+    int firstRep = Constants.ONE_INT;
+    bool firstCheck = true;
 
     // int32 something = DateTime.Compare(t1 , t2);
     // if something < zero, then t1 is earlier than t2
     // if something == zero, then same day
     // if something > zero, then t1 is later than t2
-    SimModel listKey = new SimModel();
-    studiedSims.Add(genSimsStudied);
+    foreach (var section in studiedSims)
+    {
+        if (firstCheck == true)
+        {
+            if (firstRep != section.Sim_Repetition)
+            {
+                dateCounts.Add(Constants.ZERO_INT);
+                tempDates.Add(section.Repetition_Date);
+                firstCheck = false;
+            }
+        }
+        if (firstCheck == false) // Must not be an else for logic to work
+        {
+            if (firstRep != section.Sim_Repetition)
+            {
+                if (tempDates.ElementAt(index) == section.Repetition_Date)
+                    ++dateCounts.ElementAt(index);
+                else
+                {
+                    ++index;
+                    tempDates.Add(section.Repetition_Date);
+                    dateCounts.Add(Constants.ONE_INT);
+                }
+            }
+        }
+    }
+
+    // Each of the dates with the equally highest number of 
+    // repeat topics studied needs to be used, so that the 
+    // one with the highest number of first studies also performed 
+    // can be used for X_High_Ycount Since this method does not 
+    // count first study repetitions, then the dates just 
+    // need to be passed to a list instead of the first single 
+    // date with the highest X count being passed to a variable.
     
-    /******************
-    Sorting Section Start
-    ******************/
+    List<int> elementList = new List<int>();
+    int check = Constants.ZERO_INT;
+    index = dateCounts.Count - Constants.ONE_INT;
+    firstCheck = true;
+    while (index > Constants.ZERO_INT)
+    {
+        if (firstCheck == true)
+        {
+            firstCheck = false;
+            elementList.Add(index);
+            check = dateCounts.ElementAt(index);
+        }
+        else if ((index - Constants.ONE_INT) >= Constants.ZERO_INT)
+            if (check == dateCounts.ElementAt(index - Constants.ONE_INT))
+                elementList.Add(index - Constants.ONE_INT);
+        --index;
+    }
+
+    // Add all highest dates to list. Date with highest Y-intercept
+    // will be selected from the xMaxList later.
+    List<PointLimits> tempElements = new List<PointLimits>();
+    index = Constants.ZERO_INT;
+    while (index < elementList.Count)
+    {
+        tempElements.High_Date = tempDates.ElementAt(elementList.ElementAt(index));
+        tempElements.X_Count = dateCounts.ElementAt(elementList(index));
+        
+        xMaxList.Add(tempElements);
+        ++index;
+    }
+    
+}
+private static void XmaxRepeatSort()
+{
+    SimModel listKey = new SimModel();
     int j, i, dateCheck, count;
 
     i = Constants.ZERO_INT;
@@ -336,19 +401,19 @@ private static void XmaxRepeats()
     while (count < Constants.TWO_INT)
     {  
         
-        for (j = Constants.TWO_INT; j < studiedSims.Count; ++j)
+        for (j = Constants.TWO_INT; j < xMaxSortList.Count; ++j)
         {
-            listKey = studiedSims.ElementAt(j);
+            listKey = xMaxSortList.ElementAt(j);
 
-            // Insert studiedSims[j] into sorted sequence studiedSims[1...j-1]
+            // Insert xMaxSortList[j] into sorted sequence xMaxSortList[1...j-1]
             i = j - Constants.ONE_INT;
-            dateCheck = DateTime.Compare(studiedSims.ElementAt(i).Repetition_Date, listKey.Repetition_Date);
+            dateCheck = DateTime.Compare(xMaxSortList.ElementAt(i).Repetition_Date, listKey.Repetition_Date);
             while (i > Constants.ONE_INT && dateCheck > Constants.ZERO_INT)
             {
-                studiedSims.ElementAt(i + Constants.ONE_INT) = studiedSims.ElementAt(i);
+                xMaxSortList.ElementAt(i + Constants.ONE_INT) = xMaxSortList.ElementAt(i);
                 i = i - Constants.ONE_INT;
             }
-            studiedSims.ElementAt(i + Constants.ONE_INT) = listKey;
+            xMaxSortList.ElementAt(i + Constants.ONE_INT) = listKey;
         }
 
         /* 
@@ -358,67 +423,83 @@ private static void XmaxRepeats()
         if (count == ZERO)
         {
             //key = A[ZERO];
-            listKey = studiedSims.ElementAt(Constants.ZERO_INT);
+            listKey = xMaxSortList.ElementAt(Constants.ZERO_INT);
             //A[ZERO] = A[ONE];
-            studiedSims.ElementAt(Constants.ZERO_INT) = studiedSims.ElementAt(Constants.ONE_INT);
+            xMaxSortList.ElementAt(Constants.ZERO_INT) = xMaxSortList.ElementAt(Constants.ONE_INT);
             //A[ONE] = key;
-            studiedSims.ElementAt(Constants.ONE_INT) = listKey;
+            xMaxSortList.ElementAt(Constants.ONE_INT) = listKey;
         }
         ++count;
     }
-    /******************
-    Sorting Section End
-    ******************/
-
-    // I then need to store the equally highest x-intercepts
-    // in the xMaxList. 
-    // genSimsStudied.Clear(); //might not need these two
-    // genSimsStudied.Add(studiedSims);
-    // List<int> useableIndices = new List<int>();
-    // PointLimits listKey = new PointLimits();
-    string repetitionDate;
-    string firstRepetition;
-    int useable = Constants.ZERO_INT;
-    bool firstCheck = true;
-    dateCheck = Constants.ZERO_INT;
-    count = Constants.ZERO_INT;
-    foreach (var section in studiedSims)
-    {
-        if (firstCheck == true)
-        {
-            firstCheck = false;
-            firstRepetition = section.First_Date;
-            repetitionDate = section.Repetition_Date;
-        }
-    }
-
-    // Add all highest dates to list. Date with highest Y-intercept
-    // will be selected from the xMaxList later.
-    
 }
 private static void XmaxFirsts()
 {
- // Then I need to find the highest y-intercept where the highest
-    // x-intercept exists. It does not matter if more than one
-    // date has the same x AND y intercepts.
-
-    // Use genSimsStudied list
-    // int topicIndex = Constants.ZERO_INT;
-    
+    // Use the date of highest repetition studies, 
+    // with the highest number of first studies occuring on that repetition date
+    // check all repetions in a loop
+    // If date == X_High_Date, && Sim_Repetition == 1
+    // Then Add 1 to X_High_Ycount
+    // Do this until there are no more elements
+    DateTime topicDate;
+    DateTime xMaxDate;      // There can exist more than one date with same X-value
+    DateTime dateCompare;
     int index = Constants.ZERO_INT;
+
     while (index < xMaxList.Count)
     {
-         if (firstCheck == true)
+        xMaxDate = xMaxList.ElementAt(index).High_Date;
+        foreach (var topic in genSimsStudied)
+        {
+            topicDate =  DateTime.Parse(topic.Repetition_Date);
+            dateCompare = DateTime.Compare(topicDate, xMaxDate);
+            if (topic.Sim_Repetition == Constants.ONE_INT && dateCompare == Constants.ZERO_INT)
+                ++xMaxList.ElementAt(index).Y_Count;
+        }
+        ++index;
     }
+
+    double check = Constants.ZERO_INT;
+    int useable = Canstants.ZERO_INT;
+    index = Constants.ZERO_INT;
+    check = xMaxList.ElementAt(index).Y_Count;
+    while (index < xMaxList.Count)
+    {
+        if ((index + Constants.ONE_INT) < xMaxList.Count)
+            if (check < xMaxList.ElementAt(index + Constants.ONE_INT).Y_Count)
+            {
+                check = xMaxList.ElementAt(index + Constants.ONE_INT).Y_Count;
+                useable = index + Constants.ONE_INT;
+            }
+        ++index;
+    }
+    predictVars.X_High_Ycount = xMaxList.ElementAt(useable).Y_Count;
+    predictVars.X_High_Xcount = xMaxList.ElementAt(useable).X_Count;
+}
+
+
+private static void CollectNonStudied()
+{
+    SimModel newSims = new SimModel();
+    int topicNumber = Constants.ZERO_INT;
+    foreach (var topic in TopicsList)
+        if (topic.Top_Studied == false)
+        {
+            newSims.First_Date = topic.First_Date;
+            newSims.Real_Repetition = topic.Top_Repetition;
+            newSims.Sim_Repetition = Constants.ZERO_INT;
+            newSims.Top_Difficulty = topic.Top_Difficulty;
+            newSims.Interval_Length = topic.Interval_Length;
+            newSims.Interval_Remaining = topic.Interval_Remaining;
+            newSims.Top_Number = topicNumber; 
+            genSimsProjected.Add(newSims);
+            ++topicNumber;
+        }
 }
 
 
 
 
-
-
-
-private static void GenerateProjected()
+private static void GenerateProjectedStudies()
 {
     // Make sure I got (x2 , y2)
 
