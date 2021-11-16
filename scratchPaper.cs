@@ -46,7 +46,7 @@ private static void PredictLast()
     // Do not call it here.
     // Call it after each real repetition is performed
     // This will allow results to update in real-time
-    simVars.Clear();
+    studiedSimVars.Clear();
     genSimsStudied.Clear();
     predictVars.Process_Prediction = false;
 }
@@ -81,9 +81,8 @@ private static void CollectFirstStudies()
             newSims.Sim_Repetition = Constants.ZERO_INT;
             newSims.Top_Difficulty = topic.Top_Difficulty;
             newSims.Interval_Length = topic.Interval_Length;
-            newSims.Interval_Remaining = topic.Interval_Remaining;
             newSims.Top_Number = topicNumber; 
-            simVars.Add(newSims);
+            studiedSimVars.Add(newSims);
             ++topicNumber;
         }
 }
@@ -99,7 +98,7 @@ private static void YmaxFirsts()
     DateTime tempDateTwo;    
 
 
-    foreach (var topic in simVars)
+    foreach (var topic in studiedSimVars)
     {
         if (firstCheck == true)
         {
@@ -225,7 +224,7 @@ private static void SimulatePastStudies()
     int repetitionIndex = Constants.ZERO_INT;
     predictVars.Gen_Studied_Index = Constants.ZERO_INT;
 
-    foreach (var topic in simVars)
+    foreach (var topic in studiedSimVars)
     {
         while (repetitionIndex < topic.Real_Repetition)
         {
@@ -476,22 +475,21 @@ private static void XmaxFirsts()
     predictVars.X_High_Xcount = xMaxList.ElementAt(useable).X_Count;
 }
 
-
 private static void CollectNonStudied()
 {
     SimModel newSims = new SimModel();
-    int topicNumber = Constants.ZERO_INT;
+    int index = studiedSimVars.Count - Constants.ONE_INT;
+    int topicNumber = studiedSimVars.ElementAt(index).Top_Number + Constants.ONE_INT;
     foreach (var topic in TopicsList)
         if (topic.Top_Studied == false)
         {
             newSims.First_Date = topic.First_Date;
             newSims.Real_Repetition = topic.Top_Repetition;
             newSims.Sim_Repetition = Constants.ZERO_INT;
-            newSims.Top_Difficulty = topic.Top_Difficulty;
-            newSims.Interval_Length = topic.Interval_Length;
-            newSims.Interval_Remaining = topic.Interval_Remaining;
+            newSims.Top_Difficulty = predictVars.Avg_Difficulty;
+            newSims.Interval_Length = Constants.ZERO_INT;
             newSims.Top_Number = topicNumber; 
-            genSimsProjected.Add(newSims);
+            projectedSimVars.Add(newSims);
             ++topicNumber;
         }
 }
@@ -501,7 +499,10 @@ private static void CollectNonStudied()
 
 private static void GenerateProjectedStudies()
 {
-    // Make sure I got (x2 , y2)
+    // Make sure I got (x2 , y2) AND (x1 , y1)
+
+    // x2 = X_High_Xcount, y2 = X_High_Ycount
+    // x1 = Y_High_Xcount, y1 = Y_High_Ycount
 
     // Use Avg_Difficulty
 
@@ -518,7 +519,7 @@ private static void GenerateProjectedStudies()
     // get slope m
     // m = (y2 - y1)/(x2 - x1)
 
-    // In order to get y for e
+    // In order to get y for every day
     // get y
     // y = mx + b
 
