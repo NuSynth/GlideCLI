@@ -499,44 +499,27 @@ private static void CollectNonStudied()
 
 private static void GenerateProjectedStudies()
 {
-    // Make sure I got (x2 , y2) AND (x1 , y1)
+    DateTime startDate, previousDate, simDate;
+    int totalTopics, count;
+    startDate = DateTime.Now;
+    predictVars.Sim_Date_Use = startDate.ToString("d");
+    totalTopics = projectedSimVars.Count;
+    count = Constants.ZERO_INT;
 
-    // x2 = X_High_Xcount, y2 = X_High_Ycount
-    // x1 = Y_High_Xcount, y1 = Y_High_Ycount
-
-    // Use Avg_Difficulty
-
-    // generate genSimsProjected list
-
-    // Maximum amount of new topics that can be simulated being studied, 
-    // depends on the number of repetitions that have to be performed for
-    // the day.
-
-    // Since we are finding the value of y, by using the value of x, and
-    // since we have 2 points of data already, we can use the
-    // slope-intercept formula:
-
-    // get slope m
-    // m = (y2 - y1)/(x2 - x1)
-
-    // In order to get y for every day
-    // get y
-    // y = mx + b
-
-
-SimModel projectedDates = new SimModel();
-List<int> yCounts = new List<int>();
-List<int> xCounts = new List<int>();
-    foreach (var topic in genSimsStudied)
+    predictVars.Process_Gen_Sims_Studied = false;
+    while (count < totalTopics)
     {
-        if (topic.Real_Repetition == topic.Sim_Repetition)
-        {
-            // 
-        }
+        predictStudies();
+        previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
+        simDate = previousDate.AddDays(Constants.ONE_INT);
+        predictVars.Sim_Date_Use = simDate.ToString("d");
+        totalTopics = projectedSimVars.Count;
     }
-
-
-
+    predictVars.Process_Gen_Sims_Studied = true;
+}
+private static void predictStudies()
+{
+    
 }
 
 /**************SimulateDates**************/
@@ -551,7 +534,7 @@ private static void SimAddRepetition()
     if (predictVars.Process_Gen_Sims_Studied == true)
         ++genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Sim_Repetition;
     else
-        ++genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
+        ++genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
 }
 private static void SimIntervalTime()
 {
@@ -568,9 +551,9 @@ private static void SimIntervalTime()
     }
     else
     {
-        difficulty = genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Top_Difficulty;
-        ithRepetition = genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
-        intervalLength = genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
+        difficulty = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Difficulty;
+        ithRepetition = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
+        intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
     }
 
 
@@ -588,7 +571,7 @@ private static void SimIntervalTime()
     if (predictVars.Process_Gen_Sims_Studied == true)
         genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length = intervalLength;
     else
-        genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Interval_Length = intervalLength;
+        genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length = intervalLength;
 }
 private static void SimProcessDate()
 {
@@ -609,9 +592,9 @@ private static void SimProcessDate()
     }
     else
     {
-        intervalLength = genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
+        intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
         days = Convert.ToInt32(intervalLength / SINGLE_DAY);
-        fakeToday = DateTime.Parse(genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
+        fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
         nextDate = fakeToday.AddDays(days);
         nextDateString = nextDate.ToString("d");
     }
@@ -619,5 +602,5 @@ private static void SimProcessDate()
     if (predictVars.Process_Gen_Sims_Studied == true)
         genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Next_Date = nextDateString;
     else
-        genSimsProjected.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
+        genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
 }

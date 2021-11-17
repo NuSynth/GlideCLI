@@ -18,6 +18,7 @@ namespace GlideCLI.Models
 
         //Strings
         public string Sim_Nxt_Date {get; set;}
+        public string Sim_Date_Use {get; set;} // The date being simulated
 
 
 
@@ -49,5 +50,9 @@ namespace GlideCLI.Models
         //public string X_High_Date {get; set;} 
         public double X_High_Ycount {get; set;}
         public double X_High_Xcount {get; set;}
+
+
+        public double Current_X {get; set;} // needs to be type double
+        public int Current_Y {get; set;} //needs to be type int
     }
 }
