@@ -26,7 +26,7 @@ private static void PredictLast()
     // For point (x1 , y1), where y1 is maximum first studies performed
     // x1 is number of repeat studies performed at max first studies
     CollectFirstStudies();      // Get first study dates of studied topics
-    if (studiedSimVars.Count > Constants.ZERO)
+    if (studiedSimList.Count > Constants.ZERO)
     {
         YmaxFirsts();               // Get y1: max Y First Studies for point Ymax
         SimulatePastStudies();      // Produce real repeats
@@ -48,8 +48,7 @@ private static void PredictLast()
         // Do not call it here.
         // Call it after each real repetition is performed
         // This will allow results to update in real-time
-        studiedSimVars.Clear();
-        genSimsStudied.Clear();
+
         // predictVars.Process_Prediction = false; I think I used something else
     }
 }
@@ -85,7 +84,7 @@ private static void CollectFirstStudies()
             newSims.Top_Difficulty = topic.Top_Difficulty;
             newSims.Interval_Length = topic.Interval_Length;
             newSims.Top_Number = topicNumber; 
-            studiedSimVars.Add(newSims);
+            studiedSimList.Add(newSims);
             ++topicNumber;
         }
 }
@@ -101,7 +100,7 @@ private static void YmaxFirsts()
     DateTime tempDateTwo;    
 
 
-    foreach (var topic in studiedSimVars)
+    foreach (var topic in studiedSimList)
     {
         if (firstCheck == true)
         {
@@ -227,7 +226,7 @@ private static void SimulatePastStudies()
     int repetitionIndex = Constants.ZERO_INT;
     predictVars.Gen_Studied_Index = Constants.ZERO_INT;
 
-    foreach (var topic in studiedSimVars)
+    foreach (var topic in studiedSimList)
     {
         while (repetitionIndex < topic.Real_Repetition)
         {
@@ -480,8 +479,8 @@ private static void XmaxFirsts()
 private static void CollectNonStudied()
 {
     SimModel newSims = new SimModel();
-    int index = studiedSimVars.Count - Constants.ONE_INT;
-    int topicNumber = studiedSimVars.ElementAt(index).Top_Number + Constants.ONE_INT;
+    int index = studiedSimList.Count - Constants.ONE_INT;
+    int topicNumber = studiedSimList.ElementAt(index).Top_Number + Constants.ONE_INT;
     foreach (var topic in TopicsList)
         if (topic.Top_Studied == false)
         {
@@ -491,7 +490,7 @@ private static void CollectNonStudied()
             newSims.Top_Difficulty = predictVars.Avg_Difficulty;
             newSims.Interval_Length = Constants.ZERO_INT;
             newSims.Top_Number = topicNumber; 
-            projectedSimVars.Add(newSims);
+            projectedSimList.Add(newSims);
             ++topicNumber;
         }
 }
@@ -502,10 +501,10 @@ private static void CollectNonStudied()
 private static void GenerateProjectedStudies()
 {
     DateTime startDate, previousDate, simDate;
-    int totalTopics, count;
+    int totalTopics, count, predictedIndex;
     startDate = DateTime.Now;
     predictVars.Sim_Date_Use = startDate.ToString("d");
-    totalTopics = projectedSimVars.Count;
+    totalTopics = projectedSimList.Count;
     count = Constants.ZERO_INT;
 
     predictVars.Process_Gen_Sims_Studied = false;
@@ -515,8 +514,13 @@ private static void GenerateProjectedStudies()
         previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
         simDate = previousDate.AddDays(Constants.ONE_INT);
         predictVars.Sim_Date_Use = simDate.ToString("d");
-        totalTopics = projectedSimVars.Count;
+        totalTopics = projectedSimList.Count;
     }
+    predictedIndex = studiedSimList.Count - Constants.ONE_INT;
+    predictVars.Prediction_Date = studiedSimList.ElementAt(predictedIndex).Next_Date;
+    studiedSimList.Clear();
+    genSimsStudied.Clear();
+    projectedSimList.Clear();
     predictVars.Process_Gen_Sims_Studied = true;
 }
 private static void PredictStudies()
@@ -533,8 +537,10 @@ private static void PredictStudies()
     {
         predictVars.Gen_Projected_Index = studyRepElements.ElementAt(index);
         SimCalculateLearning();
+        ++index;
     }
     studyRepElements.Clear();
+    genSimsAll.Clear();
 }
 private static void CollectStudyX()
 {
@@ -544,7 +550,7 @@ private static void CollectStudyX()
 
     // Get 2nd rep studies
     int index, repCheck = Constants.ZERO_INT;
-    foreach (var topic in studiedSimVars)
+    foreach (var topic in studiedSimList)
     {
         nextDate = DateTime.Parse(topic.Next_Date);
         dateCompare = DateTime.Compare(nextDate, useDate);
@@ -560,7 +566,7 @@ private static void CollectStudyX()
 
     // Get Late
     index = Constants.ZERO_INT;
-    foreach (var topic in studiedSimVars)
+    foreach (var topic in studiedSimList)
     {
         nextDate = DateTime.Parse(topic.Next_Date);
         dateCompare = DateTime.Compare(nextDate, useDate);
@@ -576,7 +582,7 @@ private static void CollectStudyX()
     
     //Get On-Time
     index = Constants.ZERO_INT;
-    foreach (var topic in studiedSimVars)
+    foreach (var topic in studiedSimList)
     {
         nextDate = DateTime.Parse(topic.Next_Date);
         dateCompare = DateTime.Compare(nextDate, useDate);
@@ -590,7 +596,7 @@ private static void CollectStudyX()
         ++index;
     }
     predictVars.Current_X = repCheck;
-    genSimsAll.Add(studiedSimVars);
+    genSimsAll.Add(studiedSimList);
 }
 private static void FindYatX()
 {
@@ -612,7 +618,7 @@ private static void CollectStudyY()
     int index = Constants.ZERO_INT;
     while (index < predictVars.Current_Y)
     {
-        if (projectedSimVars.Count >= predictVars.Current_Y)
+        if (projectedSimList.Count >= predictVars.Current_Y)
         {
             ++yToStudied;
             studyRepElements.Add(yToStudied);
@@ -622,13 +628,13 @@ private static void CollectStudyY()
     index = Constants.ZERO_INT;
     while (index < predictVars.Current_Y)
     {
-        if (projectedSimVars.Count >= predictVars.Current_Y)
+        if (projectedSimList.Count >= predictVars.Current_Y)
         {
-            genSimsAll.Add(projectedSimVars.ElementAt(index));
+            genSimsAll.Add(projectedSimList.ElementAt(index));
             ++index;
         }
-        else if (projectedSimVars.Count > Constants.ZERO_INT)
-            genSimsAll.Add(projectedSimVars);
+        else if (projectedSimList.Count > Constants.ZERO_INT)
+            genSimsAll.Add(projectedSimList);
     }
 }
 private static void ReduceNew()
@@ -637,14 +643,14 @@ private static void ReduceNew()
     int index = Constants.ZERO_INT;
     if (projectedSims.Count > Constants.ZERO_INT)
     {
-        foreach (var topic in projectedSimVars)
+        foreach (var topic in projectedSimList)
         {
             if (index >= predictVars.Current_Y)
                 reducedProjected.Add(topic);
             ++index;
         }
-        projectedSimVars.Clear();
-        projectedSimVars.Add(reducedProjected);
+        projectedSimList.Clear();
+        projectedSimList.Add(reducedProjected);
     }
 }
 

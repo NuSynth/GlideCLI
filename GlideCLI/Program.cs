@@ -17,10 +17,10 @@ namespace GlideCLI
         
         /***********************************************/
         // Start of parts to predict date of last topic being studied
-        static List<SimModel> studiedSimVars = new List<SimModel>();
-        static List<SimModel> projectedSimVars = new List<SimModel>();
+        static List<SimModel> studiedSimList = new List<SimModel>();
+        static List<SimModel> projectedSimList = new List<SimModel>();
         static List<SimModel> genSimsStudied = new List<SimModel>();
-        static List<SimModel> genSimsProjected = new List<SimModel>();     
+        //static List<SimModel> genSimsProjected = new List<SimModel>();     
         static List<SimModel> genSimsAll = new List<SimModel>();
         static List<PointLimits> yMaxList = new List<PointLimits>();
         static List<PointLimits> xMaxList = new List<PointLimits>();
