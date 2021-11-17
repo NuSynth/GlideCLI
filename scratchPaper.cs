@@ -10,7 +10,7 @@ putting them into the program.
 
 private static void PredictLast()
 {
-    predictVars.Process_Prediction = true;
+    // predictVars.Process_Prediction = true; I think I used something else
     // Use actual difficulties for studied topics
     // But get average of real difficulties to use 
     // for non-studied topics for them to be simulated
@@ -26,29 +26,32 @@ private static void PredictLast()
     // For point (x1 , y1), where y1 is maximum first studies performed
     // x1 is number of repeat studies performed at max first studies
     CollectFirstStudies();      // Get first study dates of studied topics
-    YmaxFirsts();               // Get y1: max Y First Studies for point Ymax
-    SimulatePastStudies();      // Produce real repeats
-    YmaxRepeats();              // Get x1: max X Repeat Studies for point Ymax
+    if (studiedSimVars.Count > Constants.ZERO)
+    {
+        YmaxFirsts();               // Get y1: max Y First Studies for point Ymax
+        SimulatePastStudies();      // Produce real repeats
+        YmaxRepeats();              // Get x1: max X Repeat Studies for point Ymax
 
-    // Since all the past study sessions are simulated and collected 
-    // already, we just need to get the XmaxRepeats and XmaxFirsts.
+        // Since all the past study sessions are simulated and collected 
+        // already, we just need to get the XmaxRepeats and XmaxFirsts.
 
-    // Point Xmax (x2 , y2)
-    // For point (x2 , y2), where x2 is maximum  repeat studies performed
-    // y2 is number of first studies performed at max repeat studies
-    XmaxRepeats();
-    XmaxFirsts();
+        // Point Xmax (x2 , y2)
+        // For point (x2 , y2), where x2 is maximum  repeat studies performed
+        // y2 is number of first studies performed at max repeat studies
+        XmaxRepeats();
+        XmaxFirsts();
 
-    GenerateProjectedStudies();
-    /*****************/
+        GenerateProjectedStudies();
+        /*****************/
 
-    // Make function to clear lists that need to be cleared.
-    // Do not call it here.
-    // Call it after each real repetition is performed
-    // This will allow results to update in real-time
-    studiedSimVars.Clear();
-    genSimsStudied.Clear();
-    predictVars.Process_Prediction = false;
+        // Make function to clear lists that need to be cleared.
+        // Do not call it here.
+        // Call it after each real repetition is performed
+        // This will allow results to update in real-time
+        studiedSimVars.Clear();
+        genSimsStudied.Clear();
+        // predictVars.Process_Prediction = false; I think I used something else
+    }
 }
 private static void avgDiff()
 {
@@ -268,7 +271,6 @@ private static void YmaxRepeats()
     DateTime dateCompare;
     int index = Constants.ZERO_INT;
 
-/*Maybe use modification of this to get xMaxList values*/
     while (index < yMaxList.Count)
     {
         yMaxDate = yMaxList.ElementAt(index).High_Date;
@@ -509,7 +511,7 @@ private static void GenerateProjectedStudies()
     predictVars.Process_Gen_Sims_Studied = false;
     while (count < totalTopics)
     {
-        predictStudies();
+        PredictStudies();
         previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
         simDate = previousDate.AddDays(Constants.ONE_INT);
         predictVars.Sim_Date_Use = simDate.ToString("d");
@@ -517,10 +519,136 @@ private static void GenerateProjectedStudies()
     }
     predictVars.Process_Gen_Sims_Studied = true;
 }
-private static void predictStudies()
+private static void PredictStudies()
+{
+    // Index values for elements to be calculated 
+    // stored in studyRepElements list.
+    CollectStudyX();
+    FindYatX();
+    CollectStudyY();
+    ReduceNew();
+
+    int index = Constants.ZERO_INT;
+    while (index < studyRepElements.Count)
+    {
+        predictVars.Gen_Projected_Index = studyRepElements.ElementAt(index);
+        SimCalculateLearning();
+    }
+    studyRepElements.Clear();
+}
+private static void CollectStudyX()
 {
     
+    DateTime useDate, nextDate, dateCompare;
+    useDate = DateTime.Parse(predictVars.Sim_Date_Use);
+
+    // Get 2nd rep studies
+    int index, repCheck = Constants.ZERO_INT;
+    foreach (var topic in studiedSimVars)
+    {
+        nextDate = DateTime.Parse(topic.Next_Date);
+        dateCompare = DateTime.Compare(nextDate, useDate);
+
+        if (dateCompare <= Constants.ZERO_INT && topic.Real_Repetition == Constants.TWO_INT)
+            if (repCheck < predictVars.X_High_Xcount)
+            {
+                studyRepElements.Add(index);
+                ++repCheck;
+            }
+        ++index;
+    }
+
+    // Get Late
+    index = Constants.ZERO_INT;
+    foreach (var topic in studiedSimVars)
+    {
+        nextDate = DateTime.Parse(topic.Next_Date);
+        dateCompare = DateTime.Compare(nextDate, useDate);
+
+        if (dateCompare < Constants.ZERO_INT && topic.Real_Repetition != Constants.TWO_INT)
+            if (repCheck < predictVars.X_High_Xcount)
+            {
+                studyRepElements.Add(index);
+                ++repCheck;
+            }
+        ++index;
+    }
+    
+    //Get On-Time
+    index = Constants.ZERO_INT;
+    foreach (var topic in studiedSimVars)
+    {
+        nextDate = DateTime.Parse(topic.Next_Date);
+        dateCompare = DateTime.Compare(nextDate, useDate);
+
+        if (dateCompare == Constants.ZERO_INT && topic.Real_Repetition != Constants.TWO_INT)
+            if (repCheck < predictVars.X_High_Xcount)
+            {
+                studyRepElements.Add(index);
+                ++repCheck;
+            }
+        ++index;
+    }
+    predictVars.Current_X = repCheck;
+    genSimsAll.Add(studiedSimVars);
 }
+private static void FindYatX()
+{
+    double xOne, yOne, xTwo, yTwo, slopeM, yCurrent, xCurrent, valueB;
+    xOne = predictVars.Y_High_Xcount;
+    yOne = predictVars.Y_High_Ycount;
+    xTwo = predictVars.X_High_Xcount;
+    yTwo = predictVars.X_High_Ycount;
+    xCurrent = predictVars.Current_X;
+    valueB = yOne;
+    slopeM = (yTwo - yOne) / (xTwo - xOne);
+    yCurrent = (slopeM * xCurrent) + valueB;
+
+    predictVars.Current_Y = (int)yCurrent;
+}
+private static void CollectStudyY()
+{
+    int yToStudied = genSimsAll.Count - Constants.ONE_INT;
+    int index = Constants.ZERO_INT;
+    while (index < predictVars.Current_Y)
+    {
+        if (projectedSimVars.Count >= predictVars.Current_Y)
+        {
+            ++yToStudied;
+            studyRepElements.Add(yToStudied);
+        }
+        ++index;
+    }
+    index = Constants.ZERO_INT;
+    while (index < predictVars.Current_Y)
+    {
+        if (projectedSimVars.Count >= predictVars.Current_Y)
+        {
+            genSimsAll.Add(projectedSimVars.ElementAt(index));
+            ++index;
+        }
+        else if (projectedSimVars.Count > Constants.ZERO_INT)
+            genSimsAll.Add(projectedSimVars);
+    }
+}
+private static void ReduceNew()
+{
+    List<SimModel> reducedProjected = new List<SimModel>();
+    int index = Constants.ZERO_INT;
+    if (projectedSims.Count > Constants.ZERO_INT)
+    {
+        foreach (var topic in projectedSimVars)
+        {
+            if (index >= predictVars.Current_Y)
+                reducedProjected.Add(topic);
+            ++index;
+        }
+        projectedSimVars.Clear();
+        projectedSimVars.Add(reducedProjected);
+    }
+}
+
+
 
 /**************SimulateDates**************/
 private static void SimCalculateLearning()

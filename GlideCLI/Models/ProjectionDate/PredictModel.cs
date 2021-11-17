@@ -54,5 +54,8 @@ namespace GlideCLI.Models
 
         public double Current_X {get; set;} // needs to be type double
         public int Current_Y {get; set;} //needs to be type int
+
+
+        public string Prediction_Date {get; set;}
     }
 }

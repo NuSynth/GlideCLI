@@ -25,7 +25,7 @@ namespace GlideCLI
         static List<PointLimits> yMaxList = new List<PointLimits>();
         static List<PointLimits> xMaxList = new List<PointLimits>();
         static List<PointLimits> xMaxSortList = new List<PointLimits>();
-
+        static List<int> studyRepElements = new List<int>();
         static PredictModel predictVars = new PredictModel();
         // End of parts to predict date of last topic being studied
         /***********************************************/
