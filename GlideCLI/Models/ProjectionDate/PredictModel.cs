@@ -57,5 +57,6 @@ namespace GlideCLI.Models
 
 
         public string Prediction_Date {get; set;}
+        //public bool Loop_Entered {get; set;} // To know if a date was stored.
     }
 }

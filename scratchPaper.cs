@@ -8,7 +8,13 @@ putting them into the program.
 // I was pretty tired when I wrote a lot of this.
 // Go through and correct some of the bad logic.
 
-private static void PredictLast()
+
+
+
+
+
+/***********************************PREDICTION START*********************************************/
+private static void PredictMain()
 {
     // predictVars.Process_Prediction = true; I think I used something else
     // Use actual difficulties for studied topics
@@ -52,7 +58,9 @@ private static void PredictLast()
         // predictVars.Process_Prediction = false; I think I used something else
     }
 }
-private static void avgDiff()
+
+
+private static void AvgDiff()
 {
     // Apply average of difficulty to simulation of 
     // calculating non-studied topics learning dates.
@@ -501,21 +509,23 @@ private static void CollectNonStudied()
 private static void GenerateProjectedStudies()
 {
     DateTime startDate, previousDate, simDate;
-    int totalTopics, count, predictedIndex;
+    int totalNewTopics, count, predictedIndex;
     startDate = DateTime.Now;
     predictVars.Sim_Date_Use = startDate.ToString("d");
-    totalTopics = projectedSimList.Count;
+    totalNewTopics = projectedSimList.Count;
     count = Constants.ZERO_INT;
 
     predictVars.Process_Gen_Sims_Studied = false;
-    while (count < totalTopics)
+    while (count < totalNewTopics)
     {
         PredictStudies();
         previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
         simDate = previousDate.AddDays(Constants.ONE_INT);
         predictVars.Sim_Date_Use = simDate.ToString("d");
-        totalTopics = projectedSimList.Count;
+        totalNewTopics = projectedSimList.Count;
     }
+    Console.WriteLine("DELETEME: Inside GenerateProjectedStudies\nGetting studiedSimList last date.\n");
+    Console.ReadLine();
     predictedIndex = studiedSimList.Count - Constants.ONE_INT;
     predictVars.Prediction_Date = studiedSimList.ElementAt(predictedIndex).Next_Date;
     studiedSimList.Clear();
@@ -527,6 +537,7 @@ private static void PredictStudies()
 {
     // Index values for elements to be calculated 
     // stored in studyRepElements list.
+    int totalNewTopics = Constants.ZERO_INT;
     CollectStudyX();
     FindYatX();
     CollectStudyY();
@@ -540,6 +551,14 @@ private static void PredictStudies()
         ++index;
     }
     studyRepElements.Clear();
+    totalNewTopics = projectedSimList.Count;
+    Console.WriteLine("DELETEME: Inside PredictStudies\nGetting gensimsAll last date.\n");
+    Console.ReadLine();
+    if (totalNewTopics == Constants.ZERO_INT)
+    {
+        predictedIndex = genSimsAll.Count - Constants.ONE_INT;
+        predictVars.Prediction_Date = genSimsAll.ElementAt(predictedIndex).Next_Date;
+    }
     genSimsAll.Clear();
 }
 private static void CollectStudyX()
@@ -738,3 +757,7 @@ private static void SimProcessDate()
     else
         genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
 }
+/***********************************PREDICTION END*********************************************/
+
+
+
