@@ -5,10 +5,15 @@ namespace GlideCLI.Models
         // Indices
         public int Gen_Studied_Index {get; set;}
         public int Gen_Projected_Index {get; set;}
+        public int Loop_Index {get; set;}
+        public int XrepIndex {get; set;}
+
         
         // Bools
         public bool Process_Prediction {get; set;}
         public bool Process_Gen_Sims_Studied {get; set;}
+        public bool First_Check {get; set;}
+
         
         //Ints
         public int Process_Repetitions {get; set;}
@@ -56,7 +61,28 @@ namespace GlideCLI.Models
         public int Current_Y {get; set;} //needs to be type int
 
 
+        //YmaxFirsts
         public string Prediction_Date {get; set;}
         //public bool Loop_Entered {get; set;} // To know if a date was stored.
+        public int Find_Yhigh_Index {get; set;}
+
+        //XmaxRepeatSort
+        public int J {get; set;}
+        public int I {get; set;}
+        public int Date_Check {get; set;}
+        public int Xsort_Count {get; set;}
+
+        //XmaxRepeats
+        public int Hold_Stuff {get; set;}
+
+
+
+        //Debug vars
+        public int debugWhileCount {get; set;}
+        public int debugFirstTrueCount {get; set;}
+        public int debugElseOneCount {get; set;}
+        public int debugElseTwoCount {get; set;}
+        public int debugElseThreeCount {get; set;}
+        public bool debugFunk {get; set;}
     }
 }
