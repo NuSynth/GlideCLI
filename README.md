@@ -1,4 +1,23 @@
-# Update
+# Update Nov 20th 2021: Completion prediction - a new feature coming soon!
+I decided to add another feature before converting the C# code into Vala for the simple GUI version using gtk, and then C with tcl/tk for FreeClear. It is going to predict the date that the last topic will be studied. I need this feature because I need to be able to know when I will finish studying each course. This will allow me to know this.
+
+It's not ready yet, so if you want to compile this program, get the source code from the latest release. This has a lot of debug points in it, so it would not be good to use to study.The current source code is just being used to back up my work as I work through this.
+
+The way it is planned to do it is pretty accurate. 
+
+There is a way to make this feature more accurate, for courses where the number of questions are not going to be changed while studying, and the items of information needed to be learned are already divided into their smallest constituent parts. But I didn't think about that until I already planned the algorithm out, and the current course I am studying does not meet that criteria. Also; that more accurate way of doing it is far less accurate for courses that do not meet that criteria. So the current design is more accurate at predicting my completion date of knowing the course I have prepared for the program.
+
+The current model of prediction relies on dates, and numbers of topics of first studies, and repetition studies. There will be diagrams uploaded later that will elaborate on exactly what is going on.
+
+The more accurate version, for courses that meet the criteria to allow it to be more accurate at predicting a completion date, will rely on dates, and numbers of questions from new topics, and numbers of questions from repetition topics. It will be a little more complicated to fully design.
+
+The current model of prediction based on topic numbers will still be in use in all future versions of the program. The prediction model based on question numbers will be added later to FreeClear. When the question based model is ready in FreeClear, then FreeClear will initially use the question based model of prediction for every subject, but will then revert to topic based prediction for a subject, if a new topic studied for said subject, results in a prediction that is further from it's predicted study date than it's predicted study date from the topic model of prediction. This will allow the program to decide on which model will produce a more accurate prediction of completion for a course.
+
+
+I ran into an issue that caused me to deviate from the design I had on paper, because I did not realize that List objects were just being assigned the addresses of variables, and not the values of the variables. I had to convert these assignment loop operations into loops that call funtions that each alocate new memory locations for the lists to point to, and to assign one element at a time within the called functions for each iteration of the loops. This simple change added a lot more parts that I have to manage. Within a week, the number of lines of code for this feature has grown this program from a little over 700 lines of code in the main page, to over 2,000 lines of code. At this point, I can't keep track of everything in my head anymore. I have to go make actual diagrams of everything, re-design some components, and then this should work. I expect this to be completed by Nov 27th at the latest. But I am not very good at guessing dates, which is why this feature is being built in the first place. So, it will be ready when it is finished.
+
+
+# Previous update
 I didn't plan to update this, but this morning I thought some specific features would be nice to have now before they are implemented in FreeClear.
 
 Updated to:

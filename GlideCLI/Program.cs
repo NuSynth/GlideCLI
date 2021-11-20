@@ -1026,6 +1026,8 @@ namespace GlideCLI
                 XmaxFirsts();
 
                 CollectNonStudied();
+                //Build the parts that give Avg_Difficulty to the non-studied!
+                // Process non-studied dates! Look at notes!
                 GenerateProjectedStudies();
                 /*****************/
 
@@ -1709,6 +1711,7 @@ namespace GlideCLI
             SimModel newSims = new SimModel();
             if (TopicsList.ElementAt(predictVars.Loop_Index).Top_Studied == false)
             {
+                //DELETEME - Note: replace this TopicList First_Date value with the date being simulated, I think
                 newSims.First_Date = TopicsList.ElementAt(predictVars.Loop_Index).First_Date;
                 newSims.Real_Repetition = TopicsList.ElementAt(predictVars.Loop_Index).Top_Repetition;
                 newSims.Sim_Repetition = Constants.ZERO_INT;
@@ -1786,7 +1789,7 @@ namespace GlideCLI
             if (totalNewTopics == Constants.ZERO_INT)
             {
                 predictedIndex = genSimsAll.Count - Constants.ONE_INT;
-                //predictVars.Prediction_Date = genSimsAll.ElementAt(predictedIndex).Next_Date;  MAYBE UNCOMMENT LATER
+                predictVars.Prediction_Date = genSimsAll.ElementAt(predictedIndex).Next_Date;  //DELETEME - delete this comment, or this line later. This is also set elsewhere.
             }
             genSimsAll.Clear();
         }
@@ -2022,14 +2025,12 @@ namespace GlideCLI
             }
             else
             {
-                Console.WriteLine($"genSimsAll.Count = {genSimsAll.Count}");
+                Console.WriteLine($"DELETEME genSimsAll.Count = {genSimsAll.Count}");
                 Console.ReadLine();
+
                 intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
                 days = Convert.ToInt32(intervalLength / SINGLE_DAY);
-                if (genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition == Constants.ONE_INT)
-                    fakeToday = DateTime.Parse(predictVars.Sim_Date_Use);
-                else
-                    fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
+                fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
                 nextDate = fakeToday.AddDays(days);
                 nextDateString = nextDate.ToString("d");
             }
@@ -2038,12 +2039,14 @@ namespace GlideCLI
                 genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Next_Date = nextDateString;
             else
             {
-                // This bracket is for debugging. Only keep genSimsAll after debugging.
+                // This bracket is for debugging. Only keep genSimsAll here after debugging.
                 genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
                 predictVars.debugTopic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
                 predictVars.Prediction_Date = nextDateString;
 
             }
+            Console.WriteLine($"DELETEME - inside last function\nPrediction Date = {predictVars.Prediction_Date}");
+            Console.ReadLine();
         }
         /***********************************PREDICTION END*********************************************/
         /*End: Create expected date of completing last topic*/
