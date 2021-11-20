@@ -1917,7 +1917,7 @@ namespace GlideCLI
         }
         private static void ReduceNew()
         {
-            Console.WriteLine($"DELETEME - is ReduceNew entered?");
+            Console.WriteLine($"DELETEME - ReduceNew entered - projectedSimList.Count = {projectedSimList.Count}");
             Console.ReadLine();
             int index = Constants.ZERO_INT;
             int count = Constants.ZERO_INT;
