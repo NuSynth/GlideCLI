@@ -7,12 +7,15 @@ namespace GlideCLI.Models
         public int Gen_Projected_Index {get; set;}
         public int Loop_Index {get; set;}
         public int XrepIndex {get; set;}
+        public int Sim_Past_Index {get; set;}
 
         
         // Bools
         public bool Process_Prediction {get; set;}
         public bool Process_Gen_Sims_Studied {get; set;}
         public bool First_Check {get; set;}
+        public bool First_Rep {get; set;}
+        public bool Only_ONE {get; set;}
 
         
         //Ints
@@ -24,6 +27,7 @@ namespace GlideCLI.Models
         //Strings
         public string Sim_Nxt_Date {get; set;}
         public string Sim_Date_Use {get; set;} // The date being simulated
+        public string Sim_All_Date_Use {get; set;}
 
 
 
@@ -84,5 +88,9 @@ namespace GlideCLI.Models
         public int debugElseTwoCount {get; set;}
         public int debugElseThreeCount {get; set;}
         public bool debugFunk {get; set;}
+
+        //Debug simulate genSimsAll
+        public int debugTopic {get; set;}
+        
     }
 }

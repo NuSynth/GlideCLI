@@ -33,6 +33,11 @@ namespace GlideCLI
         static List<int> XelementList = new List<int>();
         // For XmaxRepeats END
 
+        //ReduceNew START
+        static List<SimModel> reducedProjected = new List<SimModel>();
+
+        //ReduceNew END
+
         static List<PointLimits> xMaxList = new List<PointLimits>();
         static List<SimModel> xMaxSortList = new List<SimModel>();
         static List<int> studyRepElements = new List<int>();
@@ -961,7 +966,7 @@ namespace GlideCLI
                 studyVars.topStudBool = "false";
             Console.WriteLine($"Course Name: {globals.CourseName}");
             if (globals.newLeft > Constants.ZERO_INT)
-                Console.WriteLine($"Course Completion Expected: {predictVars.Prediction_Date}");
+                Console.WriteLine($"Course Completion Expected: topic = {predictVars.debugTopic} Date = {predictVars.Prediction_Date}");
             Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
             Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
             Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
@@ -1001,7 +1006,13 @@ namespace GlideCLI
             CollectFirstStudies();      // Get first study dates of studied topics
             if (studiedSimList.Count > Constants.ZERO_INT)
             {
-                YmaxFirsts();               // Get y1: max Y First Studies for point Ymax
+                YmaxFirsts();            // Get y1: max Y First Studies for point Ymax
+                if (predictVars.Only_ONE == true)
+                {
+                    predictVars.Prediction_Date = "Not enough topics studied yet!";
+                    predictVars.Only_ONE = false;
+                    return;
+                }
                 SimulatePastStudies();      // Produce real repeats
                 YmaxRepeats();              // Get x1: max X Repeat Studies for point Ymax
 
@@ -1013,10 +1024,8 @@ namespace GlideCLI
                 // y2 is number of first studies performed at max repeat studies
                 XmaxRepeats();
                 XmaxFirsts();
-                Console.WriteLine("DELETEME TEST 14");
-                Console.ReadLine();
 
-                //predictVars.Loop_Entered = false; // Gets set to true if completion date not studied by the user yet. 
+                CollectNonStudied();
                 GenerateProjectedStudies();
                 /*****************/
 
@@ -1053,11 +1062,14 @@ namespace GlideCLI
         {
             Console.WriteLine($"DELETEME 1: CollectFirstStudies Entered\n\n");
             Console.ReadLine();
+            int topicNumber = Constants.ZERO_INT;
+            int tracker = Constants.ZERO_INT;
             
             predictVars.Loop_Index = Constants.ZERO_INT;
             while (predictVars.Loop_Index < TopicsList.Count)
             {
-                AddFirstsCollect();
+                tracker = AddFirstsCollect(topicNumber);
+                topicNumber = tracker;
                 ++predictVars.Loop_Index;
             }
             predictVars.Loop_Index = Constants.ZERO_INT;
@@ -1080,10 +1092,9 @@ namespace GlideCLI
             }
             Console.ReadLine();
         }
-        private static void AddFirstsCollect()
+        private static int AddFirstsCollect(int topicNumber)
         {
             SimModel newSims = new SimModel();
-            int topicNumber = Constants.ZERO_INT;
             if (TopicsList.ElementAt(predictVars.Loop_Index).Top_Studied == true)
             {
                 newSims.First_Date = TopicsList.ElementAt(predictVars.Loop_Index).First_Date;
@@ -1092,11 +1103,13 @@ namespace GlideCLI
                 newSims.Top_Difficulty = TopicsList.ElementAt(predictVars.Loop_Index).Top_Difficulty;
                 newSims.Interval_Length = TopicsList.ElementAt(predictVars.Loop_Index).Interval_Length;
                 newSims.Top_Number = topicNumber; 
+                newSims.Next_Date = TopicsList.ElementAt(predictVars.Loop_Index).Next_Date;
                 studiedSimList.Add(newSims);
                 Console.WriteLine($"DELETEME 3: studiedSimList.ElementAt(predictVars.Loop_Index).First_Date = {studiedSimList.ElementAt(predictVars.Loop_Index).First_Date}");
 
                 ++topicNumber;
             }
+            return topicNumber;
         }
         private static void YmaxFirsts()
         {            
@@ -1112,7 +1125,16 @@ namespace GlideCLI
             predictVars.Loop_Index = Constants.ZERO_INT;
             predictVars.Find_Yhigh_Index = Constants.ZERO_INT;
             if (fStudyCounts.Count > Constants.TWO_INT)
+            {
                 YmaxSortFirsts();
+                predictVars.Only_ONE = false;
+            }
+            else
+            {
+                predictVars.Only_ONE = true;
+                return;
+            }
+                
 
 
 
@@ -1246,43 +1268,51 @@ namespace GlideCLI
         }
         private static void SimulatePastStudies()
         {
-            SimModel studiedSims = new SimModel();
-            bool firstRep = true;
+            predictVars.First_Rep = true;
             // DELETEME remove this later if I didn't need it: string repetitionDate = " ";
-            int repetitionIndex = Constants.ZERO_INT;
+            predictVars.Sim_Past_Index = Constants.ZERO_INT;
             predictVars.Gen_Studied_Index = Constants.ZERO_INT;
 
-            foreach (var topic in studiedSimList)
+            predictVars.Loop_Index = Constants.ZERO_INT;
+            while (predictVars.Loop_Index < studiedSimList.Count) //Replace Foreach foreach
             {
-                while (repetitionIndex < topic.Real_Repetition)
-                {
-                    studiedSims.First_Date = topic.First_Date;
-                    studiedSims.Real_Repetition = topic.Real_Repetition;
-                    if (firstRep == true)
-                    {
-                        studiedSims.Repetition_Date = topic.First_Date;
-                        studiedSims.Sim_Repetition = Constants.ZERO_INT;
-                        firstRep = false;
-                    }
-                    else
-                    {
-                        studiedSims.Repetition_Date = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index - Constants.ONE_INT).Next_Date;
-                    }
-                    studiedSims.Top_Difficulty = topic.Top_Difficulty;
-                    studiedSims.Top_Number = topic.Top_Number; 
-                    genSimsStudied.Add(studiedSims);
-
-                    predictVars.Process_Gen_Sims_Studied = true;
-                    SimCalculateLearning();
-                    predictVars.Process_Gen_Sims_Studied = false;
-
-                    ++predictVars.Gen_Studied_Index;
-                    repetitionIndex = studiedSims.Sim_Repetition;
-                }
-                repetitionIndex = Constants.ZERO_INT;
-                firstRep = true;
+                SimulateOnePastStudy();
+                ++predictVars.Loop_Index;
             }
+            predictVars.Loop_Index = Constants.ZERO_INT;
             predictVars.Gen_Studied_Index = Constants.ZERO_INT;
+            predictVars.Sim_Past_Index = Constants.ZERO_INT;
+        }
+        private static void SimulateOnePastStudy()
+        {
+            SimModel studiedSims = new SimModel();
+            while (predictVars.Sim_Past_Index < studiedSimList.ElementAt(predictVars.Loop_Index).Real_Repetition)
+            {
+                studiedSims.First_Date = studiedSimList.ElementAt(predictVars.Loop_Index).First_Date;
+                studiedSims.Real_Repetition = studiedSimList.ElementAt(predictVars.Loop_Index).Real_Repetition;
+                if (predictVars.First_Rep == true)
+                {
+                    studiedSims.Repetition_Date = studiedSimList.ElementAt(predictVars.Loop_Index).First_Date;
+                    studiedSims.Sim_Repetition = Constants.ZERO_INT;
+                    predictVars.First_Rep = false;
+                }
+                else
+                {
+                    studiedSims.Repetition_Date = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index - Constants.ONE_INT).Next_Date;
+                }
+                studiedSims.Top_Difficulty = studiedSimList.ElementAt(predictVars.Loop_Index).Top_Difficulty;
+                studiedSims.Top_Number = studiedSimList.ElementAt(predictVars.Loop_Index).Top_Number; 
+                genSimsStudied.Add(studiedSims);
+
+                predictVars.Process_Gen_Sims_Studied = true;
+                SimCalculateLearning();
+                predictVars.Process_Gen_Sims_Studied = false;
+
+                ++predictVars.Gen_Studied_Index;
+                predictVars.Sim_Past_Index = studiedSims.Sim_Repetition;
+            }
+            predictVars.Sim_Past_Index = Constants.ZERO_INT;
+            predictVars.First_Rep = true;
         }
         private static void YmaxRepeats()
         {
@@ -1332,12 +1362,46 @@ namespace GlideCLI
             Console.WriteLine($"DELETEME TEST 2 genSimsStudied.Count = {genSimsStudied.Count}");
             Console.ReadLine();
             predictVars.Loop_Index = Constants.ZERO_INT;
+            
+            //DELETEME DEBUG LOOP START
+            // DELETE ONCE DATES ARE STORED CORRECTLY
+            Console.WriteLine($"genSimsStudied.Count = {genSimsStudied.Count}");
+            Console.ReadLine();
+            foreach (var tempDate in genSimsStudied)
+            {
+                Console.WriteLine($"{tempDate.Repetition_Date}");
+            }
+            Console.ReadLine();
+            //DELETEME DEBUG LOOP END
+            
             while (predictVars.Loop_Index < genSimsStudied.Count)
             {
                 XmaxToSort();
                 ++predictVars.Loop_Index;
             }
+            //DELETEME DEBUG LOOP START
+            // DELETE ONCE DATES ARE STORED CORRECTLY
+            Console.WriteLine($"Before XmaxRepeatSort:\nxMaxSortList.Count = {xMaxSortList.Count}");
+            Console.ReadLine();
+            foreach (var tempDate in xMaxSortList)
+            {
+                Console.WriteLine($"{tempDate.Repetition_Date}");
+            }
+            Console.ReadLine();
+            //DELETEME DEBUG LOOP END
+
             XmaxRepeatSort();
+
+            //DELETEME DEBUG LOOP START
+            // DELETE ONCE DATES ARE STORED CORRECTLY
+            Console.WriteLine($"After XmaxRepeatSort:\nxMaxSortList.Count = {xMaxSortList.Count}");
+            Console.ReadLine();
+            foreach (var tempDate in xMaxSortList)
+            {
+                Console.WriteLine($"{tempDate.Repetition_Date}");
+            }
+            Console.ReadLine();
+            //DELETEME DEBUG LOOP END
             Console.WriteLine("DELETEME TEST 2");
             Console.ReadLine();
             predictVars.Loop_Index = Constants.ZERO_INT;
@@ -1348,6 +1412,7 @@ namespace GlideCLI
                 AddToXmax();
                 ++predictVars.Loop_Index;
             }
+
             Console.WriteLine("DELETEME TEST 4");
             Console.ReadLine();
             predictVars.Loop_Index = Constants.ZERO_INT;
@@ -1392,7 +1457,8 @@ namespace GlideCLI
             //predictVars.Loop_Index = Constants.ZERO_INT;
             Console.WriteLine("DELETEME TEST 7");
             Console.ReadLine();
-            
+
+
 
             // Each of the dates with the equally highest number of 
             // repeat topics studied needs to be used, so that the 
@@ -1527,6 +1593,7 @@ namespace GlideCLI
         }
         private static void XmaxRepeatSort()
         {
+            //Loop_Index
             predictVars.J = Constants.ZERO_INT;
             predictVars.I = Constants.ZERO_INT;
             predictVars.Date_Check = Constants.ZERO_INT;
@@ -1547,7 +1614,7 @@ namespace GlideCLI
         {
             SimModel listKey = new SimModel();
 
-            for (predictVars.J = Constants.TWO_INT; predictVars.J < xMaxSortList.Count; ++predictVars.J)
+            for (predictVars.J = Constants.TWO_INT; predictVars.J < xMaxSortList.Count; predictVars.J++)
             {
                 listKey = xMaxSortList[predictVars.J];
 
@@ -1558,6 +1625,7 @@ namespace GlideCLI
                 {
                     xMaxSortList[predictVars.I + Constants.ONE_INT] = xMaxSortList[predictVars.I];
                     predictVars.I = predictVars.I - Constants.ONE_INT;
+                    predictVars.Date_Check = DateTime.Compare(DateTime.Parse(xMaxSortList.ElementAt(predictVars.I).Repetition_Date), DateTime.Parse(listKey.Repetition_Date));
                 }
                 xMaxSortList[predictVars.I + Constants.ONE_INT] = listKey;
             }
@@ -1576,6 +1644,7 @@ namespace GlideCLI
                 xMaxSortList[Constants.ONE_INT] = listKey;
             }
         }
+
         private static void XmaxFirsts()
         {
             // Use the date of highest repetition studies, 
@@ -1622,21 +1691,34 @@ namespace GlideCLI
 
         private static void CollectNonStudied()
         {
-            SimModel newSims = new SimModel();
             int index = studiedSimList.Count - Constants.ONE_INT;
             int topicNumber = studiedSimList.ElementAt(index).Top_Number + Constants.ONE_INT;
-            foreach (var topic in TopicsList)
-                if (topic.Top_Studied == false)
-                {
-                    newSims.First_Date = topic.First_Date;
-                    newSims.Real_Repetition = topic.Top_Repetition;
-                    newSims.Sim_Repetition = Constants.ZERO_INT;
-                    newSims.Top_Difficulty = predictVars.Avg_Difficulty;
-                    newSims.Interval_Length = Constants.ZERO_INT;
-                    newSims.Top_Number = topicNumber; 
-                    projectedSimList.Add(newSims);
-                    ++topicNumber;
-                }
+            int tracker = Constants.ZERO_INT;
+            
+            predictVars.Loop_Index = Constants.ZERO_INT;
+            while (predictVars.Loop_Index < TopicsList.Count)
+            {
+                tracker = NonStudyGetter(topicNumber);
+                topicNumber = tracker;
+                ++predictVars.Loop_Index;
+            }
+            predictVars.Loop_Index = Constants.ZERO_INT;                
+        }
+        private static int NonStudyGetter(int topicNumber)
+        {
+            SimModel newSims = new SimModel();
+            if (TopicsList.ElementAt(predictVars.Loop_Index).Top_Studied == false)
+            {
+                newSims.First_Date = TopicsList.ElementAt(predictVars.Loop_Index).First_Date;
+                newSims.Real_Repetition = TopicsList.ElementAt(predictVars.Loop_Index).Top_Repetition;
+                newSims.Sim_Repetition = Constants.ZERO_INT;
+                newSims.Top_Difficulty = predictVars.Avg_Difficulty;
+                newSims.Interval_Length = Constants.ZERO_INT;
+                newSims.Top_Number = topicNumber; 
+                projectedSimList.Add(newSims);
+                ++topicNumber;
+            }
+            return topicNumber;
         }
 
 
@@ -1651,6 +1733,8 @@ namespace GlideCLI
             totalNewTopics = projectedSimList.Count;
             count = Constants.ZERO_INT;
 
+            Console.WriteLine($"DELETEME totalNew = {totalNewTopics}");
+            Console.ReadLine();
             predictVars.Process_Gen_Sims_Studied = false;
             while (count < totalNewTopics)
             {
@@ -1661,11 +1745,15 @@ namespace GlideCLI
                 simDate = previousDate.AddDays(Constants.ONE_INT);
                 predictVars.Sim_Date_Use = simDate.ToString("d");
                 totalNewTopics = projectedSimList.Count;
+                Console.WriteLine($"DELETEME is totalNewTopics reducing? {totalNewTopics}");
             }
+            predictVars.Sim_Date_Use = startDate.ToString("d");
+            Console.WriteLine($"DELETEME totalNew = {totalNewTopics}");
+            Console.ReadLine();
             Console.WriteLine("DELETEME 9: Inside GenerateProjectedStudies\nGetting studiedSimList last date.\n");
             Console.ReadLine();
             predictedIndex = studiedSimList.Count - Constants.ONE_INT;
-            predictVars.Prediction_Date = studiedSimList.ElementAt(predictedIndex).Next_Date;
+            //predictVars.Prediction_Date = studiedSimList.ElementAt(predictedIndex).Next_Date; MAYBE UNCOMMENT LATER
             studiedSimList.Clear();
             genSimsStudied.Clear();
             projectedSimList.Clear();
@@ -1683,6 +1771,8 @@ namespace GlideCLI
             ReduceNew();
 
             int index = Constants.ZERO_INT;
+            Console.WriteLine($"DELETEME - FIX THIS studyRepElements.Count = {studyRepElements.Count}");
+            Console.ReadLine();
             while (index < studyRepElements.Count)
             {
                 predictVars.Gen_Projected_Index = studyRepElements.ElementAt(index);
@@ -1691,12 +1781,12 @@ namespace GlideCLI
             }
             studyRepElements.Clear();
             totalNewTopics = projectedSimList.Count;
-            Console.WriteLine("DELETEME 10: Inside PredictStudies\nGetting gensimsAll last date.\n");
-            Console.ReadLine();
+            // Console.WriteLine("DELETEME 10: Inside PredictStudies\nGetting gensimsAll last date.\n");
+            // Console.ReadLine();
             if (totalNewTopics == Constants.ZERO_INT)
             {
                 predictedIndex = genSimsAll.Count - Constants.ONE_INT;
-                predictVars.Prediction_Date = genSimsAll.ElementAt(predictedIndex).Next_Date;
+                //predictVars.Prediction_Date = genSimsAll.ElementAt(predictedIndex).Next_Date;  MAYBE UNCOMMENT LATER
             }
             genSimsAll.Clear();
         }
@@ -1707,6 +1797,11 @@ namespace GlideCLI
             int dateCompare;
             useDate = DateTime.Parse(predictVars.Sim_Date_Use);
 
+            // Console.WriteLine("Inside CollectStudyX");
+            // Console.WriteLine($"DELETEME studiedSimList.Count = {studiedSimList.Count}");
+            // Console.ReadLine();
+
+            
             // Get 2nd rep studies
             int index, repCheck;
             index = repCheck = Constants.ZERO_INT;
@@ -1756,10 +1851,27 @@ namespace GlideCLI
                 ++index;
             }
             predictVars.Current_X = repCheck;
-            foreach (var sim in studiedSimList)
+            predictVars.Loop_Index = Constants.ZERO_INT;
+            while (predictVars.Loop_Index < studiedSimList.Count)
             {
-                genSimsAll.Add(sim);
+                GenSimsAllGetter();
+                ++predictVars.Loop_Index;
             }
+        }
+        private static void GenSimsAllGetter()
+        {
+            SimModel newSims = new SimModel();
+
+            
+            newSims.First_Date = studiedSimList.ElementAt(predictVars.Loop_Index).First_Date;
+            newSims.Real_Repetition = studiedSimList.ElementAt(predictVars.Loop_Index).Real_Repetition;
+            newSims.Sim_Repetition = studiedSimList.ElementAt(predictVars.Loop_Index).Sim_Repetition;
+            newSims.Top_Difficulty = studiedSimList.ElementAt(predictVars.Loop_Index).Top_Difficulty;
+            newSims.Interval_Length = studiedSimList.ElementAt(predictVars.Loop_Index).Interval_Length;
+            newSims.Top_Number = studiedSimList.ElementAt(predictVars.Loop_Index).Top_Number; 
+            newSims.Next_Date = studiedSimList.ElementAt(predictVars.Loop_Index).Next_Date;
+
+            genSimsAll.Add(newSims);
         }
         private static void FindYatX()
         {
@@ -1805,24 +1917,38 @@ namespace GlideCLI
         }
         private static void ReduceNew()
         {
-            List<SimModel> reducedProjected = new List<SimModel>();
+            Console.WriteLine($"DELETEME - is ReduceNew entered?");
+            Console.ReadLine();
             int index = Constants.ZERO_INT;
+            int count = Constants.ZERO_INT;
             if (projectedSimList.Count > Constants.ZERO_INT)
             {
-                foreach (var sim in projectedSimList)
+                while (count < projectedSimList.Count)
                 {
-                    if (index >= predictVars.Current_Y)
-                        reducedProjected.Add(sim);
+                    GetReducedNew(count, index);
                     ++index;
+                    ++count;
                 }
                 projectedSimList.Clear();
-                foreach (var sim in reducedProjected)
+                count = Constants.ONE_INT;
+                while (count < projectedSimList.Count)
                 {
-                    projectedSimList.Add(sim);
+                    GetReducedProjected(count);
+                    ++count;
                 }
+                reducedProjected.Clear();
             }
         }
+        private static void GetReducedNew(int count, int index)
+        {
 
+            if (index >= predictVars.Current_Y)
+                reducedProjected.Add(projectedSimList[count]);
+        }
+        private static void GetReducedProjected(int count)
+        {
+            projectedSimList.Add(reducedProjected[count]);
+        }
 
 
         /**************SimulateDates**************/
@@ -1885,6 +2011,7 @@ namespace GlideCLI
             DateTime nextDate;
             string nextDateString;
 
+
             if (predictVars.Process_Gen_Sims_Studied == true)
             {
                 intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
@@ -1895,9 +2022,14 @@ namespace GlideCLI
             }
             else
             {
+                Console.WriteLine($"genSimsAll.Count = {genSimsAll.Count}");
+                Console.ReadLine();
                 intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
                 days = Convert.ToInt32(intervalLength / SINGLE_DAY);
-                fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
+                if (genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition == Constants.ONE_INT)
+                    fakeToday = DateTime.Parse(predictVars.Sim_Date_Use);
+                else
+                    fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
                 nextDate = fakeToday.AddDays(days);
                 nextDateString = nextDate.ToString("d");
             }
@@ -1905,7 +2037,13 @@ namespace GlideCLI
             if (predictVars.Process_Gen_Sims_Studied == true)
                 genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Next_Date = nextDateString;
             else
+            {
+                // This bracket is for debugging. Only keep genSimsAll after debugging.
                 genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
+                predictVars.debugTopic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+                predictVars.Prediction_Date = nextDateString;
+
+            }
         }
         /***********************************PREDICTION END*********************************************/
         /*End: Create expected date of completing last topic*/
