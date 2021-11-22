@@ -4,8 +4,9 @@ I decided to add another feature before converting the C# code into Vala for the
 It will be ready soon. I am currently debugging some logic.
 
 Here is the current flowcharts of the new feature: 
-https://github.com/Dartomic/GlideCLI/blob/master/Charts/Predict Finish.odg
-https://github.com/Dartomic/GlideCLI/blob/master/Charts/Predict Finish.pdf
+https://github.com/Dartomic/GlideCLI/blob/master/Charts/PredictFinish.odg
+
+https://github.com/Dartomic/GlideCLI/blob/master/Charts/PredictFinish.pdf
 
 
 # Previous update
