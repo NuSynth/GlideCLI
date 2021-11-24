@@ -36,8 +36,6 @@
 
                 intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
                 days = (int)(intervalLength / SINGLE_DAY);
-                fakeToday = DateTime.Parse(genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Repetition_Date);
-                nextDate = fakeToday.AddDays(days);
                 nextDateString = nextDate.ToString("d");
             }
             

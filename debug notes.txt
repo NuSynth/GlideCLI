@@ -1,3 +1,8 @@
+0.
+Do desk checking of Y at x = any number.
+
+
+
 1.
   Should genSimsAll be clearing when it does? Is it too soon?
 
