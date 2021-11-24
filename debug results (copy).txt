@@ -1,0 +1,723 @@
+1.
+Should genSimsAll be clearing when it does? Is it too soon?
+
+
+2.
+where is projectedSimList becoming empty before simulating all new studies?
+
+3.
+What is predictVars.Gen_Projected_Index used for again?
+
+4.
+Is genSimsAll getting actual dates from file, or simulated dates?
+It needs actual dates, the first date it displays to study is the day 
+after the actual date, but it is being studied on the correct study date.
+
+Also, that same element's date is not updating:
+
+
+
+
+
+fakeToday is correct.
+
+The study dates are off!
+
+First Run:
+Before processing:
+
+fakeday = 11/23/2021
+
+// Wrong date displayed here
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/24/2021
+studyRepElements = 2
+
+// Next two are correct here
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 11/23/2021
+studyRepElements = 13
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Next_Date = 
+studyRepElements = 14
+
+
+After Being put into other list:
+
+fakeday = 11/23/2021
+
+DELETEME - Entering GenSimsAllGiver
+DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+
+//This date did not update...
+DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/24/2021
+
+
+DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/24/2021
+DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+
+//This date updated to the next fakeToday...
+DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/24/2021
+
+//This date correctly displays 2nd repetitions next day's study date
+DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/24/2021
+DELETEME - Left GenSimsAllGiver
+
+
+
+Second Run:
+Before Processing:
+
+fakeday = 11/24/2021
+
+//If it is updating, then it is using either the wrong repetition count, or the wrong difficulty..
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/26/2021
+studyRepElements = 2
+
+
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 11/24/2021
+studyRepElements = 9
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Next_Date = 11/24/2021
+studyRepElements = 13
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Next_Date = 11/24/2021
+studyRepElements = 14
+
+
+
+After Being put into other list:
+
+
+// Is it getting calculated the same as new topics?
+DELETEME - Entering GenSimsAllGiver
+DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/26/2021
+DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/25/2021
+DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/26/2021
+DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/26/2021
+DELETEME - Left GenSimsAllGiver
+
+
+Third Run:
+
+Before Processing:
+
+
+fakeday = 11/25/2021
+
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/27/2021
+studyRepElements = 9
+DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 
+studyRepElements = 15
+
+
+
+After Being put into other list:
+
+
+fakeday = 11/25/2021
+
+DELETEME - Entering GenSimsAllGiver
+DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/26/2021
+DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/27/2021
+DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/26/2021
+DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/26/2021
+DELETEME - genSimsAll.ElementAt(15).Next_Date = 11/26/2021
+DELETEME - Left GenSimsAllGiver
+
+
+Hypothesis:
+
+For the bad date processing:
+I think some elemnts are using the incorrect repetiton count
+
+For the incorrect date being displayed for some elements:
+I have no idea yet.
+
+
+
+First Run:
+
+
+Before processing:
+
+fakeday = 11/23/2021
+
+  studyRepElements = 2
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).First_Date = 9/12/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Real_Repetition = 6
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Difficulty = 2.02
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Interval_Length = 1440
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Number = 2
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/24/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Sim_Repetition = 1
+
+  studyRepElements = 13
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).First_Date = 11/3/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Real_Repetition = 4
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Difficulty = 2.28076923076923
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Interval_Length = 17084.667391898
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Number = 13
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 11/23/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Sim_Repetition = 0
+
+  studyRepElements = 14
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).First_Date = none
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Real_Repetition = 0
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Top_Difficulty = 2.0891208791208795
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Interval_Length = 0
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Top_Number = 14
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Next_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Sim_Repetition = 0
+
+
+
+
+After Being put into other list:
+
+
+fakeday = 11/25/2021
+
+
+  DELETEME - Entering GenSimsAllGiver
+  DELETEME - genSimsAll.ElementAt(0).First_Date = 9/10/2021
+  DELETEME - genSimsAll.ElementAt(0).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(0).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(0).Interval_Length = 97829.6970793882
+  DELETEME - genSimsAll.ElementAt(0).Top_Number = 0
+  DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+  DELETEME - genSimsAll.ElementAt(0).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(0).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(1).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Real_Repetition = 9
+  DELETEME - genSimsAll.ElementAt(1).Top_Difficulty = 1.54
+  DELETEME - genSimsAll.ElementAt(1).Interval_Length = 45554.1826516137
+  DELETEME - genSimsAll.ElementAt(1).Top_Number = 1
+  DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(1).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(2).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(2).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(2).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(2).Interval_Length = 1440
+  DELETEME - genSimsAll.ElementAt(2).Top_Number = 2
+  DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/24/2021
+  DELETEME - genSimsAll.ElementAt(2).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(2).Sim_Repetition = 1
+
+  DELETEME - genSimsAll.ElementAt(3).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(3).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(3).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(3).Interval_Length = 84899.413062144
+  DELETEME - genSimsAll.ElementAt(3).Top_Number = 3
+  DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+  DELETEME - genSimsAll.ElementAt(3).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(3).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(4).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(4).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(4).Top_Difficulty = 2.5
+  DELETEME - genSimsAll.ElementAt(4).Interval_Length = 140625
+  DELETEME - genSimsAll.ElementAt(4).Top_Number = 4
+  DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+  DELETEME - genSimsAll.ElementAt(4).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(4).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(5).First_Date = 9/14/2021
+  DELETEME - genSimsAll.ElementAt(5).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(5).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(5).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(5).Top_Number = 5
+  DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+  DELETEME - genSimsAll.ElementAt(5).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(5).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(6).First_Date = 10/2/2021
+  DELETEME - genSimsAll.ElementAt(6).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(6).Top_Difficulty = 1.78
+  DELETEME - genSimsAll.ElementAt(6).Interval_Length = 45801.7957749658
+  DELETEME - genSimsAll.ElementAt(6).Top_Number = 6
+  DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+  DELETEME - genSimsAll.ElementAt(6).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(6).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(7).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(7).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(7).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(7).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(7).Top_Number = 7
+  DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+  DELETEME - genSimsAll.ElementAt(7).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(7).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(8).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(8).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(8).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(8).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(8).Top_Number = 8
+  DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+  DELETEME - genSimsAll.ElementAt(8).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(8).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(9).First_Date = 10/7/2021
+  DELETEME - genSimsAll.ElementAt(9).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(9).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(9).Interval_Length = 37566.1119744
+  DELETEME - genSimsAll.ElementAt(9).Top_Number = 9
+  DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/24/2021
+  DELETEME - genSimsAll.ElementAt(9).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(9).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(10).First_Date = 10/28/2021
+  DELETEME - genSimsAll.ElementAt(10).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(10).Top_Difficulty = 2.17692307692308
+  DELETEME - genSimsAll.ElementAt(10).Interval_Length = 32339.6134807605
+  DELETEME - genSimsAll.ElementAt(10).Top_Number = 10
+  DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(10).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(10).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(11).First_Date = 11/1/2021
+  DELETEME - genSimsAll.ElementAt(11).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(11).Top_Difficulty = 2.06666666666667
+  DELETEME - genSimsAll.ElementAt(11).Interval_Length = 26269.0417777778
+  DELETEME - genSimsAll.ElementAt(11).Top_Number = 11
+  DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(11).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(11).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(12).First_Date = 11/2/2021
+  DELETEME - genSimsAll.ElementAt(12).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(12).Top_Difficulty = 2.28333333333333
+  DELETEME - genSimsAll.ElementAt(12).Interval_Length = 39141.7067777778
+  DELETEME - genSimsAll.ElementAt(12).Top_Number = 12
+  DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+  DELETEME - genSimsAll.ElementAt(12).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(12).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(13).First_Date = 11/3/2021
+  DELETEME - genSimsAll.ElementAt(13).Real_Repetition = 4
+  DELETEME - genSimsAll.ElementAt(13).Top_Difficulty = 2.28076923076923
+  DELETEME - genSimsAll.ElementAt(13).Interval_Length = 1440
+  DELETEME - genSimsAll.ElementAt(13).Top_Number = 13
+  DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/24/2021
+  DELETEME - genSimsAll.ElementAt(13).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(13).Sim_Repetition = 1
+
+  DELETEME - genSimsAll.ElementAt(14).First_Date = none
+  DELETEME - genSimsAll.ElementAt(14).Real_Repetition = 0
+  DELETEME - genSimsAll.ElementAt(14).Top_Difficulty = 2.0891208791208795
+  DELETEME - genSimsAll.ElementAt(14).Interval_Length = 1440
+  DELETEME - genSimsAll.ElementAt(14).Top_Number = 14
+  DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/24/2021
+  DELETEME - genSimsAll.ElementAt(14).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(14).Sim_Repetition = 1
+
+  DELETEME - Left GenSimsAllGiver
+
+
+
+
+Second Run:
+
+
+Before processing:
+
+  fakeday = 11/24/2021
+
+  studyRepElements = 2
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).First_Date = 9/12/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Real_Repetition = 6
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Difficulty = 2.02
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Interval_Length = 2908.8
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Number = 2
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/26/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Sim_Repetition = 2
+
+  studyRepElements = 9
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).First_Date = 10/7/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Real_Repetition = 5
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Difficulty = 2.26
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Interval_Length = 37566.1119744
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Number = 9
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 11/24/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Sim_Repetition = 0
+
+  studyRepElements = 13
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).First_Date = 11/3/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Real_Repetition = 4
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Top_Difficulty = 2.28076923076923
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Interval_Length = 1440
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Top_Number = 13
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Next_Date = 11/24/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[2]).Sim_Repetition = 1
+
+  studyRepElements = 14
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).First_Date = none
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Real_Repetition = 0
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Top_Difficulty = 2.0891208791208795
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Interval_Length = 1440
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Top_Number = 14
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Next_Date = 11/24/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[3]).Sim_Repetition = 1
+
+
+After Being put into other list:
+
+  fakeday = 11/24/2021
+
+  DELETEME - Entering GenSimsAllGiver
+  DELETEME - genSimsAll.ElementAt(0).First_Date = 9/10/2021
+  DELETEME - genSimsAll.ElementAt(0).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(0).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(0).Interval_Length = 97829.6970793882
+  DELETEME - genSimsAll.ElementAt(0).Top_Number = 0
+  DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+  DELETEME - genSimsAll.ElementAt(0).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(0).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(1).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Real_Repetition = 9
+  DELETEME - genSimsAll.ElementAt(1).Top_Difficulty = 1.54
+  DELETEME - genSimsAll.ElementAt(1).Interval_Length = 45554.1826516137
+  DELETEME - genSimsAll.ElementAt(1).Top_Number = 1
+  DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(1).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(2).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(2).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(2).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(2).Interval_Length = 2908.8
+  DELETEME - genSimsAll.ElementAt(2).Top_Number = 2
+  DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(2).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(2).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(3).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(3).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(3).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(3).Interval_Length = 84899.413062144
+  DELETEME - genSimsAll.ElementAt(3).Top_Number = 3
+  DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+  DELETEME - genSimsAll.ElementAt(3).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(3).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(4).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(4).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(4).Top_Difficulty = 2.5
+  DELETEME - genSimsAll.ElementAt(4).Interval_Length = 140625
+  DELETEME - genSimsAll.ElementAt(4).Top_Number = 4
+  DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+  DELETEME - genSimsAll.ElementAt(4).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(4).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(5).First_Date = 9/14/2021
+  DELETEME - genSimsAll.ElementAt(5).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(5).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(5).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(5).Top_Number = 5
+  DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+  DELETEME - genSimsAll.ElementAt(5).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(5).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(6).First_Date = 10/2/2021
+  DELETEME - genSimsAll.ElementAt(6).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(6).Top_Difficulty = 1.78
+  DELETEME - genSimsAll.ElementAt(6).Interval_Length = 45801.7957749658
+  DELETEME - genSimsAll.ElementAt(6).Top_Number = 6
+  DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+  DELETEME - genSimsAll.ElementAt(6).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(6).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(7).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(7).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(7).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(7).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(7).Top_Number = 7
+  DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+  DELETEME - genSimsAll.ElementAt(7).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(7).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(8).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(8).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(8).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(8).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(8).Top_Number = 8
+  DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+  DELETEME - genSimsAll.ElementAt(8).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(8).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(9).First_Date = 10/7/2021
+  DELETEME - genSimsAll.ElementAt(9).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(9).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(9).Interval_Length = 1440
+  DELETEME - genSimsAll.ElementAt(9).Top_Number = 9
+  DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/25/2021
+  DELETEME - genSimsAll.ElementAt(9).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(9).Sim_Repetition = 1
+
+  DELETEME - genSimsAll.ElementAt(10).First_Date = 10/28/2021
+  DELETEME - genSimsAll.ElementAt(10).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(10).Top_Difficulty = 2.17692307692308
+  DELETEME - genSimsAll.ElementAt(10).Interval_Length = 32339.6134807605
+  DELETEME - genSimsAll.ElementAt(10).Top_Number = 10
+  DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(10).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(10).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(11).First_Date = 11/1/2021
+  DELETEME - genSimsAll.ElementAt(11).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(11).Top_Difficulty = 2.06666666666667
+  DELETEME - genSimsAll.ElementAt(11).Interval_Length = 26269.0417777778
+  DELETEME - genSimsAll.ElementAt(11).Top_Number = 11
+  DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(11).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(11).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(12).First_Date = 11/2/2021
+  DELETEME - genSimsAll.ElementAt(12).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(12).Top_Difficulty = 2.28333333333333
+  DELETEME - genSimsAll.ElementAt(12).Interval_Length = 39141.7067777778
+  DELETEME - genSimsAll.ElementAt(12).Top_Number = 12
+  DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+  DELETEME - genSimsAll.ElementAt(12).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(12).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(13).First_Date = 11/3/2021
+  DELETEME - genSimsAll.ElementAt(13).Real_Repetition = 4
+  DELETEME - genSimsAll.ElementAt(13).Top_Difficulty = 2.28076923076923
+  DELETEME - genSimsAll.ElementAt(13).Interval_Length = 3284.3076923076915
+  DELETEME - genSimsAll.ElementAt(13).Top_Number = 13
+  DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(13).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(13).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(14).First_Date = none
+  DELETEME - genSimsAll.ElementAt(14).Real_Repetition = 0
+  DELETEME - genSimsAll.ElementAt(14).Top_Difficulty = 2.0891208791208795
+  DELETEME - genSimsAll.ElementAt(14).Interval_Length = 3008.3340659340665
+  DELETEME - genSimsAll.ElementAt(14).Top_Number = 14
+  DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(14).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(14).Sim_Repetition = 2
+
+  DELETEME - Left GenSimsAllGiver
+
+
+
+
+Third Run:
+
+
+Before processing:
+
+  fakeday = 11/25/2021
+
+  studyRepElements = 9
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).First_Date = 10/7/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Real_Repetition = 5
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Difficulty = 2.26
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Interval_Length = 3254.3999999999996
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Top_Number = 9
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Next_Date = 11/27/2021
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[0]).Sim_Repetition = 2
+
+  studyRepElements = 15
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).First_Date = none
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Real_Repetition = 0
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Difficulty = 2.0891208791208795
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Interval_Length = 0
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Top_Number = 14
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Next_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Repetition_Date = 
+  DELETEME - INSIDE CollectStudyY: genSimsAll.ElementAt(studyRepElements[1]).Sim_Repetition = 0
+
+
+
+After Being put into other list:
+
+fakeday = 11/25/2021
+
+  ELETEME - Entering GenSimsAllGiver
+  DELETEME - genSimsAll.ElementAt(0).First_Date = 9/10/2021
+  DELETEME - genSimsAll.ElementAt(0).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(0).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(0).Interval_Length = 97829.6970793882
+  DELETEME - genSimsAll.ElementAt(0).Top_Number = 0
+  DELETEME - genSimsAll.ElementAt(0).Next_Date = 1/26/2022
+  DELETEME - genSimsAll.ElementAt(0).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(0).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(1).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Real_Repetition = 9
+  DELETEME - genSimsAll.ElementAt(1).Top_Difficulty = 1.54
+  DELETEME - genSimsAll.ElementAt(1).Interval_Length = 45554.1826516137
+  DELETEME - genSimsAll.ElementAt(1).Top_Number = 1
+  DELETEME - genSimsAll.ElementAt(1).Next_Date = 12/12/2021
+  DELETEME - genSimsAll.ElementAt(1).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(1).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(2).First_Date = 9/12/2021
+  DELETEME - genSimsAll.ElementAt(2).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(2).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(2).Interval_Length = 2908.8
+  DELETEME - genSimsAll.ElementAt(2).Top_Number = 2
+  DELETEME - genSimsAll.ElementAt(2).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(2).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(2).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(3).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(3).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(3).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(3).Interval_Length = 84899.413062144
+  DELETEME - genSimsAll.ElementAt(3).Top_Number = 3
+  DELETEME - genSimsAll.ElementAt(3).Next_Date = 1/3/2022
+  DELETEME - genSimsAll.ElementAt(3).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(3).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(4).First_Date = 9/13/2021
+  DELETEME - genSimsAll.ElementAt(4).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(4).Top_Difficulty = 2.5
+  DELETEME - genSimsAll.ElementAt(4).Interval_Length = 140625
+  DELETEME - genSimsAll.ElementAt(4).Top_Number = 4
+  DELETEME - genSimsAll.ElementAt(4).Next_Date = 2/28/2022
+  DELETEME - genSimsAll.ElementAt(4).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(4).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(5).First_Date = 9/14/2021
+  DELETEME - genSimsAll.ElementAt(5).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(5).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(5).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(5).Top_Number = 5
+  DELETEME - genSimsAll.ElementAt(5).Next_Date = 11/28/2021
+  DELETEME - genSimsAll.ElementAt(5).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(5).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(6).First_Date = 10/2/2021
+  DELETEME - genSimsAll.ElementAt(6).Real_Repetition = 7
+  DELETEME - genSimsAll.ElementAt(6).Top_Difficulty = 1.78
+  DELETEME - genSimsAll.ElementAt(6).Interval_Length = 45801.7957749658
+  DELETEME - genSimsAll.ElementAt(6).Top_Number = 6
+  DELETEME - genSimsAll.ElementAt(6).Next_Date = 12/16/2021
+  DELETEME - genSimsAll.ElementAt(6).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(6).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(7).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(7).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(7).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(7).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(7).Top_Number = 7
+  DELETEME - genSimsAll.ElementAt(7).Next_Date = 12/10/2021
+  DELETEME - genSimsAll.ElementAt(7).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(7).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(8).First_Date = 10/5/2021
+  DELETEME - genSimsAll.ElementAt(8).Real_Repetition = 6
+  DELETEME - genSimsAll.ElementAt(8).Top_Difficulty = 2.02
+  DELETEME - genSimsAll.ElementAt(8).Interval_Length = 48430.543108608
+  DELETEME - genSimsAll.ElementAt(8).Top_Number = 8
+  DELETEME - genSimsAll.ElementAt(8).Next_Date = 12/13/2021
+  DELETEME - genSimsAll.ElementAt(8).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(8).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(9).First_Date = 10/7/2021
+  DELETEME - genSimsAll.ElementAt(9).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(9).Top_Difficulty = 2.26
+  DELETEME - genSimsAll.ElementAt(9).Interval_Length = 3254.3999999999996
+  DELETEME - genSimsAll.ElementAt(9).Top_Number = 9
+  DELETEME - genSimsAll.ElementAt(9).Next_Date = 11/27/2021
+  DELETEME - genSimsAll.ElementAt(9).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(9).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(10).First_Date = 10/28/2021
+  DELETEME - genSimsAll.ElementAt(10).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(10).Top_Difficulty = 2.17692307692308
+  DELETEME - genSimsAll.ElementAt(10).Interval_Length = 32339.6134807605
+  DELETEME - genSimsAll.ElementAt(10).Top_Number = 10
+  DELETEME - genSimsAll.ElementAt(10).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(10).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(10).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(11).First_Date = 11/1/2021
+  DELETEME - genSimsAll.ElementAt(11).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(11).Top_Difficulty = 2.06666666666667
+  DELETEME - genSimsAll.ElementAt(11).Interval_Length = 26269.0417777778
+  DELETEME - genSimsAll.ElementAt(11).Top_Number = 11
+  DELETEME - genSimsAll.ElementAt(11).Next_Date = 12/7/2021
+  DELETEME - genSimsAll.ElementAt(11).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(11).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(12).First_Date = 11/2/2021
+  DELETEME - genSimsAll.ElementAt(12).Real_Repetition = 5
+  DELETEME - genSimsAll.ElementAt(12).Top_Difficulty = 2.28333333333333
+  DELETEME - genSimsAll.ElementAt(12).Interval_Length = 39141.7067777778
+  DELETEME - genSimsAll.ElementAt(12).Top_Number = 12
+  DELETEME - genSimsAll.ElementAt(12).Next_Date = 12/19/2021
+  DELETEME - genSimsAll.ElementAt(12).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(12).Sim_Repetition = 0
+
+  DELETEME - genSimsAll.ElementAt(13).First_Date = 11/3/2021
+  DELETEME - genSimsAll.ElementAt(13).Real_Repetition = 4
+  DELETEME - genSimsAll.ElementAt(13).Top_Difficulty = 2.28076923076923
+  DELETEME - genSimsAll.ElementAt(13).Interval_Length = 3284.3076923076915
+  DELETEME - genSimsAll.ElementAt(13).Top_Number = 13
+  DELETEME - genSimsAll.ElementAt(13).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(13).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(13).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(14).First_Date = none
+  DELETEME - genSimsAll.ElementAt(14).Real_Repetition = 0
+  DELETEME - genSimsAll.ElementAt(14).Top_Difficulty = 2.0891208791208795
+  DELETEME - genSimsAll.ElementAt(14).Interval_Length = 3008.3340659340665
+  DELETEME - genSimsAll.ElementAt(14).Top_Number = 14
+  DELETEME - genSimsAll.ElementAt(14).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(14).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(14).Sim_Repetition = 2
+
+  DELETEME - genSimsAll.ElementAt(15).First_Date = none
+  DELETEME - genSimsAll.ElementAt(15).Real_Repetition = 0
+  DELETEME - genSimsAll.ElementAt(15).Top_Difficulty = 2.0891208791208795
+  DELETEME - genSimsAll.ElementAt(15).Interval_Length = 1440
+  DELETEME - genSimsAll.ElementAt(15).Top_Number = 14
+  DELETEME - genSimsAll.ElementAt(15).Next_Date = 11/26/2021
+  DELETEME - genSimsAll.ElementAt(15).Repetition_Date = 
+  DELETEME - genSimsAll.ElementAt(15).Sim_Repetition = 1
+
+  DELETEME - Left GenSimsAllGiver

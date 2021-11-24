@@ -5,13 +5,14 @@ namespace GlideCLI.Models
         // Indices
         public int Gen_Studied_Index {get; set;}
         public int Gen_Projected_Index {get; set;}
+        //public int Projected_Index_Deduct {get; set;}
         public int Loop_Index {get; set;}
         public int XrepIndex {get; set;}
         public int Sim_Past_Index {get; set;}
 
         
         // Bools
-        public bool Process_Prediction {get; set;}
+        public bool Process_Prediction {get; set;} //Use to get actual info from topics one time
         public bool Process_Gen_Sims_Studied {get; set;}
         public bool First_Check {get; set;}
         public bool First_Rep {get; set;}
@@ -25,6 +26,7 @@ namespace GlideCLI.Models
         public double Avg_Difficulty { get; set; }
 
         //Strings
+        public string Gen_Sims_Studied_Date {get; set;}
         public string Sim_Nxt_Date {get; set;}
         public string Sim_Date_Use {get; set;} // The date being simulated
         public string Sim_All_Date_Use {get; set;}

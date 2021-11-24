@@ -1,0 +1,81 @@
+DELETEME TEST 2
+
+DELETEME TEST 3 xMaxSortList.Count = 83
+
+DELETEME TEST 4
+
+DELETEME TEST 5
+
+DELETEME TEST 6
+
+DELETEME Test 6.1: toXmax.Count = 166
+
+debugWhileCount = 25
+debugFirstTrueCount = 1
+debugElseOneCount = 166
+debugElseTwoCount = 141
+debugElseThreeCount = 25
+DELETEME TEST 7
+
+DELETEME TEST 8 xRepDateCounts.Count = 39
+
+DELETEME TEST 9
+
+DELETEME TEST 10 XelementList.Count = 12
+
+DELETEME TEST 14 XmaxList.Count = 15
+
+DELETEME TEST 11
+
+DELETEME TEST 12
+
+DELETEME totalNew = 34
+
+DELETEME - predictVars.Current_Y = 1
+
+DELETEME - ReduceNew entered - projectedSimList.Count = 35
+
+DELETEME - FIX THIS studyRepElements.Count = 3
+
+DELETEME - predictVars.Gen_Projected_Index = 2
+genSimsAll.Count = 14
+
+predictVars.Gen_Projected_Index = 2
+
+DELETEME test if else exit
+
+DELETEME genSimsAll.Count = 14
+
+DELETEME - fakeday = 11/23/2021
+
+studyRepElements = 1
+studyRepElements = 12
+studyRepElements = 13
+
+DELETEME - predictVars.Gen_Projected_Index = 12
+genSimsAll.Count = 14
+
+predictVars.Gen_Projected_Index = 12
+
+DELETEME test if else exit
+
+DELETEME genSimsAll.Count = 14
+
+DELETEME - fakeday = 11/23/2021
+
+DELETEME - predictVars.Gen_Projected_Index = 13
+genSimsAll.Count = 14
+
+predictVars.Gen_Projected_Index = 13
+
+DELETEME test if else exit
+
+DELETEME genSimsAll.Count = 14
+
+DELETEME - fakeday = 11/23/2021
+
+
+DELETEME - BEFORE genSims.Clear, genSimsAll.Count = 14
+
+DELETEME is totalNewTopics reducing? 0
+DELETEME totalNew = 0
