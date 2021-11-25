@@ -12,7 +12,7 @@ namespace GlideCLI.Models
 
         //Exclusively for Generate Studied topics
         public string Next_Date { get; set; }
-        public string Repetition_Date { get; set; }
+        public string Simulated_Date { get; set; } // Simulated date of the simulateed repetition.
         public int Sim_Repetition { get; set; }        
     }
 }

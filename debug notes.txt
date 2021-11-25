@@ -1,14 +1,3 @@
-0.
-Do desk checking of Y at x = any number.
-
-
-
-1.
-  Should genSimsAll be clearing when it does? Is it too soon?
-
-
-2.
-  where is projectedSimList becoming empty before simulating all new studies?
 
 3.
   What is predictVars.Gen_Projected_Index used for again?

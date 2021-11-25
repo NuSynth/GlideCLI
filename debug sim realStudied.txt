@@ -1,0 +1,81 @@
+The way I designed it is not working the way it needs to.
+
+The design is a bit confusing.
+
+Too many jobs are being performed in the same places.
+
+Need to separate jobs completely.
+
+
+1.
+genSimsStudied should be fully initialized before 
+processing studied repetition dates.
+
+2.
+Next_Date should calculate from Simulated_Date of repetition.
+
+3.
+At end of current repetitions processing:
+
+IF index < list_being_simulated.Count
+
+  THEN: Next repetition's Simulated_Date should immediately be initialized to
+        the value of 
+
+
+PreparePastStudies()
+{
+  while (index < studiedSimsList.Count)
+  {
+      InitializeOnePastStudy(index)
+  }
+}
+
+InitializeOnePastStudy()
+{
+    while (Sim_Past_Index < studiedSimList[index].Real_Repetition)
+    {
+        PastStudyInitialization(index);
+        ++predictVars.Gen_Studied_Index;
+    }
+}
+
+PastStudyInitialization()
+{
+    build genSimsStudied list's template
+
+
+    this template is just going to be filled with actual and
+    null values for simulation of past studies to work with 
+    later.
+
+
+    genSimsStudied needs the following initialized values
+    for each repetition of a topic:
+
+    {
+        SimModel newSims = new SimModel();
+
+
+        studiedSimList.First_Date = real 1st date
+        studiedSimList.Real_Repetition = real repetition from file
+        studiedSimList.Sim_Repetition = from 1 to the real rep
+        studiedSimList.Top_Difficulty = real difficulty
+        studiedSimList.Interval_Length = 0
+        studiedSimList.Top_Number = correct topic number
+        studiedSimList.Next_Date = empty
+
+
+        genSimsStudied.Add(newSims);
+     }
+}
+
+
+
+/*********Workout what to fix below after I fix everything from above*********/
+4. - genSimsAll date processing fix
+Add Repetition function should only be called if:
+
+  1. studying from genSimsAll
+
+  2.  
