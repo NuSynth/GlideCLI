@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 
-#define LOW_Y      0 
+#define LOW_Y      0
 #define HIGH_Y     2
-#define RUN        13
+#define RUN        3
 
 /* count lines, words, and characters in input */
 int main(void)

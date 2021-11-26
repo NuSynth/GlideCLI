@@ -17,65 +17,94 @@ Next_Date should calculate from Simulated_Date of repetition.
 3.
 At end of current repetitions processing:
 
-IF index < list_being_simulated.Count
+IF index < list_being_simulated.Count && list[index].topic_num == list[index + 1].topic_num
 
   THEN: Next repetition's Simulated_Date should immediately be initialized to
         the value of 
 
 
-PreparePastStudies()
-{
-  while (index < studiedSimsList.Count)
-  {
-      InitializeOnePastStudy(index)
-  }
-}
-
-InitializeOnePastStudy()
-{
-    while (Sim_Past_Index < studiedSimList[index].Real_Repetition)
-    {
-        PastStudyInitialization(index);
-        ++predictVars.Gen_Studied_Index;
-    }
-}
-
-PastStudyInitialization()
-{
-    build genSimsStudied list's template
 
 
-    this template is just going to be filled with actual and
-    null values for simulation of past studies to work with 
-    later.
+
+/*************BEFORE CLEARING genSimsStudied: START************/
+
+--->Calculate values of maximum repeats, and y at maximum repeats
+--->Done
+
+/*************AFTER CLEARING genSimsStudied: END************/
 
 
-    genSimsStudied needs the following initialized values
-    for each repetition of a topic:
+/*********projectedVarsList: START***************************/
 
-    {
-        SimModel newSims = new SimModel();
+Fill projected vars with necessary values
 
-
-        studiedSimList.First_Date = real 1st date
-        studiedSimList.Real_Repetition = real repetition from file
-        studiedSimList.Sim_Repetition = from 1 to the real rep
-        studiedSimList.Top_Difficulty = real difficulty
-        studiedSimList.Interval_Length = 0
-        studiedSimList.Top_Number = correct topic number
-        studiedSimList.Next_Date = empty
+do the same thing to get new topics into genSimsAll
+/*********projectedVarsList: START***************************/
 
 
-        genSimsStudied.Add(newSims);
-     }
-}
+/*********genSimsAll START***********************************/
 
+during study, check if repetition == 1
 
+IF repetition is == 1; THEN
+  make sure it gets necessary initial values for the repetition == 1
+
+/*********genSimsAll END***********************************/
+  
 
 /*********Workout what to fix below after I fix everything from above*********/
 4. - genSimsAll date processing fix
 Add Repetition function should only be called if:
 
+genSimsAll just needs to update the values at the current 
+index location of the current simulated study. 
+
+1. Next_Date should be set inside Simulated_Date, and 
+   inside Next_Date.
+
+2. All other values should be set to initialize it's next 
+   study date.
+
+3. IF projectedVars.Count == ZERO
+   THEN last study day = genSimsAll[some index].Next_Date
   1. studying from genSimsAll
 
   2.  
+
+
+
+
+/*************BEFORE CLEARING genSimsAll: START************/
+
+
+
+// Leaving the notes in case Im wrong. Don't clear genSimsAll until final study date has been found.
+// I think genSimsAll's elements can be updated in-place during study simulation.
+
+1. Put all genSimsAll topics into what ever array it goes to (we'll call it studiedSims here)
+
+2. Clear genSimsAll
+
+3. Get maximum number of repeats from studiedSims
+
+4. Get number of new topics from projectedSims
+
+
+// Take the simulated day's studied topics, and replace 
+
+someIndex = Constants.ZERO_INT;
+
+while (someIndex < genSimsAll.Count)
+{
+
+}
+
+private static void 
+   SimModel studiedSims = new SimModel();
+  if (genSimsAll[some index].Top_Number == studiedSims.Top_Number
+  {
+      if (genSimsAll[someIndex].Sim_Repetition == studiedSims.Real_Repetition)
+        
+  }
+
+/*************AFTER CLEARING genSimsAll: END************/

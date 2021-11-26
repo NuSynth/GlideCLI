@@ -5,101 +5,203 @@ putting them into the program.
 ****************************************************************/
 
 
-        private static void SimulatePastStudies()
+        private static void SimCalculateLearning()
         {
-            int index = predictVars.Gen_Studied_Index = predictVars.Sim_Past_Index = Constants.ZERO_INT;
-            while (index < studiedSimList.Count) //Replace Foreach foreach
-            {
-                predictVars.First_Rep = true;
-                SimulateOnePastStudy(index);
-                ++index;                
-            }
-            index = Constants.ZERO_INT;
-            predictVars.Gen_Studied_Index = Constants.ZERO_INT;
+            if (predictVars.Process_Gen_Sims_Studied == false)
+                SimAddRepetition();
+            SimIntervalTime();
+            SimProcessDate();
         }
-        private static void SimulateOnePastStudy(int index)
+        private static void SimAddRepetition()
         {
-            while (predictVars.Sim_Past_Index < studiedSimList.ElementAt(index).Real_Repetition)
-            {
-                InitializePastStudy(index);
-                ++predictVars.Gen_Studied_Index;
-            }
-            predictVars.Sim_Past_Index = Constants.ZERO_INT;
+                ++genSimsAll[predictVars.Gen_Projected_Index].Sim_Repetition;
         }
-        private static void InitializePastStudy(int index)
+        private static void SimIntervalTime()
         {
-            SimModel studiedSims = new SimModel();
+            const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. I'm using minutes, instead of whole days, to be more precise.
+            double difficulty;
+            int ithRepetition;
+            double intervalLength;
 
-            studiedSims.First_Date = studiedSimList.ElementAt(index).First_Date;
-            studiedSims.Real_Repetition = studiedSimList.ElementAt(index).Real_Repetition;
-            if (predictVars.First_Rep == true)
+            if (predictVars.Process_Gen_Sims_Studied == true)
             {
-                predictVars.First_Rep = false;
-
-                studiedSims.Sim_Repetition = studiedSimList.ElementAt(index).Sim_Repetition;
-                studiedSims.Repetition_Date = studiedSimList.ElementAt(index).First_Date;
-                predictVars.Gen_Sims_Studied_Date = studiedSims.First_Date;
+                difficulty = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Top_Difficulty;
+                ithRepetition = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Sim_Repetition;
+                intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
             }
             else
             {
-                studiedSims.Repetition_Date = predictVars.Gen_Sims_Studied_Date;
-                studiedSims.Sim_Repetition = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index - Constants.ONE_INT).Sim_Repetition;
+                difficulty = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Difficulty;
+                ithRepetition = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
+                intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
             }
-            studiedSims.Top_Difficulty = studiedSimList.ElementAt(index).Top_Difficulty;
-            studiedSims.Top_Number = studiedSimList.ElementAt(index).Top_Number; 
-            
-
-            if (studiedSims.Sim_Repetition < studiedSims.Real_Repetition)
-            {
-                genSimsStudied.Add(studiedSims);
-                predictVars.Process_Gen_Sims_Studied = true;
-                SimCalculateLearning();
-                predictVars.Process_Gen_Sims_Studied = false;
-            }
-            predictVars.Sim_Past_Index = genSimsStudied[predictVars.Gen_Studied_Index].Sim_Repetition;
-
+            if (ithRepetition == Constants.ONE_INT)
+                intervalLength = SINGLE_DAY;
+            else
+                intervalLength = intervalLength * difficulty;
+            if (predictVars.Process_Gen_Sims_Studied == true)
+                genSimsStudied[predictVars.Gen_Studied_Index].Interval_Length = intervalLength;
+            else
+                genSimsAll[predictVars.Gen_Projected_Index].Interval_Length = intervalLength;
         }
+        private static void SimProcessDate()
+        {
+            const double SINGLE_DAY = 1440;
+            double intervalLength;
+            double daysDouble;
+            //int daysInt;
+            DateTime fakeToday;
+            DateTime nextDate;
+            string nextDateString;
+            //DateTime fakeNewDay;
 
+
+
+            if (predictVars.Process_Gen_Sims_Studied == true)
+            {
+                intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
+                daysDouble = intervalLength / SINGLE_DAY; //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                fakeToday = DateTime.Parse(predictVars.Gen_Sims_Studied_Date);
+                genSimsStudied[predictVars.Gen_Studied_Index].Simulated_Date = fakeToday.ToString("d");
+            }
+            else
+            {
+                intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
+                daysDouble = intervalLength / SINGLE_DAY;  //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                fakeToday = DateTime.Parse(predictVars.Sim_Date_Use);
+            }
+            //fakeNewDay = fakeToday; //Take the current fake day to increment the fake day later
+            //daysInt = Convert.ToInt32(daysDouble); //Necessary for AddDays function
+            //daysDouble = Convert.ToInt32(daysInt); //Necessary for AddDays function
+            nextDate = fakeToday.AddDays(daysDouble);
+            nextDateString = nextDate.ToString("d");
+            
+            if (predictVars.Process_Gen_Sims_Studied == true)
+                predictVars.Gen_Sims_Studied_Date = nextDateString;
+            else
+            {
+                // This bracket is for debugging. Only keep genSimsAll here after debugging.
+                genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
+                predictVars.debugTopic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+                predictVars.Prediction_Date = nextDateString;
+                // Console.WriteLine($"DELETEME - inside last function\nPrediction Date = {predictVars.Prediction_Date}");
+                // Console.ReadLine();
+                // debugBool = true;
+            }
+            // fakeNewDay = fakeNewDay.AddDays(Constants.ONE_INT); // Increment the fake day now
+            // predictVars.Sim_Date_Use = fakeNewDay.ToString("d");
+
+
+            // //DELETEME - Debug stuff under here
+            // if (debugBool == true)
+            // {
+            //     Console.WriteLine("Did Prediction Date display?");
+            //     Console.ReadLine();
+            // }
+            
+        }
 
         /****************MODIFIED VERSION FOR JUST INITIALIZATION******************************/
 
-        private static void PreparePastStudies()
-        {
-            int index = predictVars.Gen_Studied_Index = predictVars.Sim_Past_Index = Constants.ZERO_INT;
-            int repetition = Constants.ONE_INT;
-            while (index < studiedSimList.Count) //Replace Foreach foreach
-            {
-                repetition = studiedSimList.ElementAt(index).Sim_Repetition;
-                SimulateOnePastStudy(index, repetition);
-                ++index;                
-            }
-        }
-        private static void InitializeOnePastStudy(int index, int repetition)
-        {
-            int nextRep = Constants.ZERO_INT;
-            int lastRep = studiedSimList.ElementAt(index).Real_Repetition;
-            while (repetition < lastRep)
-            {
-                nextRep = PastStudyInitialization(index, repetition);
-                repetition = nextRep;
-            }
-        }
-        private static int PastStudyInitialization(int index, int repetition)
-        {
-            SimModel studiedSims = new SimModel();
 
-            studiedSims.First_Date = studiedSimList.ElementAt(index).First_Date;
-            studiedSims.Real_Repetition = studiedSimList.ElementAt(index).Real_Repetition;
-            studiedSims.Sim_Repetition = repetition;
-            studiedSims.Top_Difficulty = studiedSimList.ElementAt(index).Top_Difficulty;
-            studiedSims.Interval_Length = Constants.ZERO_INT; // Be sure that this is updated for each rep!
-            studiedSims.Top_Number = studiedSimList.ElementAt(index).Top_Number;
-            if (repetition == Constants.ONE_INT)
-            {
-                studiedSims.Repetition_Date = studiedSimList.ElementAt(index).First_Date;
-            }
-            genSimsStudied.Add(studiedSims);
+        private static void SimCalculateLearning()
+        {
+            if (predictVars.Process_Gen_Sims_Studied == false)
+                SimAddRepetition();
+            SimIntervalTime();
+            SimProcessDate();
+        }
+        private static void SimAddRepetition()
+        {
+            Console.WriteLine($"DELETEME - is repetition increasing? genSimsAll[{predictVars.Gen_Projected_Index}].Sim_Repetition = {genSimsAll[predictVars.Gen_Projected_Index].Sim_Repetition}");
+            ++genSimsAll[predictVars.Gen_Projected_Index].Sim_Repetition;
+        }
+        private static void SimIntervalTime()
+        {
+            const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. I'm using minutes, instead of whole days, to be more precise.
+            double difficulty;
+            int ithRepetition;
+            double intervalLength;
 
-            ++repetition;
-            return repetition;
+            if (predictVars.Process_Gen_Sims_Studied == true)
+            {
+                difficulty = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Top_Difficulty;
+                ithRepetition = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Sim_Repetition;
+                intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
+            }
+            else
+            {
+                difficulty = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Difficulty;
+                ithRepetition = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
+                intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
+            }
+            if (ithRepetition == Constants.ONE_INT)
+                intervalLength = SINGLE_DAY;
+            else
+                intervalLength = intervalLength * difficulty;
+            if (predictVars.Process_Gen_Sims_Studied == true)
+                genSimsStudied[predictVars.Gen_Studied_Index].Interval_Length = intervalLength;
+            else
+                genSimsAll[predictVars.Gen_Projected_Index].Interval_Length = intervalLength;
+        }
+        private static void SimProcessDate()
+        {
+            const double SINGLE_DAY = 1440;
+            double intervalLength;
+            double daysDouble;
+            //int daysInt;
+            DateTime fakeToday;
+            DateTime nextDate;
+            string nextDateString;
+            //DateTime fakeNewDay;
+
+
+
+            if (predictVars.Process_Gen_Sims_Studied == true)
+            {
+                intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
+                daysDouble = intervalLength / SINGLE_DAY; //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                fakeToday = DateTime.Parse(genSimsStudied[predictVars.Gen_Studied_Index].Simulated_Date);
+                // genSimsStudied now gets simulated date from previous study calculation, or from
+                // initialization if it is the first repetition.
+                // genSimsStudied[predictVars.Gen_Studied_Index].Simulated_Date = fakeToday.ToString("d");
+            }
+            else
+            {
+                intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
+                daysDouble = intervalLength / SINGLE_DAY;  //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                fakeToday = DateTime.Parse(predictVars.Sim_Date_Use);
+            }
+            nextDate = fakeToday.AddDays(daysDouble);
+            nextDateString = nextDate.ToString("d");
+
+            int indexFuture = predictVars.Gen_Studied_Index + Constants.ONE_INT;
+            if (predictVars.Process_Gen_Sims_Studied == true)
+            {
+                genSimsStudied[predictVars.Gen_Studied_Index].Next_Date = nextDateString;
+                if (indexFuture < genSimsStudied.Count)
+                    if (genSimsStudied[predictVars.Gen_Studied_Index].Top_Number == genSimsStudied[indexFuture].Top_Number)
+                        genSimsStudied[indexFuture].Simulated_Date = nextDateString;
+            }
+            else
+            {
+                // This bracket is for debugging. Only keep genSimsAll here after debugging.
+                genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Next_Date = nextDateString;
+                predictVars.debugTopic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+                predictVars.Prediction_Date = nextDateString;
+                // Console.WriteLine($"DELETEME - inside last function\nPrediction Date = {predictVars.Prediction_Date}");
+                // Console.ReadLine();
+                // debugBool = true;
+            }
+            // fakeNewDay = fakeNewDay.AddDays(Constants.ONE_INT); // Increment the fake day now
+            // predictVars.Sim_Date_Use = fakeNewDay.ToString("d");
+
+
+            // //DELETEME - Debug stuff under here
+            // if (debugBool == true)
+            // {
+            //     Console.WriteLine("Did Prediction Date display?");
+            //     Console.ReadLine();
+            // }
+            
         }
