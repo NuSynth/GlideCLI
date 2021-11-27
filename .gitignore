@@ -1,6 +1,9 @@
 /.vscode*
 
 Features to add.txt
+scratchPaper.cs
+
+/GlideCLI/Program.exe
 
 /GlideCLI/bin*
 /GlideCLI/obj*

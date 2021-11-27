@@ -9,9 +9,7 @@
         /*TODO: Correct how I named osSwitch, to OsSwitch */
         public bool osSwitch { get; set; } // True if Linux, false if Windows. This is needed to store files correctly, so this app can be used in both operating systems.
         public string DirectoryPath { get; set; }
-        public string DirectoryExists { get; set; }
         public string FilePath { get; set; }
-        public bool FileExists { get; set; }
 
 
         /* Course files variables */

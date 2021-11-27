@@ -30,5 +30,3 @@ namespace GlideCLI.Models
         public bool studied {get; set;}
     }
 }
-
-//Maybe clear all of these at the end of StudyCourse

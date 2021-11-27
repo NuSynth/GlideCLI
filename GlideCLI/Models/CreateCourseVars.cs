@@ -2,11 +2,6 @@ namespace GlideCLI.Models
 {
     public class CreationModel
     {
-        // $"{newID},{globals.CourseName}.txt,{filePath}";
-        public int Course_ID { get; set; }
-        public string Course_Name { get; set; }
-        public string File_Path { get; set; }
-
         public int chapterLoop { get; set; }
         public int currentChapter { get; set; }
         public int chaptersInt { get; set; }

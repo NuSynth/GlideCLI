@@ -20,7 +20,6 @@ namespace GlideCLI.Models
 
         //Doubles        
         public const double ZERO_DOUBLE = 0;
-        public const double ONE_DOUBLE = 1;
 
         //Strings
         public const string ZERO_STRING = "0";
