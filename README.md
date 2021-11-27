@@ -15,17 +15,17 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 
 # To Install:
 GlideCLI MIGHT run on MacOS now. It WILL now run on Windows, Linux, and Docker:
-(I don't have a mac, but if someone with a mac wants to try it, please tell me if it works. I am only guessing that macOS a Unix directory structure.)
+(I don't have a mac, but if someone with a mac wants to try it, please tell me if it works. I am only guessing that macOS uses a Unix directory structure.)
 
-* Step 1
-Just download Mono here for you operating system:
+* Step 1:
+Just download Mono here for your operating system:
 https://www.mono-project.com/download/stable/#download-lin
 
-* Step 2
+* Step 2:
 Download GlideCLI from the release page here:
 https://github.com/Dartomic/GlideCLI/releases/download/v0.21-alpha/GlideCLI.exe
 
-* Step 3
+* Step 3:
 Then open a command prompt in the directory that GlideCLI.exe is in, and type
 mono GlideCLI.exe
 
