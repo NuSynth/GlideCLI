@@ -1487,6 +1487,11 @@ namespace GlideCLI
             genSimsAll.Clear();
             genSimsStudied.Clear();
             projectedSimList.Clear();
+            fStudyDates.Clear();
+            fStudyCounts.Clear();
+            xRepTempDates.Clear();
+            xRepDateCounts.Clear();
+            toXmax.Clear();
         }
         private static void PredictStudies()
         {
