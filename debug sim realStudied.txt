@@ -78,33 +78,12 @@ index location of the current simulated study.
 
 
 
-// Leaving the notes in case Im wrong. Don't clear genSimsAll until final study date has been found.
-// I think genSimsAll's elements can be updated in-place during study simulation.
-
-1. Put all genSimsAll topics into what ever array it goes to (we'll call it studiedSims here)
-
-2. Clear genSimsAll
-
-3. Get maximum number of repeats from studiedSims
-
-4. Get number of new topics from projectedSims
+// Don't clear genSimsAll until final study date has been found.
+// genSimsAll's elements can be updated in-place during study simulation.
+// Add new studies from projectedVars, at a quantity == y
 
 
-// Take the simulated day's studied topics, and replace 
 
-someIndex = Constants.ZERO_INT;
 
-while (someIndex < genSimsAll.Count)
-{
-
-}
-
-private static void 
-   SimModel studiedSims = new SimModel();
-  if (genSimsAll[some index].Top_Number == studiedSims.Top_Number
-  {
-      if (genSimsAll[someIndex].Sim_Repetition == studiedSims.Real_Repetition)
-        
-  }
 
 /*************AFTER CLEARING genSimsAll: END************/

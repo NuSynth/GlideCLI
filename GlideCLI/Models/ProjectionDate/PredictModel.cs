@@ -2,6 +2,8 @@ namespace GlideCLI.Models
 {
     public class PredictModel
     {
+        public int Final_Topic {get; set;}
+        
         // Indices
         public int Gen_Studied_Index {get; set;}
         public int Gen_Projected_Index {get; set;}
@@ -90,9 +92,6 @@ namespace GlideCLI.Models
         public int debugElseTwoCount {get; set;}
         public int debugElseThreeCount {get; set;}
         public bool debugFunk {get; set;}
-
-        //Debug simulate genSimsAll
-        public int debugTopic {get; set;}
         
     }
 }
