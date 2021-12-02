@@ -991,6 +991,9 @@ namespace GlideCLI
                 {
                     predictVars.Prediction_Date = "Not enough topics studied yet!";
                     predictVars.Only_ONE = false;
+
+                    //Clear Lists here too
+                    ProdictionListsClear();
                     return;
                 }
                 PreparePastStudies();
@@ -1061,15 +1064,22 @@ namespace GlideCLI
             predictVars.Loop_Index = Constants.ZERO_INT;
             predictVars.Find_Yhigh_Index = Constants.ZERO_INT;
             predictVars.First_Check = true;
+
+
             while (predictVars.Loop_Index < studiedSimList.Count)
             {
+
                 FindHighY();
                 ++predictVars.Loop_Index;
             }
+
+
             predictVars.Loop_Index = Constants.ZERO_INT;
             predictVars.Find_Yhigh_Index = Constants.ZERO_INT;
             if (fStudyCounts.Count > Constants.TWO_INT)
             {
+
+
                 YmaxSortFirsts();
                 predictVars.Only_ONE = false;
             }
@@ -1215,29 +1225,19 @@ namespace GlideCLI
             //xMaxList
         
             predictVars.Loop_Index = Constants.ZERO_INT;
-            
-            
-            
             while (predictVars.Loop_Index < genSimsStudied.Count)
             {
                 XmaxToSort();
                 ++predictVars.Loop_Index;
             }
-            
-
             XmaxRepeatSort();
 
-        
-           
-       
             predictVars.Loop_Index = Constants.ZERO_INT;
-      
             while (predictVars.Loop_Index < xMaxSortList.Count)
             {
                 AddToXmax();
                 ++predictVars.Loop_Index;
             }
-
             predictVars.Loop_Index = Constants.ZERO_INT;
             xMaxSortList.Clear();
 
@@ -1249,7 +1249,6 @@ namespace GlideCLI
             // if something > zero, then t1 is later than t2
   
             predictVars.XrepIndex = Constants.ZERO_INT;
-
             predictVars.First_Check = true;
             predictVars.Loop_Index = Constants.ZERO_INT;
             while (predictVars.Loop_Index < toXmax.Count)
@@ -1274,27 +1273,27 @@ namespace GlideCLI
         }
         private static bool SortXrepCounts(bool RepsortCorrect)
         {
+		int listKey = new int();
 
-            int listKey = new int();
+		for (predictVars.J = Constants.TWO_INT; predictVars.J < xRepDateCounts.Count; predictVars.J++)
+		{
+			listKey = xRepDateCounts[predictVars.J];
 
-            for (predictVars.J = Constants.TWO_INT; predictVars.J < xRepDateCounts.Count; predictVars.J++)
-            {
-                listKey = xRepDateCounts[predictVars.J];
-
-                // Insert xRepDateCounts[j] into sorted sequence xRepDateCounts[1...j-1]
-                predictVars.I = predictVars.J - Constants.ONE_INT;
-                while (predictVars.I > Constants.ZERO_INT && xRepDateCounts[predictVars.I] > listKey)
-                {
-                    xRepDateCounts[predictVars.I + Constants.ONE_INT] = xRepDateCounts[predictVars.I];
-                    predictVars.I = predictVars.I - Constants.ONE_INT;
-                }
-                xRepDateCounts[predictVars.I + Constants.ONE_INT] = listKey;
-            }
+			// Insert xRepDateCounts[j] into sorted sequence xRepDateCounts[1...j-1]
+			predictVars.I = predictVars.J - Constants.ONE_INT;
+			while (predictVars.I > Constants.ZERO_INT && xRepDateCounts[predictVars.I] > listKey)
+			{
+			    xRepDateCounts[predictVars.I + Constants.ONE_INT] = xRepDateCounts[predictVars.I];
+			    predictVars.I = predictVars.I - Constants.ONE_INT;
+			}
+			xRepDateCounts[predictVars.I + Constants.ONE_INT] = listKey;
+		}
 
             /* 
             this is here to get the first element sorted into 
             the rest of the array on the second run of the loop
             */
+
             if (xRepDateCounts[Constants.ZERO_INT]  > xRepDateCounts[Constants.ONE_INT])
             {
                 //key = A[ZERO];
@@ -1308,6 +1307,7 @@ namespace GlideCLI
             {
                 RepsortCorrect = false;
             }
+
             return RepsortCorrect;
         }
 
