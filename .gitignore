@@ -1,8 +1,8 @@
 /.vscode*
 /.kdev4*
+/stuff*
 *.kedev4
+*.kdev4
 *.exe
-Features to add.txt
-scratchPaper.cs
 /GlideCLI/bin*
 /GlideCLI/obj*
