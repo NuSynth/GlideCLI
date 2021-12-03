@@ -1073,7 +1073,6 @@ namespace GlideCLI
                 ++predictVars.Loop_Index;
             }
 
-
             predictVars.Loop_Index = Constants.ZERO_INT;
             predictVars.Find_Yhigh_Index = Constants.ZERO_INT;
             if (fStudyCounts.Count > Constants.TWO_INT)
