@@ -17,7 +17,7 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 GlideCLI is a command line interface application:
 
 ## Screenshot
-![In Use](Images/Screenshot from 2021-12-03 04-18-04.png)
+![In Use](Images/Screenshot.png)
 
 # To Install:
 GlideCLI MIGHT run on MacOS now. It WILL now run on Windows, Linux, and Docker:
