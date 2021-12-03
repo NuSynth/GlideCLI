@@ -1,10 +1,8 @@
 /.vscode*
-
+/.kdev4*
+*.kedev4
+*.exe
 Features to add.txt
 scratchPaper.cs
-
-/GlideCLI/Program.exe
-/GlideCLI/GlideCLI.exe
-
 /GlideCLI/bin*
 /GlideCLI/obj*
