@@ -1,10 +1,12 @@
 For Stability:
-	Write my own date adding function one day.
+	-Write my own date adding function one day:
 
 	I think it's the Microsoft DateTime Add() function that has a limit on the calculation
 	on the next date, if the number of days between the date to add to, and the next date,
 	are too many. I think it was a small enough time for the program to crash within a
 	persons average lifespan.
+
+	-Make sure program does not crash if newLeft == 0;
 
 
 

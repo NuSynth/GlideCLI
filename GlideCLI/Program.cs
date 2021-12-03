@@ -514,6 +514,8 @@ namespace GlideCLI
         }
         private static void StudyCourse()
         {
+            predictVars.Lock_Initial = false;
+            predictVars.Lock_New = false;
             studyVars.index = Constants.ZERO_INT;
             studyVars.today = DateTime.Parse(globals.TheDate);
             studyVars.filePath = globals.FilePath;
@@ -530,10 +532,15 @@ namespace GlideCLI
                         while (globals.ProblemsDone != true)
                         {
                             if (globals.newLeft > Constants.ZERO_INT)
-                                PredictMain();
+                            {
+                            	predictVars.End_Reached = false;
+                            	PredictMain();
+                            }
+                            else
+                            	predictVars.End_Reached = true;
                             StudyNotDone();
                             if (studyVars.response == "m")
-                                return;
+                            	return;
                         }
                     }
                 }
@@ -785,21 +792,6 @@ namespace GlideCLI
                 }
                 ++studyVars.index;
             }
-
-            int repeatCount = globals.currentLeft + globals.lateLeft;
-            if (globals.newLeft > Constants.ZERO_INT)
-            {
-            	predictVars.End_Reached = false;
-
-            	if (repeatCount == Constant.ZERO_INT)
-            		predictVars.Unlock_New_Date = true;
-            	else
-            		predictVars.Unlock_New_Date = false;
-            }
-            else
-            {
-            	predictVars.End_Reached = true;
-            }
         }
         private static void StudyFalse()
         {
@@ -897,10 +889,7 @@ namespace GlideCLI
                     if (globals.newLeft >= Constants.ONE_INT)
                     	--globals.newLeft;
                     if (predictVars.Until_New > Constants.ZERO_INT)
-                    {
-                    	--predictVars.Until_New;
-
-                    }
+                        --predictVars.Until_New;
 
                     Console.Clear();
                 }
@@ -928,6 +917,8 @@ namespace GlideCLI
                 --globals.lateLeft;
             else if (studyVars.dateCompare == Constants.ZERO_INT)
                 --globals.currentLeft;
+           if (predictVars.Until_New > Constants.ZERO_INT)
+                --predictVars.Until_New;
             Console.Clear();
         }
         private static void StudyNotDone()
@@ -981,8 +972,35 @@ namespace GlideCLI
             else
                 studyVars.topStudBool = "false";
             Console.WriteLine($"Course Name: {globals.CourseName}");
-            if (globals.newLeft > Constants.ZERO_INT)
-                Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Initial_Prediction_Date}");
+            Console.WriteLine($"\nCurrent Repetition Goal:")
+
+            if (predictVars.Enough_Studied == true)
+            {
+		// Display Initial Goal Date IF End_Reached == FALSE AND Unlock_New_Date == FALSE
+		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == false)
+		{
+			// Display Number of topics left to reach Initial Goal Date
+			// Initial_Prediction_Date
+			Console.WriteLine($"Study {predictVars.Until_New} sections for this CURRENT COMPLETION DATE:");
+			Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Initial_Prediction_Date}");
+			Console.WriteLine($"Study more than {predictVars.Until_New} sections to complete course sooner.\n");
+		}
+		// Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
+		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
+		{
+			// Display New Goal Date
+			// New_Prediction_Date
+			Console.WriteLine($"Study {predictVars.Until_New} sections for this NEW COMPLETION DATE:");
+			Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.New_Prediction_Date}\n");
+		}
+		// Display No_Date IF End_Reached == TRUE
+		if (predictVars.End_Reached == true)
+			Console.WriteLine("Maintenance study session");
+
+            }
+            // if (predictVars.Enough_Studied == true && predictVars.End_Reached == false);
+            	//if (globals.newLeft > Constants.ZERO_INT)
+                	//Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Prediction_Date}");
             Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
             Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
             Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
@@ -1502,6 +1520,7 @@ namespace GlideCLI
                 predictVars.Sim_Date_Use = simDate.ToString("d");
                 totalNewTopics = projectedSimList.Count;
             }
+            GoalSetter();
             ProdictionListsClear();
         }
         private static void ProdictionListsClear()
@@ -1518,8 +1537,6 @@ namespace GlideCLI
         }
         private static void PredictStudies()
         {
-            int totalNewTopics = Constants.ZERO_INT;
-            int predictedIndex = Constants.ZERO_INT;
             int index;
             
             index = Constants.ZERO_INT;
@@ -1548,13 +1565,6 @@ namespace GlideCLI
                 ++index;
             }
             studyRepElements.Clear();
-            totalNewTopics = projectedSimList.Count;
-            if (totalNewTopics == Constants.ZERO_INT) //FIXME - Make sure this doesn't cause problems once new reps are 0 for reps of old topics.
-            {
-                predictedIndex = genSimsAll.Count - Constants.ONE_INT;
-                predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number + Constants.ONE_INT;
-                predictVars.Initial_Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
-            }
         }
         private static void CollectStudyX()
         {
@@ -1644,20 +1654,49 @@ namespace GlideCLI
             rise = lowY - highY;
             slope = rise / run;
             curReps = predictVars.Current_X;
+
+            //DELETEME START
+            Console.WriteLine($"curReps = {curReps}");
+            Console.ReadLine();
+            //DELETEME END
+
             yCurrent = (slope * curReps) + value_b;
             predictVars.Current_Y = (int)yCurrent;
-            GoalSetter();
         }
         private static void GoalSetter()
         {
-        	int currentXint = (int)predictVars.Current_X;
-        	int currentY;
-        	if (currentY > )
-        	if (predictVars.End_Reached == false)
-        	{
-        		currentXint + pr
+        	int currentX = (int)predictVars.Current_X;
+        	int currentY = predictVars.Current_Y;
+        	int countDown = currentX + currentY;
 
-        	}
+        	if (currentY > globals.newLeft)
+			currentY = globals.newLeft;
+
+		if (predictVars.Lock_Initial == false && predictVars.Unlock_New_Date == false)
+        		predictVars.Until_New = countDown;
+        	if (predictVars.Lock_New == false && predictVars.Unlock_New_Date == true)
+        		predictVars.Until_New = countDown;
+
+                if (predictVars.Until_New == Constants.ZERO_INT)
+			predictVars.Unlock_New_Date = true;
+                else
+                	predictVars.Unlock_New_Date = false;
+
+		if (predictVars.Unlock_New_Date == false)
+		{
+			if (predictVars.Lock_Initial == false)
+			{
+				predictVars.Lock_Initial = true;
+				predictVars.Initial_Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+        			predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number + Constants.ONE_INT;
+			}
+		}
+		if (predictVars.Unlock_New_Date == true)
+		{
+			predictVars.Lock_Initial = true;
+			predictVars.New_Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+			predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number + Constants.ONE_INT;
+		}
 
         }
         private static void CollectStudyY()
@@ -1672,10 +1711,6 @@ namespace GlideCLI
                 {
                     ++yToStudied;
                     studyRepElements.Add(yToStudied);
-                    if (predictVars.Until_New == Constants.ZERO_INT)
-                    {
-
-                    }
                 }
                 ++index;
             }

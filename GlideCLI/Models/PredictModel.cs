@@ -7,6 +7,8 @@ namespace GlideCLI.Models
         public string New_Prediction_Date {get; set;}
         public int Final_Topic {get; set;}
         public int Until_New {get; set;}                              // Counts down number of topics studied, if topics were scheduled to study
+        public bool Lock_Initial {get; set;}                          // Required so that Initial_Prediction_Date is set only once.
+        public bool Lock_New {get; set;}                              // Used for new dates to display
         public bool Unlock_New_Date {get; set;}                       // Display a newer date if Until_New reaches ZERO
         public bool End_Reached {get; set;}                           // No expected date shown if == false
         

@@ -48,17 +48,23 @@ putting them into the program.
 		{
 			// Display Number of topics left to reach Initial Goal Date
 			// Initial_Prediction_Date
+			Console.WriteLine($"\nCourse Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Initial_Prediction_Date}");
+			Console.WriteLine($"Minimum sections left to study today for completion date to be correct: {predictVars.Until_New}");
+			Console.WriteLine($"Study more sections than {predictVars.Until_New} to complete course sooner.\n");
 		}
 		// Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
 		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
 		{
 			// Display New Goal Date
 			// New_Prediction_Date
+			Console.WriteLine("\nStudy current topic for this new completion date:")
+			Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.New_Prediction_Date}\n");
 		}
 		// Display No_Date IF End_Reached == TRUE
 		if (predictVars.End_Reached == true)
 		{
 			// Display "Maintenence study"
+			Console.WriteLine("Maintenance study session");
 		}
             }
             // if (predictVars.Enough_Studied == true && predictVars.End_Reached == false);
