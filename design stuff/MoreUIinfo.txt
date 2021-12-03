@@ -1,0 +1,52 @@
+CURRENT:
+
+Course Name: WesternCiv.txt
+Course Completion Expected: Section = 48 Date = 1/28/2022
+Section: 10
+Previously Studied: true
+Number of LATE practice to review: 1
+Number of ON-TIME practice topics to review: 0
+Number of NEW topics left: 34
+
+
+Number of questions/problems: 5
+
+OPTIONS:
+(m) = Main Menu.
+(enter key) = Process topic, and go to next
+
+
+
+Option: 
+
+
+NEW:
+
+Course Name: WesternCiv.txt
+Current Section: 10 | Previously Studied: true
+Sections Available for Session:
+LATE: 1 | ON-TIME: 0 | NEW: 34
+
+________________Course Completion Expected________________
+if (repsOverOne >= TWO)
+{
+  if (projectVars.New_Counter > projectVars.First_Y_High_Y) //Set both to zero at menu entry
+    Updated: Last Section = 48 | Date = 1/28/2022     //Will display updated date if count becomes greater than First_Y_High_Y.
+  else
+    If {Y_HIGH + Repeats} sections studied today: Last Section = 48 | Date = 1/28/2022  // Displays until new expected studies have been studied.
+}
+
+Number of questions/problems: 5
+
+OPTIONS:
+(m) = Main Menu.
+(enter key) = Process topic, and go to next
+
+
+
+Option: 
+
+
+
+
+

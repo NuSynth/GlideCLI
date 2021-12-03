@@ -1,0 +1,93 @@
+For Stability:
+	Write my own date adding function one day.
+
+	I think it's the Microsoft DateTime Add() function that has a limit on the calculation
+	on the next date, if the number of days between the date to add to, and the next date,
+	are too many. I think it was a small enough time for the program to crash within a
+	persons average lifespan.
+
+
+
+Features to add:
+
+First - Before adding the features I want:
+  Divide all functions into smallest possible
+    -This will make it easier to port the C# code to a different language
+
+  Move all CLI user interface into the function with the user-interface switch
+    -this will make it easier to build in a GUI replacement
+
+  Port code to Vala before C
+    -This will allow me to give it a GUI before I finish learning enough C for FreeClear
+
+1.
+Produce an average number of cards per day, and attempt
+to predict day that last card of subject will be studied.
+
+This result does not need to be stored on a file.
+It can be calculated at start of every repetition.
+
+  IF none have been studied, display a question mark for expected completion date instead of date.
+
+  Take the first day of study from first topic.
+  Subtract that date from current date
+
+
+  Store number of days studied into variable.
+
+  double nDays;
+
+  Store the number of topics studied in a variable.
+
+  double nStudied;
+
+  Store the total number of topics in a variable
+
+  double totalTops;
+
+  Store the average from nStudied and nDays.
+
+  double avrStudied;
+
+  Store result of totalTops / avrStudied
+
+  double daysToFinish;
+
+  add daysToFinish to current date
+
+  Date expectComplete;
+
+2.
+At the course selection screen, show which courses have studied repetitions that are due.
+
+  Get number of courses
+
+  Make list array thing
+  while (index < numCourses)
+  {
+      Check each course file
+
+        count each line
+        store count in lineCount
+        make lineIndex
+
+        bool trueFalse = false;
+        while (lineIndex < lineCount)
+        {
+            if line date >= today
+            {
+              store "true" in list's index corresponding to course number
+
+              // To exit loop
+              set lineIndex = lineCount
+            }
+         }
+    }
+
+  for each course that prints to stdout, display "studies due = true, or false" next to to topic name in list.
+
+
+
+
+
+
