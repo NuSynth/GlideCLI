@@ -12,7 +12,7 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 * exit from menu
 * Change number of total questions on first study of a topic
 * Predicts the date a course will be completed by.
-* UAllows users to win earlier completion dates.
+* Allows users to win earlier completion dates.
 
 # To Install:
 GlideCLI MIGHT run on MacOS now. It WILL now run on Windows, Linux, and Docker:
