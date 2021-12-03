@@ -8,6 +8,8 @@ For Stability:
 
 	-Make sure program does not crash if newLeft == 0;
 
+Use LaTex in the GUI versions to display scientifc and mathematical stuf.
+
 
 
 Features to add:
