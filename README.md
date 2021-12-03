@@ -14,6 +14,11 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 * Predicts the date a course will be completed by.
 * Allows users to win earlier completion dates.
 
+GlideCLI is a command line interface application:
+
+## Screenshot
+![In Use](Images/Screenshot from 2021-12-03 04-18-04.png)
+
 # To Install:
 GlideCLI MIGHT run on MacOS now. It WILL now run on Windows, Linux, and Docker:
 (I don't have a mac, but if someone with a mac wants to try it, please tell me if it works. I am only guessing that macOS uses a Unix directory structure.)
