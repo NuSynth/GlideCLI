@@ -4,94 +4,108 @@ This file is normally used to design components before
 putting them into the program.
 ****************************************************************/
 
-        private static void StudyHUD()
+        private static void GoalSetter()
         {
-            Console.Clear();
-            if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
-                studyVars.topStudBool = "true";
+        	int currentX = (int)predictVars.Current_X;
+        	int currentY = predictVars.Current_Y;
+        	int countDown = currentX + currentY;
+
+        	if (currentY > globals.newLeft)
+			    currentY = globals.newLeft;
+
+            if (predictVars.Lock_Initial == false && predictVars.Unlock_New_Date == false)
+                    predictVars.Until_New = countDown;
+
+            if (predictVars.Until_New == Constants.ZERO_INT)
+                predictVars.Unlock_New_Date = true;
             else
-                studyVars.topStudBool = "false";
-            Console.WriteLine($"Course Name: {globals.CourseName}");
-            if (globals.newLeft > Constants.ZERO_INT)
-                Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Prediction_Date}");
-            Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
-            Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
-            Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
-            Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
-            Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
-            Console.WriteLine($"\n\nNumber of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");
-            Console.WriteLine("\nOPTIONS:");
-            Console.WriteLine("(m) = Main Menu.");
-            if (globals.lateLeft > Constants.ZERO_INT || globals.currentLeft > Constants.ZERO_INT)
-                Console.WriteLine("(enter key) = Process topic, and go to next");
-            else
-                Console.WriteLine("(u) = Update number of questions.");
+                predictVars.Unlock_New_Date = false;
+
+            if (predictVars.Unlock_New_Date == false)
+            {
+                if (predictVars.Lock_Initial == false)
+                {
+                    predictVars.Lock_Initial = true;
+                    predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+                    predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+                }
+            }
+            if (predictVars.Unlock_New_Date == true)
+            {
+                predictVars.Until_New = countDown;
+                predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+                predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+            }
+
         }
 
 
         /****************MODIFIED VERSION******************************/
 
-        private static void StudyHUD()
+
+        private static void GoalSetter()
         {
-            Console.Clear();
-            if (TopicsList.ElementAt(globals.TopicID).Top_Studied == true)
-                studyVars.topStudBool = "true";
-            else
-                studyVars.topStudBool = "false";
-            Console.WriteLine($"Course Name: {globals.CourseName}");
+        	int currentX = (int)predictVars.Current_X;
+        	int currentY = predictVars.Current_Y;
+        	int countDown = currentX + currentY;
 
+            ++predictVars.debugCount;
+        	if (currentY > globals.newLeft)
+			    currentY = globals.newLeft;
 
-            if (predictVars.Enough_Studied == true)
+            //DELETEME START
+            if (currentY > globals.newLeft)
+                predictVars.debugFunk = true;
+            Console.WriteLine($"\ndebugCount = {predictVars.debugCount}");
+            Console.WriteLine($"genSimsAll.Count = {genSimsAll.Count}");
+            Console.WriteLine($"debugFunk = {predictVars.debugFunk}");
+            Console.WriteLine($"currentX = {currentX}");
+            Console.WriteLine($"currentY = {currentY}");
+            Console.WriteLine($"countDown = {countDown}\n");
+            //DELETEME END
+
+            if (predictVars.Until_New == Constants.ZERO_INT)
             {
-		// Display Initial Goal Date IF End_Reached == FALSE AND Unlock_New_Date == FALSE
-		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == false)
-		{
-			// Display Number of topics left to reach Initial Goal Date
-			// Initial_Prediction_Date
-			Console.WriteLine($"\nCourse Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Initial_Prediction_Date}");
-			Console.WriteLine($"Minimum sections left to study today for completion date to be correct: {predictVars.Until_New}");
-			Console.WriteLine($"Study more sections than {predictVars.Until_New} to complete course sooner.\n");
-		}
-		// Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
-		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
-		{
-			// Display New Goal Date
-			// New_Prediction_Date
-			Console.WriteLine("\nStudy current topic for this new completion date:")
-			Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.New_Prediction_Date}\n");
-		}
-		// Display No_Date IF End_Reached == TRUE
-		if (predictVars.End_Reached == true)
-		{
-			// Display "Maintenence study"
-			Console.WriteLine("Maintenance study session");
-		}
+                predictVars.Until_New = countDown;
+                predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+                predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
             }
-            // if (predictVars.Enough_Studied == true && predictVars.End_Reached == false);
-            	//if (globals.newLeft > Constants.ZERO_INT)
-                	//Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Prediction_Date}");
-            Console.WriteLine($"Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
-            Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
-            Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
-            Console.WriteLine($"Number of ON-TIME practice topics to review: {globals.currentLeft}");
-            Console.WriteLine($"Number of NEW topics left: {globals.newLeft}");
-            Console.WriteLine($"\n\nNumber of questions/problems: {TopicsList.ElementAt(globals.TopicID).Num_Problems}");
-            Console.WriteLine("\nOPTIONS:");
-            Console.WriteLine("(m) = Main Menu.");
-            if (globals.lateLeft > Constants.ZERO_INT || globals.currentLeft > Constants.ZERO_INT)
-                Console.WriteLine("(enter key) = Process topic, and go to next");
-            else
-                Console.WriteLine("(u) = Update number of questions.");
+
+
+            // if (predictVars.Until_New == Constants.ZERO_INT)
+            //     predictVars.Unlock_New_Date = true;
+            // else
+            //     predictVars.Unlock_New_Date = false;
+
+            // if (predictVars.Unlock_New_Date == false)
+            // {
+            //     if (predictVars.Lock_Initial == false)
+            //     {
+            //         predictVars.Lock_Initial = true;
+            //         predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+            //         predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+            //     }
+            // }
+            // if (predictVars.Unlock_New_Date == true)
+            // {
+            //     predictVars.Until_New = countDown;
+            //     predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+            //     predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+            // }
+
         }
 
 
-	IF predictVars.Enough_Studied == TRUE
 
-	{
 
-		Display Initial Goal Date IF End_Reached == FALSE AND Unlock_New_Date == FALSE
 
-		Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
+        /**************************************PROBLEM SEPARATOR******************************************************************/
 
-		Display No_Date IF End_Reached == TRUE
-        }
+
+        // Right before GoalSetter is called:
+
+        // predictVars.CurrentX needs to be set == to lateLeft + currentLeft
+        // Then FindYatX needs to be called.
+        // Then GoalSetter
+
+predictVars.Sim_Date_Use

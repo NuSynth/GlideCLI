@@ -5,8 +5,8 @@ namespace GlideCLI.Models
         // Date for StudyHud()
         public string Prediction_Date {get; set;}
         public int Final_Topic {get; set;}
-        public int Until_New {get; set;}                              // Counts down number of topics studied, if topics were scheduled to study
-        public bool Lock_Initial {get; set;}                          // Required so that Initial_Prediction_Date is set only once.
+        public int Until_New {get; set;}                              // Counts down number of topics studied, if topics were scheduled to study        
+        public bool Lock_Goals {get; set;}                          // Required so that Initial_Prediction_Date is set only once.
         public bool Unlock_New_Date {get; set;}                       // Display a newer date if Until_New reaches ZERO
         public bool End_Reached {get; set;}                           // No expected date shown if == false
         
@@ -44,14 +44,5 @@ namespace GlideCLI.Models
         public int J {get; set;}
         public int I {get; set;}
         public int Date_Check {get; set;}
-
-        //Debug vars
-        // public int debugWhileCount {get; set;}
-        // public int debugFirstTrueCount {get; set;}
-        // public int debugElseOneCount {get; set;}
-        // public int debugElseTwoCount {get; set;}
-        // public int debugElseThreeCount {get; set;}
-        // public bool debugFunk {get; set;}
-        
     }
 }

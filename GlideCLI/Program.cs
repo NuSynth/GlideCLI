@@ -14,7 +14,7 @@ namespace GlideCLI
         static Globals globals = new Globals();
         static CreationModel creationVars = new CreationModel();
         static StudyModel studyVars = new StudyModel();
-        
+
         /***********************************************/
         // Start of parts to predict date of last topic being studied
         static List<SimModel> studiedSimList = new List<SimModel>();
@@ -57,7 +57,7 @@ namespace GlideCLI
         {
             var userName = Environment.UserName;
             string pathString;
-            pathString = ($"//home//{userName}//Documents");            
+            pathString = ($"//home//{userName}//Documents");
             if (Directory.Exists(pathString))
                 Linux();
             else
@@ -91,7 +91,7 @@ namespace GlideCLI
                 MainMenu();
                 StudyIncrementer();
                 ClearLists();
-            }            
+            }
         }
         private static void CheckForCountFile()
         {
@@ -127,7 +127,7 @@ namespace GlideCLI
         {
             int selectionInt;
             string selectionString;
-            
+
             globals.madeSelect = false;
             while (globals.madeSelect == false)
             {
@@ -144,7 +144,7 @@ namespace GlideCLI
                     catch
                     {
                         Console.WriteLine("Invalid Input. Try again:");
-                    }                    
+                    }
                     if (selectionInt == Constants.ONE_INT || selectionInt == Constants.TWO_INT)
                         MainOptions(selectionInt);
                 }
@@ -163,40 +163,40 @@ namespace GlideCLI
                     }
                     if (selectionInt >= Constants.ONE_INT && selectionInt <= Constants.THREE_INT)
                         MainOptions(selectionInt);
-                }                
+                }
             }
         }
         private static void MainOptions(int selectionInt)
         {
             const int ZERO = 0;
             switch (selectionInt)
-                {
-                    case 1:
-                        globals.madeSelect = true;
-                        Console.Clear();
-                        Console.WriteLine("Good Bye");
-                        Environment.Exit(ZERO);
-                        break;
-                    case 2:
-                        globals.madeSelect = true;
-                        Console.Clear();
-                        Console.WriteLine("Create new course selected.\n");
-                        CreateCourse();
-                        break;
-                    case 3:
-                        globals.madeSelect = true;
-                        Console.Clear();
-                        Console.WriteLine("COURSES:\n");                        
-                        StudyIncrementer();
-                        ClearLists();
-                        SelectCourse();
-                        StudyCourse();                        
-                        break;
-                    default:
-                        Console.WriteLine("Default case");
-                        globals.madeSelect = false;
-                        break;
-                }
+            {
+                case 1:
+                    globals.madeSelect = true;
+                    Console.Clear();
+                    Console.WriteLine("Good Bye");
+                    Environment.Exit(ZERO);
+                    break;
+                case 2:
+                    globals.madeSelect = true;
+                    Console.Clear();
+                    Console.WriteLine("Create new course selected.\n");
+                    CreateCourse();
+                    break;
+                case 3:
+                    globals.madeSelect = true;
+                    Console.Clear();
+                    Console.WriteLine("COURSES:\n");
+                    StudyIncrementer();
+                    ClearLists();
+                    SelectCourse();
+                    StudyCourse();
+                    break;
+                default:
+                    Console.WriteLine("Default case");
+                    globals.madeSelect = false;
+                    break;
+            }
         }
         private static void SelectionDialogs(int dialog)
         {
@@ -216,7 +216,7 @@ namespace GlideCLI
                     Console.Clear();
                     Console.WriteLine("\n\n1: Exit the program");
                     Console.WriteLine("2: Create a new course");
-                    Console.WriteLine("3: Study a course\n"); 
+                    Console.WriteLine("3: Study a course\n");
                     Console.WriteLine("\n\n\nSelect an option from the menu: ");
                     break;
                 case 3:
@@ -224,7 +224,7 @@ namespace GlideCLI
                     Console.Clear();
                     Console.WriteLine("\n\n\nNothing left to study for current topic today.");
                     Console.WriteLine("Enter m to quit back to menu, or any other key to exit.");
-                    globals.response = Console.ReadLine();                
+                    globals.response = Console.ReadLine();
                     if (globals.response == "m")
                     {
                         Console.Clear();
@@ -327,7 +327,7 @@ namespace GlideCLI
                     SelectionDialogs(Constants.SIX_INT);
                     creationVars.topicCounter = Convert.ToInt32(creationVars.topicCountString);
                     globals.TopicCount = globals.TopicCount + creationVars.topicCounter;
-                    
+
                     // This loop is where all of the essential data are set up
                     while (creationVars.topicLoop < creationVars.topicCounter)
                     {
@@ -369,9 +369,9 @@ namespace GlideCLI
                     ++creationVars.subLoop;
                 }
                 creationVars.subSectionCounter = Constants.ZERO_INT;
-                creationVars.subLoop = Constants.ZERO_INT;                
+                creationVars.subLoop = Constants.ZERO_INT;
                 ++creationVars.chapterLoop;
-            }            
+            }
         }
         private static void ProduceCourse()
         {
@@ -399,23 +399,23 @@ namespace GlideCLI
             string path;
             string courseCount;
             string listContents;
-            List<string> contentList = new List<string>();            
+            List<string> contentList = new List<string>();
             ++newID;
             listContents = $"{newID},{globals.CourseName}.txt,{creationVars.filePath}";
-            contentList.Add(listContents);            
+            contentList.Add(listContents);
             if (File.Exists(creationVars.listFile))
-                CourseListPath();            
+                CourseListPath();
             else
-                File.WriteAllLines(creationVars.listFile, contentList);                   
+                File.WriteAllLines(creationVars.listFile, contentList);
             if (globals.osSwitch == true)
-                path = $"{globals.DirectoryPath}//CourseCount.txt";            
+                path = $"{globals.DirectoryPath}//CourseCount.txt";
             else
-                path = $"{globals.DirectoryPath}\\CourseCount.txt";            
+                path = $"{globals.DirectoryPath}\\CourseCount.txt";
             courseCount = File.ReadAllText(path);
             globals.CourseCount = Convert.ToInt32(courseCount);
             ++globals.CourseCount;
             courseCount = Convert.ToString(globals.CourseCount);
-            File.WriteAllText(path, courseCount); 
+            File.WriteAllText(path, courseCount);
             SelectionDialogs(Constants.EIGHT_INT);
         }
         private static void CourseListPath()
@@ -445,7 +445,7 @@ namespace GlideCLI
             ++courseID;
             List<string> lines = new List<string>();
             if (File.Exists(filePath))
-                lines = File.ReadAllLines(filePath).ToList();          
+                lines = File.ReadAllLines(filePath).ToList();
             lines.Add($"{courseID},{globals.CourseName}.txt,{courseFilePath}");
             File.WriteAllLines(filePath2, lines); // Just in case the computer loses power, or freezes up. CourseList.bak would have to be manually renamed.
             File.WriteAllLines(filePath, lines);
@@ -486,7 +486,7 @@ namespace GlideCLI
                 catch
                 {
                     Console.WriteLine("Invalid selection.");
-                    validInput = false;                    
+                    validInput = false;
                 }
                 if (validInput == true)
                 {
@@ -501,7 +501,7 @@ namespace GlideCLI
                         {
                             Console.WriteLine($"Course ID: {course.Course_ID} - Course Name: {course.Course_Name}");
                             if (testVar == course.Course_ID)
-                                globals.CourseName = course.Course_Name;                            
+                                globals.CourseName = course.Course_Name;
                         }
                     }
                     catch
@@ -510,12 +510,12 @@ namespace GlideCLI
                         validInput = false;
                     }
                 }
-            }            
+            }
         }
         private static void StudyCourse()
         {
-            predictVars.Lock_Initial = false;
-            predictVars.Unlock_New_Date = false;
+            predictVars.Lock_Goals = false;
+            predictVars.Until_New = Constants.ZERO_INT;
             studyVars.index = Constants.ZERO_INT;
             studyVars.today = DateTime.Parse(globals.TheDate);
             studyVars.filePath = globals.FilePath;
@@ -533,14 +533,15 @@ namespace GlideCLI
                         {
                             if (globals.newLeft > Constants.ZERO_INT)
                             {
-                            	predictVars.End_Reached = false;
-                            	PredictMain();
+                                predictVars.End_Reached = false;
+                                PredictMain();
                             }
                             else
-                            	predictVars.End_Reached = true;
+                                predictVars.End_Reached = true;
                             StudyNotDone();
+
                             if (studyVars.response == "m")
-                            	return;
+                                return;
                         }
                     }
                 }
@@ -684,10 +685,10 @@ namespace GlideCLI
                     Console.Clear();
                     Console.WriteLine("\n\nInvalid Input\n\nPress Enter to Continue");
                     Console.ReadLine();
-                    SelectionDialogs(Constants.TEN_INT);                
+                    SelectionDialogs(Constants.TEN_INT);
                 }
             }
-            
+
             TopicsList.ElementAt(globals.TopicID).Num_Problems = numTotalDouble;
         }
         private static void StudyIncrementer()
@@ -701,7 +702,7 @@ namespace GlideCLI
         }
         private static void ClearLists()
         {
-            if ( globals.studyTracker > Constants.ONE_INT)
+            if (globals.studyTracker > Constants.ONE_INT)
             {
                 TopicsList.Clear();
                 topics.Clear();
@@ -753,7 +754,7 @@ namespace GlideCLI
                     studyVars.topicDate = DateTime.Parse(studyVars.dateAsString);
                     studyVars.dateCompare = DateTime.Compare(studyVars.topicDate, studyVars.today);
                     if (studyVars.dateCompare < Constants.ZERO_INT)
-                    {                        
+                    {
                         ToStudy.Add(studyVars.index);
                         // to display number of late topics left to study
                         ++globals.lateLeft;
@@ -805,7 +806,7 @@ namespace GlideCLI
                 if (studyVars.response == "m" || studyVars.response == "u")
                 {
                     while (studyVars.response == "u")
-                    {                            
+                    {
                         ChangeTopicQuestions();
                         Console.WriteLine("\n\n\nEnter the quantity you answered correctly: ");
                         try
@@ -837,7 +838,7 @@ namespace GlideCLI
                 {
                     studyVars.numCorrectString = studyVars.response;
                     studyVars.numCorrectDouble = Convert.ToDouble(studyVars.numCorrectString);
-                    test = true;                        
+                    test = true;
                 }
                 catch
                 {
@@ -846,7 +847,7 @@ namespace GlideCLI
                     Console.ReadLine();
                     SelectionDialogs(Constants.TEN_INT);
                     test = false;
-                }            
+                }
                 //Not an else since response expected to change if response == "u"
                 if (test == true)
                 {
@@ -861,7 +862,7 @@ namespace GlideCLI
                             ChangeTopicQuestions();
                             Console.Clear();
                             Console.WriteLine("Re-enter number of problems or questions you respoded to correctly");
-                        }          
+                        }
                         if (studyVars.response == "m")
                         {
                             Console.Clear();
@@ -871,7 +872,7 @@ namespace GlideCLI
                             globals.lateLeft = Constants.ZERO_INT;
                             studyVars.studied = false;
                             return;
-                        }                      
+                        }
                         try
                         {
                             studyVars.numCorrectString = studyVars.response;
@@ -887,9 +888,11 @@ namespace GlideCLI
                     TopicsList.ElementAt(globals.TopicID).Num_Correct = studyVars.numCorrectDouble;
                     TopicsList.ElementAt(globals.TopicID).First_Date = studyVars.todayDateString;
                     if (globals.newLeft >= Constants.ONE_INT)
-                    	--globals.newLeft;
+                        --globals.newLeft;
                     if (predictVars.Until_New > Constants.ZERO_INT)
                         --predictVars.Until_New;
+                    if (predictVars.Until_New == Constants.ZERO_INT)
+                        predictVars.Lock_Goals = false;
 
                     Console.Clear();
                 }
@@ -897,11 +900,6 @@ namespace GlideCLI
         }
         private static void StudyTrue()
         {
-            //DELETEME START
-            Console.WriteLine($"\nUntil_New = {predictVars.Until_New}\n");
-            //DELETEME END
-
-
             Console.Write("\n\n\nOption: ");
             studyVars.studied = true;
             studyVars.response = Console.ReadLine();
@@ -922,8 +920,10 @@ namespace GlideCLI
                 --globals.lateLeft;
             else if (studyVars.dateCompare == Constants.ZERO_INT)
                 --globals.currentLeft;
-           if (predictVars.Until_New > Constants.ZERO_INT)
+            if (predictVars.Until_New > Constants.ZERO_INT)
                 --predictVars.Until_New;
+            if (predictVars.Until_New == Constants.ZERO_INT)
+                predictVars.Lock_Goals = false;
             Console.Clear();
         }
         private static void StudyNotDone()
@@ -948,9 +948,9 @@ namespace GlideCLI
                     SaveProgress();
                     ++globals.TopicIndex;
                     if (globals.TopicIndex < studyVars.toStudyCount)
-                        globals.TopicID = ToStudy.ElementAt(globals.TopicIndex); 
+                        globals.TopicID = ToStudy.ElementAt(globals.TopicIndex);
                 }
- 
+
             }
             else
                 globals.ProblemsDone = true;
@@ -1005,8 +1005,8 @@ namespace GlideCLI
 
             }
             // if (predictVars.Enough_Studied == true && predictVars.End_Reached == false);
-            	//if (globals.newLeft > Constants.ZERO_INT)
-                	//Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Prediction_Date}");
+            //if (globals.newLeft > Constants.ZERO_INT)
+            //Console.WriteLine($"Course Completion Expected: Section = {predictVars.Final_Topic} Date = {predictVars.Prediction_Date}");
             Console.WriteLine($"Current Section: {TopicsList.ElementAt(globals.TopicID).Top_Name}");
             Console.WriteLine($"Previously Studied: {studyVars.topStudBool}");
             Console.WriteLine($"Number of LATE practice to review: {globals.lateLeft}");
@@ -1040,7 +1040,7 @@ namespace GlideCLI
                     predictVars.Only_ONE = false;
 
                     //Clear Lists here too
-                    ProdictionListsClear();
+                    PredictionListsClear();
                     return;
                 }
                 enoughStudied = true;
@@ -1072,13 +1072,13 @@ namespace GlideCLI
                 }
             }
             nDifficultsDouble = Convert.ToDouble(count);
-            predictVars.Avg_Difficulty = difficultsAdded/nDifficultsDouble;
+            predictVars.Avg_Difficulty = difficultsAdded / nDifficultsDouble;
         }
         private static void CollectFirstStudies()
         {
             int topicNumber = Constants.ZERO_INT;
             int tracker = Constants.ZERO_INT;
-            
+
             int index = Constants.ZERO_INT;
             while (index < TopicsList.Count)
             {
@@ -1098,7 +1098,7 @@ namespace GlideCLI
                 newSims.Sim_Repetition = Constants.ONE_INT;
                 newSims.Top_Difficulty = TopicsList.ElementAt(index).Top_Difficulty;
                 newSims.Interval_Length = TopicsList.ElementAt(index).Interval_Length;
-                newSims.Top_Number = topicNumber; 
+                newSims.Top_Number = topicNumber;
                 newSims.Next_Date = TopicsList.ElementAt(index).Next_Date;
                 studiedSimList.Add(newSims);
 
@@ -1138,7 +1138,7 @@ namespace GlideCLI
 
             highestIndex = fStudyCounts.Count - Constants.ONE_INT;
             predictVars.Y_High_Ycount = fStudyCounts[highestIndex];
-            
+
         }
         private static void YmaxSortFirsts()
         {
@@ -1148,8 +1148,8 @@ namespace GlideCLI
 
             count = Constants.ZERO_INT;
             while (count < Constants.TWO_INT)
-            {  
-                
+            {
+
                 for (j = Constants.TWO_INT; j < fStudyCounts.Count; ++j)
                 {
                     keyOne = fStudyCounts[j];
@@ -1178,7 +1178,7 @@ namespace GlideCLI
                     keyOne = fStudyCounts[Constants.ZERO_INT];
                     keyTwo = fStudyDates[Constants.ZERO_INT];
                     //A[ZERO] = A[ONE];
-            
+
                     fStudyCounts[Constants.ZERO_INT] = fStudyCounts[Constants.ONE_INT];
                     fStudyDates[Constants.ZERO_INT] = fStudyDates[Constants.ONE_INT];
                     //A[ONE] = key;
@@ -1192,7 +1192,7 @@ namespace GlideCLI
         {
             int dateCompare;
             DateTime tempDateOne;
-            DateTime tempDateTwo;    
+            DateTime tempDateTwo;
 
             if (predictVars.First_Check == true)
             {
@@ -1224,7 +1224,7 @@ namespace GlideCLI
             {
                 repetition = studiedSimList.ElementAt(index).Sim_Repetition;
                 InitializeOnePastStudy(index, repetition);
-                ++index;                
+                ++index;
             }
         }
         private static void InitializeOnePastStudy(int index, int repetition)
@@ -1249,7 +1249,7 @@ namespace GlideCLI
             studiedSims.Top_Number = studiedSimList.ElementAt(index).Top_Number;
             if (repetition == Constants.ONE_INT)
                 studiedSims.Simulated_Date = studiedSimList.ElementAt(index).First_Date;
-            
+
             genSimsStudied.Add(studiedSims);
             ++repetition;
             return repetition;
@@ -1270,7 +1270,7 @@ namespace GlideCLI
         private static void XmaxRepeats()
         {
             //xMaxList
-        
+
             predictVars.Loop_Index = Constants.ZERO_INT;
             while (predictVars.Loop_Index < genSimsStudied.Count)
             {
@@ -1294,7 +1294,7 @@ namespace GlideCLI
             // if something < zero, then t1 is earlier than t2
             // if something == zero, then same day
             // if something > zero, then t1 is later than t2
-  
+
             predictVars.XrepIndex = Constants.ZERO_INT;
             predictVars.First_Check = true;
             predictVars.Loop_Index = Constants.ZERO_INT;
@@ -1320,28 +1320,28 @@ namespace GlideCLI
         }
         private static bool SortXrepCounts(bool RepsortCorrect)
         {
-		int listKey = new int();
+            int listKey = new int();
 
-		for (predictVars.J = Constants.TWO_INT; predictVars.J < xRepDateCounts.Count; predictVars.J++)
-		{
-			listKey = xRepDateCounts[predictVars.J];
+            for (predictVars.J = Constants.TWO_INT; predictVars.J < xRepDateCounts.Count; predictVars.J++)
+            {
+                listKey = xRepDateCounts[predictVars.J];
 
-			// Insert xRepDateCounts[j] into sorted sequence xRepDateCounts[1...j-1]
-			predictVars.I = predictVars.J - Constants.ONE_INT;
-			while (predictVars.I > Constants.ZERO_INT && xRepDateCounts[predictVars.I] > listKey)
-			{
-			    xRepDateCounts[predictVars.I + Constants.ONE_INT] = xRepDateCounts[predictVars.I];
-			    predictVars.I = predictVars.I - Constants.ONE_INT;
-			}
-			xRepDateCounts[predictVars.I + Constants.ONE_INT] = listKey;
-		}
+                // Insert xRepDateCounts[j] into sorted sequence xRepDateCounts[1...j-1]
+                predictVars.I = predictVars.J - Constants.ONE_INT;
+                while (predictVars.I > Constants.ZERO_INT && xRepDateCounts[predictVars.I] > listKey)
+                {
+                    xRepDateCounts[predictVars.I + Constants.ONE_INT] = xRepDateCounts[predictVars.I];
+                    predictVars.I = predictVars.I - Constants.ONE_INT;
+                }
+                xRepDateCounts[predictVars.I + Constants.ONE_INT] = listKey;
+            }
 
             /* 
             this is here to get the first element sorted into 
             the rest of the array on the second run of the loop
             */
 
-            if (xRepDateCounts[Constants.ZERO_INT]  > xRepDateCounts[Constants.ONE_INT])
+            if (xRepDateCounts[Constants.ZERO_INT] > xRepDateCounts[Constants.ONE_INT])
             {
                 //key = A[ZERO];
                 listKey = xRepDateCounts[Constants.ZERO_INT];
@@ -1414,22 +1414,22 @@ namespace GlideCLI
                     }
                 }
             }
-            
+
         }
         private static void XmaxRepeatSort()
         {
             predictVars.J = Constants.ZERO_INT;
             predictVars.I = Constants.ZERO_INT;
             predictVars.Date_Check = Constants.ZERO_INT;
-            
+
             bool XsortCorrect, XsortCheck;
             XsortCheck = XsortCorrect = true;
             while (XsortCheck == true)
-            {  
+            {
                 XsortCheck = XinsertSort(XsortCorrect);
                 XsortCorrect = XsortCheck;
             }
-       
+
             predictVars.J = Constants.ZERO_INT;
             predictVars.I = Constants.ZERO_INT;
             predictVars.Date_Check = Constants.ZERO_INT;
@@ -1461,7 +1461,7 @@ namespace GlideCLI
             the rest of the array on the second run of the loop
             */
             int toFixSort = DateTime.Compare(DateTime.Parse(xMaxSortList[Constants.ZERO_INT].Simulated_Date), DateTime.Parse(xMaxSortList[Constants.ONE_INT].Simulated_Date));
-            if (toFixSort  > Constants.ZERO_INT)
+            if (toFixSort > Constants.ZERO_INT)
             {
                 //key = A[ZERO];
                 listKey = xMaxSortList[Constants.ZERO_INT];
@@ -1479,7 +1479,7 @@ namespace GlideCLI
             int index = studiedSimList.Count - Constants.ONE_INT;
             int topicNumber = studiedSimList.ElementAt(index).Top_Number + Constants.ONE_INT;
             int tracker = Constants.ZERO_INT;
-            
+
             int loopIndex = Constants.ZERO_INT;
             while (loopIndex < TopicsList.Count)
             {
@@ -1487,7 +1487,7 @@ namespace GlideCLI
                 topicNumber = tracker;
                 ++loopIndex;
             }
-            loopIndex = Constants.ZERO_INT;                
+            loopIndex = Constants.ZERO_INT;
         }
         private static int NonStudyGetter(int topicNumber, int loopIndex)
         {
@@ -1499,7 +1499,7 @@ namespace GlideCLI
                 newSims.Sim_Repetition = Constants.ZERO_INT;
                 newSims.Top_Difficulty = predictVars.Avg_Difficulty;
                 newSims.Interval_Length = Constants.ZERO_INT;
-                newSims.Top_Number = topicNumber; 
+                newSims.Top_Number = topicNumber;
                 projectedSimList.Add(newSims);
                 ++topicNumber;
             }
@@ -1527,9 +1527,9 @@ namespace GlideCLI
                 totalNewTopics = projectedSimList.Count;
             }
             GoalSetter();
-            ProdictionListsClear();
+            PredictionListsClear();
         }
-        private static void ProdictionListsClear()
+        private static void PredictionListsClear()
         {
             studiedSimList.Clear();
             genSimsAll.Clear();
@@ -1544,7 +1544,7 @@ namespace GlideCLI
         private static void PredictStudies()
         {
             int index;
-            
+
             index = Constants.ZERO_INT;
             if (predictVars.Process_Prediction == true)
             {
@@ -1554,7 +1554,7 @@ namespace GlideCLI
                     GenSimsAllGetter(index);
                     ++index;
                 }
-                predictVars.Process_Prediction = false; 
+                predictVars.Process_Prediction = false;
             }
 
             CollectStudyX();
@@ -1563,7 +1563,7 @@ namespace GlideCLI
             ReduceNew();
 
             index = Constants.ZERO_INT;
-           
+
             while (index < studyRepElements.Count)
             {
                 predictVars.Gen_Projected_Index = studyRepElements.ElementAt(index);
@@ -1574,7 +1574,7 @@ namespace GlideCLI
         }
         private static void CollectStudyX()
         {
-            
+
             DateTime useDate, nextDate;
             int dateCompare;
             useDate = DateTime.Parse(predictVars.Sim_Date_Use);
@@ -1611,7 +1611,7 @@ namespace GlideCLI
                     }
                 ++index;
             }
-            
+
             //Get On-Time
             index = Constants.ZERO_INT;
             foreach (var topic in genSimsAll)
@@ -1631,7 +1631,7 @@ namespace GlideCLI
         }
         private static void GenSimsAllGetter(int index)
         {
-            
+
 
             SimModel newSims = new SimModel();
 
@@ -1645,7 +1645,7 @@ namespace GlideCLI
                 newSims.Sim_Repetition = TopicsList.ElementAt(index).Top_Repetition;  //Some of these are not matching Real_Repetition. They should increment to that value in simulation of previous study sessions.
                 newSims.Top_Difficulty = TopicsList.ElementAt(index).Top_Difficulty;
                 newSims.Interval_Length = TopicsList.ElementAt(index).Interval_Length;
-                
+
                 genSimsAll.Add(newSims);
             }
         }
@@ -1655,7 +1655,7 @@ namespace GlideCLI
             double curReps, rise, slope, value_b, yCurrent;
 
             highY = value_b = predictVars.Y_High_Ycount;
-            run = predictVars.X_High_Xcount; 
+            run = predictVars.X_High_Xcount;
             lowY = Constants.ZERO_DOUBLE;
             rise = lowY - highY;
             slope = rise / run;
@@ -1663,54 +1663,31 @@ namespace GlideCLI
             yCurrent = (slope * curReps) + value_b;
             predictVars.Current_Y = (int)yCurrent;
 
-
-
-            Console.WriteLine($"highY = {highY}");
-            Console.WriteLine($"value_b = {value_b}");
-            Console.WriteLine($"run = {run}");
-            Console.WriteLine($"lowY = {lowY}");
-            Console.WriteLine($"rise = {rise}");
-            Console.WriteLine($"slope = {slope}");
-            Console.WriteLine($"curReps = {curReps}");
-            Console.WriteLine($"yCurrent = {yCurrent}\n");
+            if (predictVars.Lock_Goals == false)
+            {
+                predictVars.Lock_Goals = true;
+                RepSetter();
+            }
         }
-        private static void GoalSetter()
+        private static void RepSetter()
         {
-        	int currentX = (int)predictVars.Current_X;
+            int currentX = (int)predictVars.Current_X;
         	int currentY = predictVars.Current_Y;
         	int countDown = currentX + currentY;
 
         	if (currentY > globals.newLeft)
-			currentY = globals.newLeft;
+			    currentY = globals.newLeft;
 
-            if (predictVars.Lock_Initial == false && predictVars.Unlock_New_Date == false)
-                    predictVars.Until_New = countDown;
-
-            if (predictVars.Until_New == Constants.ZERO_INT)
-                predictVars.Unlock_New_Date = true;
-            else
-                predictVars.Unlock_New_Date = false;
-
-            if (predictVars.Unlock_New_Date == false)
-            {
-                if (predictVars.Lock_Initial == false)
-                {
-                    predictVars.Lock_Initial = true;
-                    predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
-                    predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
-                }
-            }
-            if (predictVars.Unlock_New_Date == true)
-            {
-                predictVars.Until_New = countDown;
-                predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
-                predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
-            }
-
+            predictVars.Until_New = countDown;
+        }
+        private static void GoalSetter()
+        {
+            predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+            predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
         }
         private static void CollectStudyY()
         {
-            
+
             int yToStudied = genSimsAll.Count - Constants.ONE_INT;
             int index = Constants.ZERO_INT;
 
@@ -1746,7 +1723,7 @@ namespace GlideCLI
         {
             SimModel newSims = new SimModel();
 
-            newSims.Top_Number = projectedSimList.ElementAt(index).Top_Number; 
+            newSims.Top_Number = projectedSimList.ElementAt(index).Top_Number;
             newSims.First_Date = predictVars.Sim_Date_Use;
             newSims.Simulated_Date = predictVars.Sim_Date_Use; //Store next date here so that it will be picked up for study on that day
             newSims.Next_Date = predictVars.Sim_Date_Use; // Make sure it gets the next date. 
@@ -1767,8 +1744,8 @@ namespace GlideCLI
                     GetReducedNew(count);
                     ++count;
                 }
-                projectedSimList.Clear();                
-              
+                projectedSimList.Clear();
+
                 count = Constants.ZERO_INT;
                 while (count < reducedProjected.Count)
                 {
@@ -1822,7 +1799,7 @@ namespace GlideCLI
                     intervalLength = SINGLE_DAY;
                 else
                     intervalLength = intervalLength * difficulty;
-                
+
                 genSimsStudied[predictVars.Gen_Studied_Index].Interval_Length = intervalLength;
 
                 int indexFuture = predictVars.Gen_Studied_Index + Constants.ONE_INT;
@@ -1835,13 +1812,13 @@ namespace GlideCLI
                 difficulty = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Difficulty;
                 ithRepetition = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Sim_Repetition;
                 intervalLength = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Interval_Length;
-            
+
                 if (ithRepetition == Constants.ONE_INT)
                     intervalLength = SINGLE_DAY;
                 else
                     intervalLength = intervalLength * difficulty;
 
-                 genSimsAll[predictVars.Gen_Projected_Index].Interval_Length = intervalLength;
+                genSimsAll[predictVars.Gen_Projected_Index].Interval_Length = intervalLength;
             }
         }
         private static void SimAddRepetition()
@@ -1853,6 +1830,7 @@ namespace GlideCLI
             const double SINGLE_DAY = 1440;
             double intervalLength;
             double daysDouble;
+            int daysInt = Constants.ZERO_INT;
             DateTime fakeToday;
             DateTime nextDate;
             string nextDateString;
@@ -1860,16 +1838,20 @@ namespace GlideCLI
             if (predictVars.Process_Gen_Sims_Studied == true)
             {
                 intervalLength = genSimsStudied.ElementAt(predictVars.Gen_Studied_Index).Interval_Length;
-                daysDouble = intervalLength / SINGLE_DAY; //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                daysDouble = intervalLength / SINGLE_DAY; 
+                daysInt = (int)daysDouble; //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
                 fakeToday = DateTime.Parse(genSimsStudied[predictVars.Gen_Studied_Index].Simulated_Date);
             }
             else
             {
                 intervalLength = genSimsAll[predictVars.Gen_Projected_Index].Interval_Length;
-                daysDouble = intervalLength / SINGLE_DAY;  //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
+                daysDouble = intervalLength / SINGLE_DAY;  
+                daysInt = (int)daysDouble; //Necessary to cut off fractional portion without rounding, so cant convert to Int32 yet.
                 fakeToday = DateTime.Parse(predictVars.Sim_Date_Use);
             }
-            nextDate = fakeToday.AddDays(daysDouble);
+            //nextDate = fakeToday.AddDays(daysDouble);
+            
+            nextDate = fakeToday.AddDays(daysInt);
             nextDateString = nextDate.ToString("d");
 
             int indexFuture = Constants.ZERO_INT;
