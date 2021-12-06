@@ -897,6 +897,11 @@ namespace GlideCLI
         }
         private static void StudyTrue()
         {
+            //DELETEME START
+            Console.WriteLine($"\nUntil_New = {predictVars.Until_New}\n");
+            //DELETEME END
+
+
             Console.Write("\n\n\nOption: ");
             studyVars.studied = true;
             studyVars.response = Console.ReadLine();
@@ -976,27 +981,27 @@ namespace GlideCLI
 
             if (predictVars.Enough_Studied == true)
             {
-		// Display Initial Goal Date IF End_Reached == FALSE AND Unlock_New_Date == FALSE
-		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == false)
-		{
-			// Display Number of topics left to reach Initial Goal Date
-			// Initial_Prediction_Date
-			Console.WriteLine($"Study {predictVars.Until_New} section(s) for this CURRENT COMPLETION GOAL:");
-			Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}");
-			Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to complete course sooner.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
-		}
-		// Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
-		if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
-		{
-			// Display New Goal Date
-			// New_Prediction_Date
-			Console.WriteLine($"Study {predictVars.Until_New} section(s) for this NEW COMPLETION GOAL:");
-			Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
-			predictVars.Unlock_New_Date = false;
-		}
-		// Display No_Date IF End_Reached == TRUE
-		if (predictVars.End_Reached == true)
-			Console.WriteLine("Maintenance study session");
+                // Display Initial Goal Date IF End_Reached == FALSE AND Unlock_New_Date == FALSE
+                if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == false)
+                {
+                    // Display Number of topics left to reach Initial Goal Date
+                    // Initial_Prediction_Date
+                    Console.WriteLine($"Study {predictVars.Until_New} section(s) for this CURRENT COMPLETION GOAL:");
+                    Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}");
+                    Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to complete course sooner.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
+                }
+                // Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
+                if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
+                {
+                    // Display New Goal Date
+                    // New_Prediction_Date
+                    Console.WriteLine($"Study {predictVars.Until_New} section(s) for this NEW COMPLETION GOAL:");
+                    Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
+                    predictVars.Unlock_New_Date = false;
+                }
+                // Display No_Date IF End_Reached == TRUE
+                if (predictVars.End_Reached == true)
+                    Console.WriteLine("Maintenance study session");
 
             }
             // if (predictVars.Enough_Studied == true && predictVars.End_Reached == false);
@@ -1657,6 +1662,17 @@ namespace GlideCLI
             curReps = predictVars.Current_X;
             yCurrent = (slope * curReps) + value_b;
             predictVars.Current_Y = (int)yCurrent;
+
+
+
+            Console.WriteLine($"highY = {highY}");
+            Console.WriteLine($"value_b = {value_b}");
+            Console.WriteLine($"run = {run}");
+            Console.WriteLine($"lowY = {lowY}");
+            Console.WriteLine($"rise = {rise}");
+            Console.WriteLine($"slope = {slope}");
+            Console.WriteLine($"curReps = {curReps}");
+            Console.WriteLine($"yCurrent = {yCurrent}\n");
         }
         private static void GoalSetter()
         {
@@ -1667,29 +1683,29 @@ namespace GlideCLI
         	if (currentY > globals.newLeft)
 			currentY = globals.newLeft;
 
-		if (predictVars.Lock_Initial == false && predictVars.Unlock_New_Date == false)
-        		predictVars.Until_New = countDown;
+            if (predictVars.Lock_Initial == false && predictVars.Unlock_New_Date == false)
+                    predictVars.Until_New = countDown;
 
-                if (predictVars.Until_New == Constants.ZERO_INT)
-			predictVars.Unlock_New_Date = true;
-                else
-                	predictVars.Unlock_New_Date = false;
+            if (predictVars.Until_New == Constants.ZERO_INT)
+                predictVars.Unlock_New_Date = true;
+            else
+                predictVars.Unlock_New_Date = false;
 
-		if (predictVars.Unlock_New_Date == false)
-		{
-			if (predictVars.Lock_Initial == false)
-			{
-				predictVars.Lock_Initial = true;
-				predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
-        			predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
-			}
-		}
-		if (predictVars.Unlock_New_Date == true)
-		{
-			predictVars.Until_New = countDown;
-			predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
-        		predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
-		}
+            if (predictVars.Unlock_New_Date == false)
+            {
+                if (predictVars.Lock_Initial == false)
+                {
+                    predictVars.Lock_Initial = true;
+                    predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+                    predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+                }
+            }
+            if (predictVars.Unlock_New_Date == true)
+            {
+                predictVars.Until_New = countDown;
+                predictVars.Prediction_Date = genSimsAll[predictVars.Gen_Projected_Index].Next_Date;
+                predictVars.Final_Topic = genSimsAll.ElementAt(predictVars.Gen_Projected_Index).Top_Number;
+            }
 
         }
         private static void CollectStudyY()
