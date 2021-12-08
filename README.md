@@ -13,11 +13,20 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 * Change number of total questions on first study of a topic
 * Predicts the date a course will be completed by.
 * Allows users to win earlier completion dates.
+* Now allows user to change the current date back to the previous, in case the study session starts after midnight. I also use this for debugging.
 
 GlideCLI is a command line interface application:
 
-## Screenshot
-![In Use](Images/Screenshot.png)
+## Screenshots
+
+Main Menu
+![In Use](Images/screen1.png)
+
+The Study HUD
+![In Use](Images/screen2.png)
+
+New Date changing feature
+![In Use](Images/screen3.png)
 
 # To Install:
 GlideCLI MIGHT run on MacOS now. It WILL now run on Windows, Linux, and Docker:
