@@ -161,7 +161,7 @@ namespace GlideCLI
                     {
                         Console.WriteLine("Invalid Input. Try again:");
                     }
-                    if (selectionInt >= Constants.ONE_INT && selectionInt <= Constants.THREE_INT)
+                    if (selectionInt >= Constants.ONE_INT && selectionInt <= Constants.FOUR_INT)
                         MainOptions(selectionInt);
                 }
             }
@@ -192,6 +192,16 @@ namespace GlideCLI
                     SelectCourse();
                     StudyCourse();
                     break;
+                case 4:
+                    globals.madeSelect = true;
+                    Console.Clear();
+                    Console.WriteLine($"Current date set at: {globals.TheDate}");
+                    Console.WriteLine("Enter a date, in your region's formatting, to force program to use it:");
+                    Console.WriteLine("Example: If date under the 10nth in the month: \nIf in US (12/2/2021): \"mm/d/yyyy\"\nIf in Germany: (2/12/2021)\"d/mm/yyyy\"\n");
+                    Console.WriteLine("Example: If the date is the 10nth in the month, or greater, then:\nIf in US (12/13/2021): \"mm/dd/yyyy\"\nIf in Germany (13/12/2021): \"dd/mm/yyyy\"\n");
+                    Console.Write("\n\nEnter a date to use: ");
+                    globals.TheDate = Console.ReadLine();
+                    break;
                 default:
                     Console.WriteLine("Default case");
                     globals.madeSelect = false;
@@ -214,9 +224,11 @@ namespace GlideCLI
                     //For AvailableOptions()
                     // Option 2 if courses are available
                     Console.Clear();
+                    Console.WriteLine($"Date: {globals.TheDate}");
                     Console.WriteLine("\n\n1: Exit the program");
                     Console.WriteLine("2: Create a new course");
-                    Console.WriteLine("3: Study a course\n");
+                    Console.WriteLine("3: Study a course");
+                    Console.WriteLine("4: Force GlieCLI to use a different date\n");
                     Console.WriteLine("\n\n\nSelect an option from the menu: ");
                     break;
                 case 3:
@@ -679,10 +691,12 @@ namespace GlideCLI
                 {
                     numTotalString = Console.ReadLine();
                     numTotalDouble = Convert.ToDouble(numTotalString);
+                    test = true;
                 }
                 catch
                 {
                     Console.Clear();
+                    test = false;
                     Console.WriteLine("\n\nInvalid Input\n\nPress Enter to Continue");
                     Console.ReadLine();
                     SelectionDialogs(Constants.TEN_INT);
@@ -977,7 +991,7 @@ namespace GlideCLI
             else
                 studyVars.topStudBool = "false";
             Console.WriteLine($"Course Name: {globals.CourseName}");
-            Console.WriteLine($"\nCurrent Repetition Goal:");
+            Console.WriteLine($"Today is: {globals.TheDate}:\n");
 
             if (predictVars.Enough_Studied == true)
             {
@@ -986,8 +1000,8 @@ namespace GlideCLI
                 {
                     // Display Number of topics left to reach Initial Goal Date
                     // Initial_Prediction_Date
-                    Console.WriteLine($"Study {predictVars.Until_New} section(s) for this CURRENT COMPLETION GOAL:");
-                    Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}");
+                    Console.WriteLine($"Current Repetition Goal: {predictVars.Until_New} section(s)");
+                    Console.WriteLine($"CURRENT COMPLETION GOAL: Last Section: {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} | Completion Date: {predictVars.Prediction_Date}");
                     Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to complete course sooner.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
                 }
                 // Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
@@ -1511,10 +1525,10 @@ namespace GlideCLI
 
         private static void GenerateProjectedStudies()
         {
-            DateTime startDate, previousDate, simDate;
+            DateTime previousDate, simDate;
             int totalNewTopics, count;
-            startDate = DateTime.Now;
-            predictVars.Sim_Date_Use = startDate.ToString("d");
+            // startDate = DateTime.Now; //DELETEME - probably just using the stored date from start of program now
+            predictVars.Sim_Date_Use = globals.TheDate;
             totalNewTopics = projectedSimList.Count; //This reduces in value as new topics are transfered
             count = Constants.ZERO_INT; //This stays ZERO
 
