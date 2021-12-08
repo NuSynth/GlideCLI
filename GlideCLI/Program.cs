@@ -1002,7 +1002,7 @@ namespace GlideCLI
                     // Initial_Prediction_Date
                     Console.WriteLine($"Current Repetition Goal: {predictVars.Until_New} section(s)");
                     Console.WriteLine($"CURRENT COMPLETION GOAL: Last Section: {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} | Completion Date: {predictVars.Prediction_Date}");
-                    Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to complete course sooner.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
+                    Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to unlock next date calculation.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
                 }
                 // Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
                 if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
@@ -1527,10 +1527,12 @@ namespace GlideCLI
         {
             DateTime previousDate, simDate;
             int totalNewTopics, count;
-            // startDate = DateTime.Now; //DELETEME - probably just using the stored date from start of program now
             predictVars.Sim_Date_Use = globals.TheDate;
             totalNewTopics = projectedSimList.Count; //This reduces in value as new topics are transfered
             count = Constants.ZERO_INT; //This stays ZERO
+
+            if (predictVars.Until_New == Constants.ZERO_INT)
+                predictVars.Lock_Prediction = false;
 
             while (count < totalNewTopics)
             {
@@ -1540,7 +1542,12 @@ namespace GlideCLI
                 predictVars.Sim_Date_Use = simDate.ToString("d");
                 totalNewTopics = projectedSimList.Count;
             }
-            GoalSetter();
+
+            if (predictVars.Lock_Prediction == false)
+            {
+                GoalSetter();
+                predictVars.Lock_Prediction = true;
+            }
             PredictionListsClear();
         }
         private static void PredictionListsClear()
