@@ -16,6 +16,7 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 * Now allows user to change the current date back to the previous, in case the study session starts after midnight. I also use this for debugging.
 
 GlideCLI is a command line interface application:
+(You might need to modify the size of your command line window to see everything in the Study HUD, until the graphical user-interface version is ready.)
 
 ## Screenshots
 
