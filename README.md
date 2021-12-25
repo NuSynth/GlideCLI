@@ -56,10 +56,27 @@ Here is the link: https://github.com/Dartomic/GlideCLI/blob/master/Docs/Manual.p
 
 
 # Difference between this software, and the research
-The current research for the calculation of difficulty, which is used to calculate the interval length between study sessions, it is also used in the calculation of engram stability, and it is also used in the calculation of the forgetting curve, is inaccurate.The research for the currently accepted calculation of difficulty can be found here: https://github.com/Dartomic/GlideCLI/blob/master/Docs/easinessFactor.pdf
+The research currently used by most scientists for the calculation of difficulty, which is used to calculate the interval length between study sessions, it is also used in the calculation of engram stability, and it is also used in the calculation of the forgetting curve, is inaccurate. The research I am referring to, for this currently accepted calculation of difficulty can be found here: https://github.com/Dartomic/GlideCLI/blob/master/Docs/easinessFactor.pdf
 
-The calculation is inaccurate, because it can produce a result below the value of 1.3, which would cause the interval length between study sessions to be far too short. The way the researchers would go around that, is by setting the veriable to 1.3 if it was calculated as being below 1.3... The problem with this, is that their formula in the Easiness Factor research paper that I linked to, is calculating an innacurate value for everything. Information that was calculated as being a difficulty of 1.3, and was easier to learn than the hardest material, which is calculated as less than 1.3, does not all of a sudden become equally as difficult to maintain as the hardest material, when the hardest material is raised to a value equal to 1.3. 
+I explain how the currently accepted calculation is innaccurate in the document: https://github.com/Dartomic/GlideCLI/blob/master/Docs/Differences.md
 
-I had to invent a way to calculate difficulty, because I could not find that research document on the Easiness Factor, until after I had written this program. I knew that the calculation of difficulty had to be constrained between these values inclusively, (1.3, and 2.5), and the image of a sloped line on a graph, intersecting y at 1.3, and x at 0, just popped into my head. So I applied the point slope formula to calculate difficulty, and it works perfect. So perfect, that difficulty does not need to be re-calculated for every repetition. It only needs to be calculated on the first repetition. If you look at the pdf file that I linked in the about section (https://github.com/Dartomic/GlideCLI/blob/master/Docs/Manual.pdf), I go into great detail to explain how difficulty is calculated there. Although, it is very simple. I just wanted to be as detailed as I could be so that it is understood how it is more accurate than the research article's version.
+If you look at the pdf file that I linked in the about section (https://github.com/Dartomic/GlideCLI/blob/master/Docs/Manual.pdf), I go into detail to explain how the calculation of difficulty is performed in this software.
+
+Since I realized that I am not using anyone elses research for the calculation of difficulty, and since the researchers gave a name to their calculation of difficulty in the journal article I linked to (which I mentioned is not accurate, and is therefore not used in my program), then maybe I should name the calculation of difficulty in GlideCLI. It does not exactly feel right to do this, because I am just using the Slope-Intercept formula. But I decided to give it a name anyway, to distinguish this way of calculating difficulty from the way that it is calculated by the researchers who have PhD's. I'm naming it Spacing Multiplyer. 
+
+The name Spacing Multiplier is not mentioned in the source code yet, because after I have been using it for three years, I just realized that I should name it. This way I don't have to mention the other formula for the calculation in order to explain how difficulty is calculated in anything I write in the future.
+
+
+# The Forgetting Curve
+GlideCLI does calculate the forgetting curve, and uses the formula from this research:
+
+https://github.com/Dartomic/GlideCLI/blob/master/Docs/5535.pdf
+
+Other than calculating the forgetting curve, and storing the result in a file, this calculation, and the result that it produces, is not actually used for anything yet. It has only been in the program the entire time so that the results will be available for a graph that the users can view, after I write the part that draws the decay curve for the user by using this calculation. The result is called Engram Stability. 
+
+Other than just being a cool feature in a future iteration of the design of this software, it contributes nothing that this software, or any derivitive that I write of it, will ever need to use, except for a neat entertainment novelty. If it turns out that the formula for engram stability (the forgetting curve) that I am using from the research article is somehow owned somebody, then just let me know by issuing a bug report. I will immediately remove it. I just now decided that I am going to do this anyway, just in case it turns out to be an issue. I thought of a different formula that nobody else is using that I can just use for the calculation of Engram stability in it's place. The results it will produce are going to be the same as the current formula, except it's not documented in any research, since the idea of what I can replace it with popped in my head just now. 
+
+# After I change the Forgetting Curve Formula
+After I change over to this other formula that no one has used yet for the calculation of Engram Stability, my program will be 100% made of algorithms that I developed. It wont be based on anyone elses work.
 
 
