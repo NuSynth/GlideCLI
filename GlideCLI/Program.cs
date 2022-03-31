@@ -1002,7 +1002,7 @@ namespace GlideCLI
                     // Initial_Prediction_Date
                     Console.WriteLine($"Current Repetition Goal: {predictVars.Until_New} section(s)");
                     Console.WriteLine($"CURRENT COMPLETION GOAL: Last Section: {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} | Completion Date: {predictVars.Prediction_Date}");
-                    Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to unlock next date calculation.\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
+                    Console.WriteLine($"Study more than {predictVars.Until_New} section(s) to unlock next date calculation.\n(Completion requires 2 repetitions of Section Number {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
                 }
                 // Display New Goal Date IF End_Reached == FALSE AND Unlock_New_Date == TRUE
                 if (predictVars.End_Reached == false && predictVars.Unlock_New_Date == true)
@@ -1010,7 +1010,7 @@ namespace GlideCLI
                     // Display New Goal Date
                     // New_Prediction_Date
                     Console.WriteLine($"Study {predictVars.Until_New} section(s) for this NEW COMPLETION GOAL:");
-                    Console.WriteLine($"Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}\n(Completion requires 2 repetitions of Section Numer {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
+                    Console.WriteLine($"Section Number {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name} on Date of {predictVars.Prediction_Date}\n(Completion requires 2 repetitions of Section Number {TopicsList.ElementAt(predictVars.Final_Topic).Top_Name}.)\n");
                     predictVars.Unlock_New_Date = false;
                 }
                 // Display No_Date IF End_Reached == TRUE
