@@ -39,7 +39,7 @@ https://www.mono-project.com/download/stable/#download-lin
 
 * Step 2:
 Download GlideCLI from the release page here:
-https://github.com/Dartomic/GlideCLI/releases/download/v0.21-alpha/GlideCLI.exe
+https://github.com/Dartomic/GlideCLI/releases/download/v0.22-alpha/GlideCLI.exe
 
 * Step 3:
 Then open a command prompt in the directory that GlideCLI.exe is in, and type
