@@ -1,6 +1,4 @@
-# Update Dec 3rd 2021: Date Reinforcment - Win earlier completion dates!
-
-I thought it would be more reinforcing to see how many repetitions I need to complete the predicted date. Then I thought it would be cool to see if I could win an earlier completion date! 
+# Update Dec 27th 2022: Users can now make a weekly schedule of days off from studying, and the program should still accurately predict the completion date. (The predicted date of completion is dependent on the average difficulty for each topic completed, so the predicted completion date does change a little as the user works through the topics.)
 
 
 # About
@@ -12,7 +10,7 @@ Glide allows people who use it to study more efficiently, and learn at a very fa
 * exit from menu
 * Change number of total questions on first study of a topic
 * Predicts the date a course will be completed by.
-* Allows users to win earlier completion dates.
+* Allows the user to make a weekly study schedule.
 * Now allows user to change the current date back to the previous, in case the study session starts after midnight. I also use this for debugging.
 
 GlideCLI is a command line interface application:
