@@ -40,6 +40,13 @@ namespace GlideCLI
         // End of parts to predict date of last topic being studied
         /***********************************************/
 
+        /***********************************************/
+        // Start of parts for Scheduler
+        static WeekModel weekList = new WeekModel();
+
+        // End parts of Scheduler
+        /***********************************************/
+
         public static void Main(string[] args)
         {
             //Console.Clear();
@@ -88,6 +95,7 @@ namespace GlideCLI
             {
                 StudyDecrementer();
                 CheckForCountFile();
+                CheckForWeek();
                 MainMenu();
                 StudyIncrementer();
                 ClearLists();
@@ -161,7 +169,7 @@ namespace GlideCLI
                     {
                         Console.WriteLine("Invalid Input. Try again:");
                     }
-                    if (selectionInt >= Constants.ONE_INT && selectionInt <= Constants.FOUR_INT)
+                    if (selectionInt >= Constants.ONE_INT && selectionInt <= Constants.FIVE_INT)
                         MainOptions(selectionInt);
                 }
             }
@@ -174,8 +182,8 @@ namespace GlideCLI
                 case 1:
                     globals.madeSelect = true;
                     Console.Clear();
-                    Console.WriteLine("Good Bye");
-                    Environment.Exit(ZERO);
+                    Console.WriteLine("Weekly Schedule Selected.\n");
+                    WeeklySchedule();
                     break;
                 case 2:
                     globals.madeSelect = true;
@@ -202,6 +210,12 @@ namespace GlideCLI
                     Console.Write("\n\nEnter a date to use: ");
                     globals.TheDate = Console.ReadLine();
                     break;
+                case 5:
+                    globals.madeSelect = true;
+                    Console.Clear();
+                    Console.WriteLine("Good Bye");
+                    Environment.Exit(ZERO);
+                    break;
                 default:
                     Console.WriteLine("Default case");
                     globals.madeSelect = false;
@@ -225,10 +239,11 @@ namespace GlideCLI
                     // Option 2 if courses are available
                     Console.Clear();
                     Console.WriteLine($"Date: {globals.TheDate}");
-                    Console.WriteLine("\n\n1: Exit the program");
+                    Console.WriteLine("\n\n1: Weekly Schedule");
                     Console.WriteLine("2: Create a new course");
                     Console.WriteLine("3: Study a course");
-                    Console.WriteLine("4: Force GlieCLI to use a different date\n");
+                    Console.WriteLine("4: Force GlieCLI to use a different date");
+                    Console.WriteLine("5: Exit the program\n");
                     Console.WriteLine("\n\n\nSelect an option from the menu: ");
                     break;
                 case 3:
@@ -302,6 +317,10 @@ namespace GlideCLI
                     Console.WriteLine("Invalid Input:");
                     Console.WriteLine("\n\nvalue exceeds number of problems or questions, \nor it is less than zero.");
                     Console.Write("\n\n\nQuantity answered correctly, or option choice: ");
+                    break;
+                case 13:
+                    //For WeeklySchedule()
+                    WeeklyDialog();
                     break;
             }
         }
@@ -1067,8 +1086,6 @@ namespace GlideCLI
             }
             predictVars.Enough_Studied = enoughStudied;
         }
-
-
         private static void AvgDiff()
         {
             // Apply average of difficulty to simulation of 
@@ -1280,7 +1297,6 @@ namespace GlideCLI
             }
             predictVars.Gen_Studied_Index = Constants.ZERO_INT;
         }
-
         private static void XmaxRepeats()
         {
             //xMaxList
@@ -1371,7 +1387,6 @@ namespace GlideCLI
 
             return RepsortCorrect;
         }
-
         private static void XmaxToSort()
         {
             SimModel sim = new SimModel();
@@ -1448,7 +1463,6 @@ namespace GlideCLI
             predictVars.I = Constants.ZERO_INT;
             predictVars.Date_Check = Constants.ZERO_INT;
         }
-
         private static bool XinsertSort(bool XsortCorrect)
         {
 
@@ -1519,14 +1533,11 @@ namespace GlideCLI
             }
             return topicNumber;
         }
-
-
-
-
         private static void GenerateProjectedStudies()
         {
             DateTime previousDate, simDate;
             int totalNewTopics, count;
+            bool skipDay = false;
             predictVars.Sim_Date_Use = globals.TheDate;
             totalNewTopics = projectedSimList.Count; //This reduces in value as new topics are transfered
             count = Constants.ZERO_INT; //This stays ZERO
@@ -1536,9 +1547,12 @@ namespace GlideCLI
 
             while (count < totalNewTopics)
             {
+                Console.WriteLine("TEST");
                 previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
                 simDate = previousDate.AddDays(Constants.ONE_INT);
-                PredictStudies();
+                skipDay = SkipChecker(simDate);
+                if (skipDay == false)
+                    PredictStudies(); // I think if I add another if statement here to make sure there is not a day off the day after the new study.
                 predictVars.Sim_Date_Use = simDate.ToString("d");
                 totalNewTopics = projectedSimList.Count;
             }
@@ -1569,7 +1583,6 @@ namespace GlideCLI
             index = Constants.ZERO_INT;
             if (predictVars.Process_Prediction == true)
             {
-                index = Constants.ZERO_INT;
                 while (index < TopicsList.Count)
                 {
                     GenSimsAllGetter(index);
@@ -1579,9 +1592,21 @@ namespace GlideCLI
             }
 
             CollectStudyX();
-            FindYatX();
-            CollectStudyY();
-            ReduceNew();
+            // Might just have to skip the following 3 functions for an off day HERE
+            DateTime simDate, previousDate;
+            bool skipDay = false;
+
+            previousDate = DateTime.Parse(predictVars.Sim_Date_Use);
+            simDate = previousDate.AddDays(Constants.TWO_INT);
+            skipDay = SkipChecker(simDate);
+            if (skipDay == false)
+            {
+
+                FindYatX();          
+                CollectStudyY();
+                ReduceNew();
+            }
+
 
             index = Constants.ZERO_INT;
 
@@ -1694,10 +1719,11 @@ namespace GlideCLI
         {
             int currentX = (int)predictVars.Current_X;
         	int currentY = predictVars.Current_Y;
-        	int countDown = currentX + currentY;
+        	int countDown = Constants.ZERO_INT;
 
         	if (currentY > globals.newLeft)
 			    currentY = globals.newLeft;
+            countDown = currentX + currentY;
 
             predictVars.Until_New = countDown;
         }
@@ -1891,5 +1917,215 @@ namespace GlideCLI
             }
         }
         /***********************************PREDICTION END*********************************************/
+
+        /*******************************WEEKLY SCHEDULE START******************************************/
+        private static void CheckForWeek()
+        {
+            string fileName, filePath;
+            if (globals.osSwitch == true)
+                fileName = "//week.sc";
+            else
+                fileName = "\\week.sc";
+            filePath = $"{globals.DirectoryPath}{fileName}";
+            List<string> weekFileContents = new List<string>();
+            if (File.Exists(filePath))
+            {
+                weekFileContents = File.ReadAllLines(filePath).ToList();
+                foreach (string line in weekFileContents)
+                {
+                    string[] entries = line.Split(',');
+                    weekList.Monday = Convert.ToInt32(entries[Constants.ZERO_INT]);
+                    weekList.Tuesday = Convert.ToInt32(entries[Constants.ONE_INT]);
+                    weekList.Wednesday = Convert.ToInt32(entries[Constants.TWO_INT]);
+                    weekList.Thursday = Convert.ToInt32(entries[Constants.THREE_INT]);
+                    weekList.Friday = Convert.ToInt32(entries[Constants.FOUR_INT]);
+                    weekList.Saturday = Convert.ToInt32(entries[Constants.FIVE_INT]);
+                    weekList.Sunday = Convert.ToInt32(entries[Constants.SIX_INT]);
+                }
+                
+            }
+            else
+            {
+                string fileContents = "0,0,0,0,0,0,0";
+                File.WriteAllText(filePath,fileContents);
+                weekList.Monday = Constants.ZERO_INT;
+                weekList.Tuesday = Constants.ZERO_INT;
+                weekList.Wednesday = Constants.ZERO_INT;
+                weekList.Thursday = Constants.ZERO_INT;
+                weekList.Friday = Constants.ZERO_INT;
+                weekList.Saturday = Constants.ZERO_INT;
+                weekList.Sunday = Constants.ZERO_INT;
+            }
+        }
+        private static bool SkipChecker(DateTime simDate)
+        {
+            bool skip = false;
+            if (weekList.Monday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Monday)
+                    skip = true;
+            if (weekList.Tuesday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Tuesday)
+                    skip = true;
+            if (weekList.Wednesday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Wednesday)
+                    skip = true;
+            if (weekList.Thursday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Thursday)
+                    skip = true;
+            if (weekList.Friday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Friday)
+                    skip = true;
+            if (weekList.Saturday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Saturday)
+                    skip = true;
+            if (weekList.Sunday == Constants.ONE_INT)
+                if (simDate.DayOfWeek == DayOfWeek.Sunday)
+                    skip = true;
+            
+            return skip;
+        }
+        private static void WeeklySchedule()
+        {
+            const string MENU = "m";
+            bool menuBool = false;
+            string userInput;
+            int dayOption = Constants.ZERO_INT;
+
+            while (menuBool == false)
+            {
+                SelectionDialogs(Constants.THIRTEEN_INT);
+                userInput = Console.ReadLine();
+                try {
+                    dayOption = Convert.ToInt32(userInput);
+                    if (dayOption > Constants.SIX_INT || dayOption < Constants.ZERO_INT)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid input.\nPress Enter to try again.");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        ToggleDayFunction(dayOption);
+                    }
+                }
+                catch {
+                    if (userInput == MENU)
+                        menuBool = true;
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid input.\nPress Enter to try again.");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
+                }
+            }
+        }
+        private static void WeeklyDialog()
+        {
+            const int STUDY_DAY = 0;
+            const int OFF_DAY = 1;
+            string[] days = {"0) Monday", "1) Tuesday", "2) Wednesday", "3) Thursday", "4) Friday", "5) Saturday", "6) Sunday"};
+            string[] state = {"Study Day", "Off Day"};
+            int[] dayState = new int[Constants.SEVEN_INT];
+
+            dayState[Constants.ZERO_INT] = weekList.Monday;
+            dayState[Constants.ONE_INT] = weekList.Tuesday;
+            dayState[Constants.TWO_INT] = weekList.Wednesday;
+            dayState[Constants.THREE_INT] = weekList.Thursday;
+            dayState[Constants.FOUR_INT] = weekList.Friday;
+            dayState[Constants.FIVE_INT] = weekList.Saturday;
+            dayState[Constants.SIX_INT] = weekList.Sunday;
+
+            int index = Constants.ZERO_INT;
+            while (index <= Constants.SIX_INT)
+            {
+                if (dayState[index] == Constants.ZERO_INT)
+                    Console.WriteLine($"{days[index]}    ---   {state[STUDY_DAY]}");
+                else
+                    Console.WriteLine($"{days[index]}    ---   {state[OFF_DAY]}");
+                ++index;
+            }
+
+            Console.WriteLine("\n\n\nOPTIONS:\nEnter a number from 1 to 7 to alter the schedule.\n\nOr enter m to go back to the main menu: ");
+        }
+        private static void ToggleDayFunction(int dayOption)
+        {
+            List<string> weekFileContents = new List<string>();
+            string filePath;
+            if (globals.osSwitch == true)
+                filePath = $"{globals.DirectoryPath}//week.sc";
+            else
+                filePath = $"{globals.DirectoryPath}\\week.sc";
+            weekFileContents = File.ReadAllLines(filePath).ToList();
+            foreach (string line in weekFileContents)
+            {
+                string[] entries = line.Split(',');
+                weekList.Monday = Convert.ToInt32(entries[Constants.ZERO_INT]);
+                weekList.Tuesday = Convert.ToInt32(entries[Constants.ONE_INT]);
+                weekList.Wednesday = Convert.ToInt32(entries[Constants.TWO_INT]);
+                weekList.Thursday = Convert.ToInt32(entries[Constants.THREE_INT]);
+                weekList.Friday = Convert.ToInt32(entries[Constants.FOUR_INT]);
+                weekList.Saturday = Convert.ToInt32(entries[Constants.FIVE_INT]);
+                weekList.Sunday = Convert.ToInt32(entries[Constants.SIX_INT]);
+            }
+
+            
+
+            switch (dayOption)
+            {
+                case 0:
+                    if (weekList.Monday == Constants.ZERO_INT)
+                        weekList.Monday = Constants.ONE_INT;
+                    else
+                        weekList.Monday = Constants.ZERO_INT;
+                    break;
+                case 1:
+                    if (weekList.Tuesday == Constants.ZERO_INT)
+                        weekList.Tuesday = Constants.ONE_INT;
+                    else
+                        weekList.Tuesday = Constants.ZERO_INT;
+                    break;
+                case 2:
+                    if (weekList.Wednesday == Constants.ZERO_INT)
+                        weekList.Wednesday = Constants.ONE_INT;
+                    else
+                        weekList.Wednesday = Constants.ZERO_INT;
+                    break;
+                case 3:
+                    if (weekList.Thursday == Constants.ZERO_INT)
+                        weekList.Thursday = Constants.ONE_INT;
+                    else
+                        weekList.Thursday = Constants.ZERO_INT;
+                    break;
+                case 4:
+                    if (weekList.Friday == Constants.ZERO_INT)
+                        weekList.Friday = Constants.ONE_INT;
+                    else
+                        weekList.Friday = Constants.ZERO_INT;
+                    break;
+                case 5:
+                    if (weekList.Saturday == Constants.ZERO_INT)
+                        weekList.Saturday = Constants.ONE_INT;
+                    else
+                        weekList.Saturday = Constants.ZERO_INT;
+                    break;
+                case 6:
+                    if (weekList.Sunday == Constants.ZERO_INT)
+                        weekList.Sunday = Constants.ONE_INT;
+                    else
+                        weekList.Sunday = Constants.ZERO_INT;
+                    break;
+            }
+
+            List<string> output = new List<string>();
+            output.Add($"{weekList.Monday},{weekList.Tuesday},{weekList.Wednesday},{weekList.Thursday},{weekList.Friday},{weekList.Saturday},{weekList.Sunday}");
+            File.WriteAllLines(filePath, output);
+        }
+        
+        /********************************WEEKLY SCHEDULE END*******************************************/
+
     }
 }

@@ -5,6 +5,11 @@
         //used to check if list needs to be cleared
         public int studyTracker {get; set;}
 
+        /* Schedule variables */
+        public string SchedulePath { get; set; }
+        public int ScheduleCount { get; set; }
+        public bool ScheduleExists { get; set; }
+        public bool DaysOffBool { get; set; }
 
         /*TODO: Correct how I named osSwitch, to OsSwitch */
         public bool osSwitch { get; set; } // True if Linux, false if Windows. This is needed to store files correctly, so this app can be used in both operating systems.
